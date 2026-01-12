@@ -340,6 +340,63 @@ h1 {
     height: 16px;
 }
 
+/* Error Page Styles */
+.error-page {
+    justify-content: flex-start;
+}
+
+.error-content {
+    margin-top: 15vh;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.05em;
+    opacity: 0.9;
+}
+
+.error-title {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+.error-message {
+    max-width: 600px;
+    margin: 0 auto 3rem auto;
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.error-actions .nav-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+}
+
+.error-actions .nav-pill:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #fff;
+}
+
+@media (max-width: 768px) {
+    .error-code { font-size: 5rem; }
+    .error-title { font-size: 2rem; }
+    .error-message { padding: 0 1.5rem; font-size: 1.1rem; }
+}
+
 /* Footer (optional but good for spacing) */
 footer {
     padding: 2rem;
