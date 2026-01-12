@@ -67,7 +67,8 @@ header > * {
     gap: 1rem;
 }
 
-.nav-buttons a {
+/* Nav Styles - Inspired by Helium */
+.nav-pill {
     text-decoration: none;
     color: var(--text-primary);
     font-weight: 500;
@@ -77,19 +78,24 @@ header > * {
     gap: 0.5rem;
     padding: 0.6rem 1.2rem;
     border-radius: 9999px;
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Nav Styles - Inspired by Helium */
 .nav-pill:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
 .nav-btn-primary {
-    background-color: #e5e7eb; /* Helium uses a very light gray/off-white for buttons */
+    background-color: #e5e7eb; 
     color: #1c2675 !important;
     font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 9999px;
 }
 
 .nav-btn-primary:hover {
