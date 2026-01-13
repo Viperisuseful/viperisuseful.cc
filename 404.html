@@ -19,7 +19,7 @@
                 
                 <!-- Discord Profile Card Dropdown -->
                 <div class="status-dropdown">
-                    <div class="profile-banner" id="discord-banner"></div>
+                    <div class="profile-banner" id="discord-banner" aria-hidden="true"></div>
                     <div class="profile-header">
                         <div class="avatar-container">
                             <div class="avatar-wrapper">
@@ -28,14 +28,21 @@
                             </div>
                             <div id="avatar-status-dot" class="avatar-status-dot offline"></div>
                         </div>
+
+                        <div class="profile-header-right">
+                            <div class="profile-title-row">
+                                <span class="profile-username">viperisuseful</span>
+                                <span id="discord-server-badge" class="server-badge" style="display:none;"></span>
+                                <span id="discord-server-badge-2" class="server-badge server-badge-icon" style="display:none;"></span>
+                                <span id="discord-primary-badge" class="profile-primary-badge" style="display:none;"></span>
+                                <div id="discord-clan-tag" class="clan-tag" style="display:none;"></div>
+                                <div id="discord-badges" class="profile-badges" aria-hidden="true"></div>
+                            </div>
+                            <div id="discord-custom-status" class="profile-custom-status" style="display:none;"></div>
+                        </div>
                     </div>
                     <div class="profile-body">
-                        <div class="profile-name-section">
-                            <span class="profile-username">viperisuseful</span>
-                            <div id="discord-clan-tag" class="clan-tag" style="display:none;"></div>
-                            <div id="discord-badges" class="profile-badges"></div>
-                        </div>
-                        <div id="discord-custom-status" class="profile-custom-status" style="display:none;"></div>
+                        <div class="profile-divider" aria-hidden="true"></div>
                         <div id="discord-activity" class="profile-activity">
                             <!-- Activity content injected via JS -->
                         </div>
