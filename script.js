@@ -53,85 +53,84 @@ document.addEventListener('DOMContentLoaded', () => {
         drawStars();
     }
 
-    // --- Lanyard API (Discord Status via WebSocket) ---
+    // --- Lanyard API (Discord Status) ---
     const lanyardId = document.body.dataset.lanyardId;
 
     if (lanyardId) {
-        const statusDotSmall = document.querySelector('.status-dot');
-        const statusTextSmall = document.querySelector('.status-text');
         const statusDotCard = document.getElementById('avatar-status-dot');
         const avatarImg = document.getElementById('discord-avatar');
         const customStatusEl = document.getElementById('discord-custom-status');
         const activityContainer = document.getElementById('discord-activity');
 
-        let socket = new WebSocket('wss://api.lanyard.rest/socket');
+        function updateUI(presence) {
+            if (!presence) return;
+            
+            const status = presence.discord_status || 'offline';
+            const user = presence.discord_user;
+            
+            // 1. Update Status Dot
+            if (statusDotCard) {
+                statusDotCard.className = `avatar-status-dot ${status}`;
+            }
 
+            // 2. Update Avatar (Discord PFP)
+            if (avatarImg && user && user.avatar) {
+                const extension = user.avatar.startsWith('a_') ? 'gif' : 'png';
+                avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=128`;
+            }
+
+            // 3. Update Custom Status
+            const customStatus = presence.activities.find(a => a.type === 4);
+            if (customStatusEl) {
+                customStatusEl.textContent = customStatus ? customStatus.state : "";
+            }
+
+            // 4. Update Game/Activity
+            if (activityContainer) {
+                const game = presence.activities.find(a => a.type === 0);
+                if (game) {
+                    let iconUrl = 'resources/Viperisuseful-LOGO.png';
+                    if (game.assets && game.assets.large_image) {
+                        if (game.assets.large_image.startsWith('mp:external')) {
+                            iconUrl = game.assets.large_image.replace(/mp:external\/([^\/]+)\/https\/(.*)/, 'https://$2');
+                        } else {
+                            iconUrl = `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
+                        }
+                    }
+                    
+                    activityContainer.innerHTML = `
+                        <div class="activity-item">
+                            <img class="activity-icon" src="${iconUrl}" alt="Game Icon">
+                            <div class="activity-details">
+                                <span class="activity-name">${game.name}</span>
+                                <span class="activity-state">${game.details || ""}</span>
+                                <span class="activity-state">${game.state || ""}</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    activityContainer.innerHTML = `<span class="activity-state">No current activity</span>`;
+                }
+            }
+        }
+
+        // Initial Fetch (Immediate load)
+        fetch(`https://api.lanyard.rest/v1/users/${lanyardId}`)
+            .then(res => res.json())
+            .then(json => { if (json.success) updateUI(json.data); })
+            .catch(err => console.error('Lanyard Fetch Error:', err));
+
+        // WebSocket for Live Updates
+        let socket = new WebSocket('wss://api.lanyard.rest/socket');
         socket.onmessage = (event) => {
             const data = JSON.parse(event.data);
-
             if (data.op === 1) {
                 setInterval(() => socket.send(JSON.stringify({ op: 3 })), data.d.heartbeat_interval);
                 socket.send(JSON.stringify({ op: 2, d: { subscribe_to_id: lanyardId } }));
             }
-
             if (data.op === 0) {
-                const presence = data.d;
-                const status = presence.discord_status;
-                const user = presence.discord_user;
-                
-                // 1. Update Status Dots
-                const statusClass = `avatar-status-dot ${status}`;
-                if (statusDotCard) statusDotCard.className = statusClass;
-                if (statusDotSmall) statusDotSmall.className = `status-dot ${status}`;
-
-                // 2. Update Avatar (Discord PFP)
-                if (avatarImg && user.avatar) {
-                    const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${user.avatar.startsWith('a_') ? 'gif' : 'png'}?size=128`;
-                    avatarImg.src = avatarUrl;
-                }
-
-                // 3. Update Custom Status
-                const customStatus = presence.activities.find(a => a.type === 4);
-                if (customStatusEl) customStatusEl.textContent = customStatus ? customStatus.state : "";
-
-                // 4. Update Game/App Activity
-                const game = presence.activities.find(a => a.type === 0);
-                if (activityContainer) {
-                    if (game) {
-                        let iconUrl = 'resources/Viperisuseful-LOGO.png';
-                        if (game.assets && game.assets.large_image) {
-                            if (game.assets.large_image.startsWith('mp:external')) {
-                                iconUrl = game.assets.large_image.replace(/mp:external\/([^\/]+)\/https\/(.*)/, 'https://$2');
-                            } else {
-                                iconUrl = `https://cdn.discordapp.com/app-assets/${game.application_id}/${game.assets.large_image}.png`;
-                            }
-                        }
-                        
-                        activityContainer.innerHTML = `
-                            <div class="activity-item">
-                                <img class="activity-icon" src="${iconUrl}" alt="Game Icon">
-                                <div class="activity-details">
-                                    <span class="activity-name">${game.name}</span>
-                                    <span class="activity-state">${game.details || ""}</span>
-                                    <span class="activity-state">${game.state || ""}</span>
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        activityContainer.innerHTML = `<span class="activity-state">No current activity</span>`;
-                    }
-                }
-
-                // 5. Update small text (if it exists)
-                if (statusTextSmall) {
-                    const statusMap = { 'online': 'Online', 'idle': 'Away', 'dnd': 'Busy', 'offline': 'Offline' };
-                    statusTextSmall.textContent = game ? game.name : (customStatus ? customStatus.state : statusMap[status]);
-                }
+                updateUI(data.d);
             }
-        };
-
-        socket.onclose = () => {
-            if (statusDotCard) statusDotCard.className = 'avatar-status-dot offline';
         };
     }
 
