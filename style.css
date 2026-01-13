@@ -101,37 +101,39 @@ main {
 /* Status Dropdown Card */
 .status-dropdown {
     position: absolute;
-    top: calc(100% + 1rem);
-    left: 0;
-    width: 280px;
+    top: calc(100% + 0.5rem);
+    left: -10px;
+    width: 300px;
     padding: 1.25rem;
-    border-radius: 20px;
+    border-radius: 16px;
+    background: #11142e; /* Solid background to prevent see-through mess */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     opacity: 0;
     visibility: hidden;
     transform: translateY(10px);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s ease;
     z-index: 2000;
-    pointer-events: none;
 }
 
 .logo:hover .status-dropdown {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-    pointer-events: all;
 }
 
 .profile-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 1.25rem;
+    margin-bottom: 0.75rem;
 }
 
 .avatar-container {
     position: relative;
-    width: 48px;
-    height: 48px;
+    width: 54px;
+    height: 54px;
+    flex-shrink: 0;
 }
 
 #discord-avatar {
@@ -139,19 +141,21 @@ main {
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+    background: #0b0f24;
 }
 
 .avatar-status-dot {
     position: absolute;
-    bottom: 2px;
-    right: 2px;
-    width: 14px;
-    height: 14px;
+    bottom: -2px;
+    right: -2px;
+    width: 18px;
+    height: 18px;
     border-radius: 50%;
-    border: 3px solid #0b0f24; /* Match card bg */
+    border: 3px solid #11142e; /* Matches card bg */
+    z-index: 2;
 }
 
-.avatar-status-dot.online { background: #43b581; }
+.avatar-status-dot.online { background: #43b581; box-shadow: 0 0 10px rgba(67, 181, 129, 0.3); }
 .avatar-status-dot.idle { background: #faa61a; }
 .avatar-status-dot.dnd { background: #f04747; }
 .avatar-status-dot.offline { background: #747f8d; }
@@ -159,39 +163,41 @@ main {
 .profile-info {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
 .profile-username {
     font-weight: 700;
-    font-size: 1.05rem;
-    color: var(--text-primary);
+    font-size: 1.1rem;
+    color: #fff;
 }
 
 .profile-custom-status {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.6);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .profile-activity {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
 }
 
 .activity-item {
     display: flex;
     gap: 1rem;
     align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.75rem;
+    border-radius: 12px;
 }
 
 .activity-icon {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 8px;
     object-fit: cover;
 }
@@ -199,21 +205,30 @@ main {
 .activity-details {
     display: flex;
     flex-direction: column;
-    gap: 0.1rem;
+    min-width: 0;
 }
 
 .activity-name {
     font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-primary);
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .activity-state {
     font-size: 0.8rem;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
+/* Remove old indicator styles */
 .status-indicator {
+    display: none;
+}
     display: flex;
     align-items: center;
     gap: 0.6rem;

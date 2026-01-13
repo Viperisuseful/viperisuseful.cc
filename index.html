@@ -16,7 +16,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
     
-    <link rel="stylesheet" href="style.css?v=1.0.9">
+    <link rel="stylesheet" href="style.css?v=1.1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 </head>
 <body data-lanyard-id="990680811827261490">
@@ -31,11 +31,11 @@
                 </a>
                 
                 <!-- Discord Profile Card Dropdown -->
-                <div class="status-dropdown glass">
+                <div class="status-dropdown">
                     <div class="profile-header">
                         <div class="avatar-container">
                             <img id="discord-avatar" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
-                            <div class="avatar-status-dot offline"></div>
+                            <div id="avatar-status-dot" class="avatar-status-dot offline"></div>
                         </div>
                         <div class="profile-info">
                             <span class="profile-username">viperisuseful</span>
@@ -46,10 +46,6 @@
                         <!-- Activity content injected via JS -->
                     </div>
                 </div>
-            </div>
-            <div id="discord-status" class="status-indicator" title="Discord Status">
-                <span class="status-dot"></span>
-                <span class="status-text">Connecting...</span>
             </div>
         </div>
         <nav class="nav-links" aria-label="Primary">
