@@ -103,7 +103,7 @@ main {
     position: absolute;
     top: calc(100% + 0.5rem);
     left: -10px;
-    width: 420px;
+    width: min(420px, 92vw);
     border-radius: 16px;
     background: #111214;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -130,6 +130,7 @@ main {
     padding: 0 !important;
     margin: 0 !important;
     border: none !important;
+    background: transparent !important;
 }
 
 .profile-header {
@@ -149,6 +150,8 @@ main {
     width: 44px;
     height: 44px;
     flex: 0 0 auto;
+    max-width: 48px;
+    max-height: 48px;
 }
 
 .avatar-wrapper {
@@ -158,6 +161,7 @@ main {
     border-radius: 50%;
     background: #111214;
     padding: 3px;
+    overflow: hidden;
 }
 
 #discord-avatar {

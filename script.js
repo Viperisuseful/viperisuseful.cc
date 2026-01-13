@@ -210,26 +210,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                // Banner / Accent (banner is typically NOT present in Lanyard payload)
+                // Banner / Accent: we currently hide it in CSS; ensure no inline styling reintroduces it
                 if (bannerEl) {
-                    const kvBanner = getKvBannerUrl(presence.kv);
-
-                    // Prefer a KV-provided banner URL (because Lanyard presence doesn't include profile banners)
-                    if (kvBanner) {
-                        bannerEl.style.backgroundImage = `url(${kvBanner})`;
-                        bannerEl.style.backgroundColor = '';
-                    } else if (user.banner) {
-                        const ext = String(user.banner).startsWith('a_') ? 'gif' : 'png';
-                        bannerEl.style.backgroundImage = `url(https://cdn.discordapp.com/banners/${user.id}/${user.banner}.${ext}?size=600)`;
-                        bannerEl.style.backgroundColor = '';
-                    } else if (user.accent_color) {
-                        const hex = user.accent_color.toString(16).padStart(6, '0');
-                        bannerEl.style.backgroundImage = 'none';
-                        bannerEl.style.backgroundColor = `#${hex}`;
-                    } else {
-                        bannerEl.style.backgroundImage = 'none';
-                        bannerEl.style.backgroundColor = '#5562ea';
-                    }
+                    bannerEl.style.display = 'none';
+                    bannerEl.style.backgroundImage = 'none';
+                    bannerEl.style.backgroundColor = 'transparent';
                 }
 
                 // Server badge pills (KV-driven, because Lanyard doesn't include guild/server tags)
@@ -240,9 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (serverBadgeEl) {
                     const badgeText =
                         getKvString(presence.kv, 'server_badge_text') ||
-                        getKvString(presence.kv, 'server_tag');
+                        getKvString(presence.kv, 'server_tag') ||
+                        'TRTL';
 
-                    const badgeIconUrl = getKvAssetRef(presence.kv, 'server_badge_icon_url');
+                    const badgeIconUrl = getKvAssetRef(presence.kv, 'server_badge_icon_url') || 'resources/badge-leaf.svg';
 
                     if (badgeText) {
                         const iconHtml = badgeIconUrl ? `<img src="${badgeIconUrl}" alt="" onerror="this.style.display='none'">` : '';
@@ -254,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 if (serverBadgeEl2) {
-                    const secondaryIconUrl = getKvAssetRef(presence.kv, 'server_badge_secondary_icon_url');
+                    const secondaryIconUrl = getKvAssetRef(presence.kv, 'server_badge_secondary_icon_url') || 'resources/badge-purple.svg';
                     if (secondaryIconUrl) {
                         serverBadgeEl2.innerHTML = `<img src="${secondaryIconUrl}" alt="" onerror="this.style.display='none'">`;
                         serverBadgeEl2.style.display = 'inline-flex';
