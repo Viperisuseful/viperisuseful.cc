@@ -1,0 +1,14 @@
+{
+  "name": "viperisuseful-portfolio",
+  "version": "1.0.0",
+  "description": "Static portfolio hosted on Heroku",
+  "scripts": {
+    "start": "npx serve -s . -l $PORT"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "serve": "^14.2.4"
+  }
+}
