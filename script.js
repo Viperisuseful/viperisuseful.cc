@@ -64,10 +64,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const bannerEl = document.getElementById('discord-banner');
         const customStatusEl = document.getElementById('discord-custom-status');
         const activityContainer = document.getElementById('discord-activity');
+        const badgesContainer = document.getElementById('discord-badges');
 
         function updateUI(presence) {
             if (!presence) return;
-            // console.log('Lanyard Presence:', presence);
+            // console.log('Lanyard Data:', presence);
             
             const status = presence.discord_status || 'offline';
             const user = presence.discord_user;
@@ -77,28 +78,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusDotCard.className = `avatar-status-dot ${status}`;
             }
 
-            // 2. Update Avatar & Decoration
+            // 2. Update Avatar, Decoration & Banner
             if (user) {
+                // Avatar
                 if (avatarImg && user.avatar) {
                     const ext = user.avatar.startsWith('a_') ? 'gif' : 'png';
                     avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=160`;
                 }
+
+                // Decoration
                 if (decorationImg) {
                     if (user.avatar_decoration_data) {
                         const asset = user.avatar_decoration_data.asset;
                         decorationImg.src = `https://cdn.discordapp.com/avatar-decorations/${asset}.png`;
                         decorationImg.style.display = 'block';
+                    } else if (user.avatar_decoration) { // Fallback for older Lanyard versions/API formats
+                        decorationImg.src = `https://cdn.discordapp.com/avatar-decorations/${user.avatar_decoration}.png`;
+                        decorationImg.style.display = 'block';
                     } else {
                         decorationImg.style.display = 'none';
                     }
                 }
+
+                // Banner
                 if (bannerEl) {
-                    if (user.accent_color) {
+                    if (user.banner) {
+                        const ext = user.banner.startsWith('a_') ? 'gif' : 'png';
+                        bannerEl.style.backgroundImage = `url(https://cdn.discordapp.com/banners/${user.id}/${user.banner}.${ext}?size=600)`;
+                    } else if (user.accent_color) {
                         const hex = user.accent_color.toString(16).padStart(6, '0');
+                        bannerEl.style.backgroundImage = 'none';
                         bannerEl.style.backgroundColor = `#${hex}`;
                     } else {
+                        bannerEl.style.backgroundImage = 'none';
                         bannerEl.style.backgroundColor = '#5562ea';
                     }
+                }
+
+                // Badges (Simple mapping for common ones)
+                if (badgesContainer) {
+                    let badgesHtml = '';
+                    const flags = user.public_flags || 0;
+                    
+                    // Simple bitwise check for some badges
+                    if (flags & 1) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordstaff.svg" title="Staff">';
+                    if (flags & 2) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordpartner.svg" title="Partner">';
+                    if (flags & 4) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_events.svg" title="HypeSquad Events">';
+                    if (flags & 64) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_bravery.svg" title="Bravery">';
+                    if (flags & 128) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_brilliance.svg" title="Brilliance">';
+                    if (flags & 256) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_balance.svg" title="Balance">';
+                    if (flags & 512) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/earlysupporter.svg" title="Early Supporter">';
+                    if (flags & 16384) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordcertifiedmoderator.svg" title="Certified Moderator">';
+                    if (flags & 131072) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/activedeveloper.svg" title="Active Developer">';
+                    
+                    badgesContainer.innerHTML = badgesHtml;
+                    badgesContainer.style.display = badgesHtml ? 'flex' : 'none';
                 }
             }
 
@@ -146,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             </div>
                         </div>
                     `;
+                    activityContainer.style.display = 'block';
                 } else {
                     activityContainer.innerHTML = `<span class="no-activity">No current activity</span>`;
                 }
