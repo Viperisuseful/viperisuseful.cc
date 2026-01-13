@@ -83,9 +83,134 @@ main {
     gap: 1.5rem;
 }
 
+.logo {
+    position: relative;
+    cursor: pointer;
+}
+
 .logo img {
-    height: 48px; /* Restored and made slightly more compact for the status bar */
+    height: 48px;
     width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover > a img {
+    transform: scale(1.05);
+}
+
+/* Status Dropdown Card */
+.status-dropdown {
+    position: absolute;
+    top: calc(100% + 1rem);
+    left: 0;
+    width: 280px;
+    padding: 1.25rem;
+    border-radius: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 2000;
+    pointer-events: none;
+}
+
+.logo:hover .status-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.avatar-container {
+    position: relative;
+    width: 48px;
+    height: 48px;
+}
+
+#discord-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.avatar-status-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 3px solid #0b0f24; /* Match card bg */
+}
+
+.avatar-status-dot.online { background: #43b581; }
+.avatar-status-dot.idle { background: #faa61a; }
+.avatar-status-dot.dnd { background: #f04747; }
+.avatar-status-dot.offline { background: #747f8d; }
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-username {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.profile-custom-status {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-activity {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.activity-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.activity-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.activity-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.activity-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.activity-state {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 }
 
 .status-indicator {
@@ -373,8 +498,22 @@ main {
 }
 
 .bento-item-large {
-    grid-column: span 2;
+    grid-column: span 4; /* Make it full width to really show the image */
     grid-row: span 2;
+    flex-direction: row !important;
+    align-items: stretch;
+}
+
+.bento-item-large .project-media {
+    flex: 1.4;
+    aspect-ratio: auto;
+    height: 100%;
+}
+
+.bento-item-large .project-body {
+    flex: 1;
+    padding: 2.5rem;
+    justify-content: center;
 }
 
 .bento-item-medium {
@@ -407,14 +546,11 @@ main {
     aspect-ratio: 16/9;
 }
 
-.bento-item-large .project-media {
-    aspect-ratio: 21/9;
-}
-
 .project-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: top;
     transition: transform 0.5s ease;
 }
 
@@ -595,6 +731,12 @@ footer {
     
     .bento-item-large, .bento-item-medium, .bento-item-small {
         grid-column: span 2;
+        flex-direction: column !important;
+    }
+
+    .bento-item-large .project-media {
+        aspect-ratio: 16/9;
+        flex: none;
     }
 
     .nav-links {

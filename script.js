@@ -82,8 +82,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const presence = data.d;
                 const status = presence.discord_status;
                 
+                // Update small top status
                 statusDot.className = 'status-dot ' + status;
                 
+                // Update dropdown avatar status
+                const avatarStatus = document.querySelector('.avatar-status-dot');
+                if (avatarStatus) avatarStatus.className = 'avatar-status-dot ' + status;
+
+                // Update Avatar Image
+                const avatarImg = document.getElementById('discord-avatar');
+                if (avatarImg && presence.discord_user.avatar) {
+                    avatarImg.src = `https://cdn.discordapp.com/avatars/${presence.discord_user.id}/${presence.discord_user.avatar}.png?size=128`;
+                }
+
                 const statusMap = {
                     'online': 'Online',
                     'idle': 'Away',
@@ -91,10 +102,47 @@ document.addEventListener('DOMContentLoaded', () => {
                     'offline': 'Offline'
                 };
 
-                // Check for active activity
-                const activity = presence.activities.find(a => a.type === 0);
-                if (activity) {
-                    statusText.textContent = activity.name;
+                // Handle Activities
+                const activities = presence.activities;
+                const customStatus = activities.find(a => a.type === 4);
+                const gameActivity = activities.find(a => a.type === 0);
+                
+                // Update custom status text in dropdown
+                const customStatusEl = document.getElementById('discord-custom-status');
+                if (customStatusEl) {
+                    customStatusEl.textContent = customStatus ? customStatus.state : "";
+                }
+
+                // Update activity container in dropdown
+                const activityContainer = document.getElementById('discord-activity');
+                if (activityContainer) {
+                    if (gameActivity) {
+                        const iconUrl = gameActivity.assets && gameActivity.assets.large_image 
+                            ? (gameActivity.assets.large_image.startsWith('mp:external') 
+                                ? gameActivity.assets.large_image.replace(/mp:external\/([^\/]+)\/https\/(.*)/, 'https://$2')
+                                : `https://cdn.discordapp.com/app-assets/${gameActivity.application_id}/${gameActivity.assets.large_image}.png`)
+                            : 'resources/Viperisuseful-LOGO.png';
+
+                        activityContainer.innerHTML = `
+                            <div class="activity-item">
+                                <img class="activity-icon" src="${iconUrl}" alt="Activity">
+                                <div class="activity-details">
+                                    <span class="activity-name">${gameActivity.name}</span>
+                                    <span class="activity-state">${gameActivity.details || ""}</span>
+                                    <span class="activity-state">${gameActivity.state || ""}</span>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        activityContainer.innerHTML = `<span class="activity-state">No current activity</span>`;
+                    }
+                }
+
+                // Update top bar text based on game or status
+                if (gameActivity) {
+                    statusText.textContent = gameActivity.name;
+                } else if (customStatus) {
+                    statusText.textContent = customStatus.state;
                 } else {
                     statusText.textContent = statusMap[status] || 'Offline';
                 }
