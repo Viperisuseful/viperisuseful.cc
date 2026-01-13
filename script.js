@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function updateUI(presence) {
             if (!presence) return;
+            // console.log('Lanyard Presence:', presence); // Debugging
             
             const status = presence.discord_status || 'offline';
             const user = presence.discord_user;
@@ -78,8 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Update Avatar & Decoration
             if (user) {
                 if (avatarImg && user.avatar) {
-                    const extension = user.avatar.startsWith('a_') ? 'gif' : 'png';
-                    avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=128`;
+                    const ext = user.avatar.startsWith('a_') ? 'gif' : 'png';
+                    avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=160`;
                 }
                 if (decorationImg) {
                     if (user.avatar_decoration_data) {
@@ -108,12 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (customStatus.emoji) {
                         if (customStatus.emoji.id) {
                             const ext = customStatus.emoji.animated ? 'gif' : 'png';
-                            emojiHtml = `<img class="status-emoji" src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${ext}" alt="${customStatus.emoji.name}">`;
+                            emojiHtml = `<img class="status-emoji" src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${ext}" alt="emoji">`;
                         } else if (customStatus.emoji.name) {
-                            emojiHtml = `<span>${customStatus.emoji.name}</span>`;
+                            emojiHtml = `<span class="status-emoji-text">${customStatus.emoji.name}</span>`;
                         }
                     }
-                    customStatusEl.innerHTML = `${emojiHtml} <span>${customStatus.state || ""}</span>`;
+                    customStatusEl.innerHTML = `${emojiHtml} <span class="status-text">${customStatus.state || ""}</span>`;
                     customStatusEl.style.display = 'flex';
                 } else {
                     customStatusEl.style.display = 'none';
@@ -136,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     activityContainer.innerHTML = `
                         <div class="activity-header">Playing a game</div>
                         <div class="activity-item">
-                            <img class="activity-icon" src="${iconUrl}" alt="Game Icon">
+                            <img class="activity-icon" src="${iconUrl}" onerror="this.src='resources/Viperisuseful-LOGO.png'" alt="Activity">
                             <div class="activity-details">
                                 <span class="activity-name">${game.name}</span>
                                 <span class="activity-state">${game.details || ""}</span>
