@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const lanyardId = document.body.dataset.lanyardId;
 
     if (lanyardId) {
+        const apiKey = '3e242dc130603b07d6fc649cd150301d';
         const statusDotCard = document.getElementById('avatar-status-dot');
         const avatarImg = document.getElementById('discord-avatar');
         const decorationImg = document.getElementById('discord-decoration');
@@ -66,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function updateUI(presence) {
             if (!presence) return;
-            // console.log('Lanyard Presence:', presence); // Debugging
+            // console.log('Lanyard Presence:', presence);
             
             const status = presence.discord_status || 'offline';
             const user = presence.discord_user;
@@ -151,8 +152,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Initial Fetch (Immediate load)
-        fetch(`https://api.lanyard.rest/v1/users/${lanyardId}`)
+        // Initial Fetch with API Key
+        fetch(`https://api.lanyard.rest/v1/users/${lanyardId}`, {
+            headers: { 'Authorization': apiKey }
+        })
             .then(res => res.json())
             .then(json => { if (json.success) updateUI(json.data); })
             .catch(err => console.error('Lanyard Fetch Error:', err));
@@ -163,7 +166,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = JSON.parse(event.data);
             if (data.op === 1) {
                 setInterval(() => socket.send(JSON.stringify({ op: 3 })), data.d.heartbeat_interval);
-                socket.send(JSON.stringify({ op: 2, d: { subscribe_to_id: lanyardId } }));
+                socket.send(JSON.stringify({ 
+                    op: 2, 
+                    d: { 
+                        subscribe_to_id: lanyardId,
+                        api_key: apiKey 
+                    } 
+                }));
             }
             if (data.op === 0) {
                 updateUI(data.d);
