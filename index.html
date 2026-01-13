@@ -20,99 +20,174 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 </head>
 <body>
-    <!-- Scroll Progress Bar -->
     <div id="scroll-progress"></div>
 
-    <header>
+    <header class="site-header">
         <div class="logo">
-            <a href="#">
+            <a href="#top" aria-label="Viperisuseful home">
                 <img src="resources/Viperisuseful-LOGO.png" alt="Logo">
             </a>
         </div>
-        <nav class="nav-buttons">
-            <a href="quickrunlab/" class="nav-pill">
-                QuickRun Lab
-            </a>
-            <a href="turtlecave/" class="nav-pill">
-                <img src="resources/turtleicon.png" alt="Turtle" class="nav-icon"> Turtle Cave
-            </a>
-            <a href="discord/" class="nav-btn-primary">
-                <img src="resources/icons8-discord.svg" alt="Discord" class="btn-icon"> Join Discord
-            </a>
+        <nav class="nav-links" aria-label="Primary">
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="discord/" class="nav-link nav-link-ghost">Discord</a>
+            <a href="quickrunlab/" class="nav-link">QuickRun</a>
+            <a href="turtlecave/" class="nav-link">TurtleCave</a>
         </nav>
+        <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <img src="resources/icons8-menu.svg" alt="Menu">
+        </button>
+        <div class="nav-drawer" aria-label="Mobile">
+            <a href="#projects" class="nav-link">Projects</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="discord/" class="nav-link">Discord</a>
+            <a href="quickrunlab/" class="nav-link">QuickRun</a>
+            <a href="turtlecave/" class="nav-link">TurtleCave</a>
+        </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div id="spark-lottie" class="spark-container"></div>
-            <h1>Development without obstacles.</h1>
-            <p>
-                I'm viperisuseful, a developer bridging the gap between community and code 
-                through projects like my Discord server, turtlecave.xyz, and quickrunlab.tech.
-            </p>
+        <section class="hero" id="top">
+            <div class="hero-content reveal-on-scroll">
+                <div class="status-chip">Available for collaborations</div>
+                <h1>Build fast. Launch fearless.</h1>
+                <p>
+                    I'm viperisuseful, shipping community-first products like QuickRun Lab, Turtle Cave,
+                    and Discord tools that keep teams moving without friction.
+                </p>
+                <div class="hero-ctas">
+                    <a class="btn btn-primary" href="discord/">Join Discord</a>
+                    <a class="btn btn-ghost" href="#projects">View projects</a>
+                </div>
+                <div class="hero-meta">
+                    <span>Tooling & infrastructure</span>
+                    <span>Community ops at scale</span>
+                    <span>Safety-first automation</span>
+                </div>
+            </div>
+            <div class="hero-visual reveal-on-scroll">
+                <div class="orb"></div>
+                <div id="spark-lottie" class="spark-container"></div>
+            </div>
         </section>
 
-        <section class="projects-showcase">
-            <!-- Project 1: QuickRun Lab -->
-            <div class="feature-row">
-                <div class="feature-image-container">
-                    <img src="resources/quickrunlab-screenshot.png" alt="QuickRun Lab interface" class="feature-image">
-                </div>
-                <div class="feature-content">
-                    <h2>QuickRun Lab</h2>
-                    <div class="project-tags">
-                        <span class="tag"><img src="resources/icons8-python.svg" alt="Python" class="tag-icon"> Python</span>
-                        <span class="tag"><img src="resources/icons8-docker.svg" alt="Docker" class="tag-icon"> Docker</span>
-                    </div>
-                    <p class="feature-description">
-                        QuickRun Lab is a secure, browser-based compiler designed to remove the frustration of local setup, allowing beginners to write and execute C and R code instantly from any device. By providing a safe, sandboxed environment with cloud storage and "crash-proof" execution queues, it offers a hassle-free playground where students can experiment and learn without fear of breaking their own computers.
+        <section class="about" id="about">
+            <div class="about-card glass reveal-on-scroll">
+                <div class="about-copy">
+                    <h2>Building reliable experiences</h2>
+                    <p>
+                        I design and deliver products that remove operational friction—safe sandboxes for learners,
+                        transparent moderation tools for communities, and fast pathways for collaboration.
                     </p>
-                    <a href="quickrunlab/" class="feature-link">Visit Laboratory &rarr;</a>
+                </div>
+                <div class="about-skills">
+                    <div class="skills-group">
+                        <h3>Core</h3>
+                        <ul>
+                            <li>Systems design</li>
+                            <li>Developer experience</li>
+                            <li>Automation</li>
+                        </ul>
+                    </div>
+                    <div class="skills-group">
+                        <h3>Stack</h3>
+                        <ul>
+                            <li>Python, JS/TS</li>
+                            <li>Docker, MongoDB</li>
+                            <li>Cloud queues & workers</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <!-- Project 2: Turtle Cave -->
-            <div class="feature-row reverse">
-                <div class="feature-image-container">
-                    <img src="resources/turtlecave-screenshot.png" alt="Turtle Cave environment" class="feature-image">
-                </div>
-                <div class="feature-content">
-                    <h2>Turtle Cave</h2>
-                    <div class="project-tags">
-                        <span class="tag"><img src="resources/icons8-javascript.svg" alt="JS" class="tag-icon"> JavaScript</span>
-                        <span class="tag"><img src="resources/icons8-mongodb.svg" alt="MongoDB" class="tag-icon"> MongoDB</span>
-                    </div>
-                    <p class="feature-description">
-                        This website serves as the official support and utility hub for our Discord community,
-                        allowing members to easily submit appeals, open support tickets, and view evidence records.
-                        It works directly with the server's moderation bot to ensure a safe, organized,
-                        and transparent experience for everyone in the community.
-                    </p>
-                    <a href="turtlecave/" class="feature-link">Enter the Cave &rarr;</a>
-                </div>
+        <section class="projects" id="projects">
+            <div class="section-heading">
+                <p class="eyebrow">Featured work</p>
+                <h2>Projects that keep people moving</h2>
             </div>
+            <div class="project-grid">
+                <article class="project-card glass reveal-on-scroll">
+                    <figure class="project-media">
+                        <img src="resources/quickrunlab-screenshot.png" loading="lazy" alt="QuickRun Lab interface">
+                    </figure>
+                    <div class="project-body">
+                        <div class="project-top">
+                            <h3>QuickRun Lab</h3>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">Docker</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            Secure, browser-based compiler so students run C/R code instantly—no local setup, crash-proof queues, cloud storage.
+                        </p>
+                        <ul class="project-highlights">
+                            <li>Sandboxed execution with safe isolation</li>
+                            <li>Crash-proof queueing for reliability</li>
+                            <li>Device-agnostic learning experience</li>
+                        </ul>
+                        <a class="project-link" href="quickrunlab/">Open QuickRun Lab</a>
+                    </div>
+                </article>
 
-            <!-- Project 3: Community -->
-            <div class="feature-row">
-                <div class="feature-image-container">
-                    <img src="resources/DiscordServer-screenshot.png" alt="Discord Community" class="feature-image">
-                </div>
-                <div class="feature-content">
-                    <h2>The Turtle Cave Server</h2>
-                    <p class="feature-description">
-                        A welcoming community of turtle lovers with over 200+ custom emotes. 
-                        Whether you're here for the emotes or simply to find 
-                        a cozy corner of the internet, we have a shell for everyone. 
-                        Join our vibrant hub of frens and turtle lovers today.
-                    </p>
-                    <a href="discord/" class="feature-link">Join Server &rarr;</a>
-                </div>
+                <article class="project-card glass reveal-on-scroll">
+                    <figure class="project-media">
+                        <img src="resources/turtlecave-screenshot.png" loading="lazy" alt="Turtle Cave">
+                    </figure>
+                    <div class="project-body">
+                        <div class="project-top">
+                            <h3>Turtle Cave</h3>
+                            <div class="project-tags">
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">MongoDB</span>
+                            </div>
+                        </div>
+                        <p class="project-description">
+                            The official hub for appeals, support, and evidence review—integrated with the moderation bot for transparent ops.
+                        </p>
+                        <ul class="project-highlights">
+                            <li>Appeals and ticket workflows</li>
+                            <li>Evidence access for staff</li>
+                            <li>Automation with community bots</li>
+                        </ul>
+                        <a class="project-link" href="turtlecave/">Enter Turtle Cave</a>
+                    </div>
+                </article>
+
+                <article class="project-card glass reveal-on-scroll">
+                    <figure class="project-media">
+                        <img src="resources/DiscordServer-screenshot.png" loading="lazy" alt="Discord community">
+                    </figure>
+                    <div class="project-body">
+                        <div class="project-top">
+                            <h3>The Turtle Cave Server</h3>
+                        </div>
+                        <p class="project-description">
+                            A cozy community with 200+ emotes and safety-first automation so members can just enjoy the space.
+                        </p>
+                        <ul class="project-highlights">
+                            <li>Safety tooling and clear policies</li>
+                            <li>High-trust support flows</li>
+                            <li>Always-on welcoming vibe</li>
+                        </ul>
+                        <a class="project-link" href="discord/">Join the server</a>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
 
     <footer>
-        &copy; 2026 viperisuseful.cc. Made by love, to spread love.
+        <div class="footer-inner">
+            <p>&copy; 2026 viperisuseful.cc</p>
+            <div class="footer-links">
+                <a href="mailto:contact@viperisuseful.cc">Email</a>
+                <a href="https://github.com/Viperisuseful" target="_blank" rel="noreferrer">GitHub</a>
+                <a href="discord/">Discord</a>
+            </div>
+        </div>
     </footer>
 
     <script src="script.js"></script>
