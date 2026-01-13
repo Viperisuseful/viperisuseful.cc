@@ -53,44 +53,62 @@ document.addEventListener('DOMContentLoaded', () => {
         drawStars();
     }
 
-    // --- Lanyard API (Discord Status) ---
+    // --- Lanyard API (Discord Status via WebSocket) ---
     const lanyardId = document.body.dataset.lanyardId;
     const statusDot = document.querySelector('.status-dot');
     const statusText = document.querySelector('.status-text');
 
     if (lanyardId && statusDot && statusText) {
-        async function updateStatus() {
-            try {
-                const response = await fetch(`https://api.lanyard.rest/v1/users/${lanyardId}`);
-                const data = await response.json();
-                
-                if (data.success) {
-                    const status = data.data.discord_status;
-                    statusDot.className = 'status-dot ' + status;
-                    
-                    const statusMap = {
-                        'online': 'Online',
-                        'idle': 'Away',
-                        'dnd': 'Busy',
-                        'offline': 'Offline'
-                    };
-                    
-                    // Check for active activity (Game/Code)
-                    const activity = data.data.activities.find(a => a.type === 0);
-                    if (activity) {
-                        statusText.textContent = activity.name;
-                    } else {
-                        statusText.textContent = statusMap[status] || 'Offline';
-                    }
-                }
-            } catch (err) {
-                console.error('Lanyard Error:', err);
-                statusText.textContent = 'Status Hidden';
+        let socket = new WebSocket('wss://api.lanyard.rest/socket');
+
+        socket.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+
+            // Handle Heartbeat (Op 1)
+            if (data.op === 1) {
+                setInterval(() => {
+                    socket.send(JSON.stringify({ op: 3 }));
+                }, data.d.heartbeat_interval);
+
+                // Initialize (Op 2)
+                socket.send(JSON.stringify({
+                    op: 2,
+                    d: { subscribe_to_id: lanyardId }
+                }));
             }
-        }
-        
-        updateStatus();
-        setInterval(updateStatus, 30000); // Update every 30s
+
+            // Handle Presence Update (Op 0)
+            if (data.op === 0) {
+                const presence = data.d;
+                const status = presence.discord_status;
+                
+                statusDot.className = 'status-dot ' + status;
+                
+                const statusMap = {
+                    'online': 'Online',
+                    'idle': 'Away',
+                    'dnd': 'Busy',
+                    'offline': 'Offline'
+                };
+
+                // Check for active activity
+                const activity = presence.activities.find(a => a.type === 0);
+                if (activity) {
+                    statusText.textContent = activity.name;
+                } else {
+                    statusText.textContent = statusMap[status] || 'Offline';
+                }
+            }
+        };
+
+        socket.onclose = () => {
+            statusText.textContent = 'Offline';
+            statusDot.className = 'status-dot offline';
+        };
+
+        socket.onerror = () => {
+            statusText.textContent = 'Offline';
+        };
     }
 
     const loader = document.getElementById('loading-bar');
