@@ -83,6 +83,11 @@ main {
     gap: 1.5rem;
 }
 
+.logo img {
+    height: 48px; /* Restored and made slightly more compact for the status bar */
+    width: auto;
+}
+
 .status-indicator {
     display: flex;
     align-items: center;
