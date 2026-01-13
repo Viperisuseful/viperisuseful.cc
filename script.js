@@ -59,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (lanyardId) {
         const statusDotCard = document.getElementById('avatar-status-dot');
         const avatarImg = document.getElementById('discord-avatar');
+        const decorationImg = document.getElementById('discord-decoration');
+        const bannerEl = document.getElementById('discord-banner');
         const customStatusEl = document.getElementById('discord-custom-status');
         const activityContainer = document.getElementById('discord-activity');
 
@@ -73,16 +75,49 @@ document.addEventListener('DOMContentLoaded', () => {
                 statusDotCard.className = `avatar-status-dot ${status}`;
             }
 
-            // 2. Update Avatar (Discord PFP)
-            if (avatarImg && user && user.avatar) {
-                const extension = user.avatar.startsWith('a_') ? 'gif' : 'png';
-                avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=128`;
+            // 2. Update Avatar & Decoration
+            if (user) {
+                if (avatarImg && user.avatar) {
+                    const extension = user.avatar.startsWith('a_') ? 'gif' : 'png';
+                    avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=128`;
+                }
+                if (decorationImg) {
+                    if (user.avatar_decoration_data) {
+                        const asset = user.avatar_decoration_data.asset;
+                        decorationImg.src = `https://cdn.discordapp.com/avatar-decorations/${asset}.png`;
+                        decorationImg.style.display = 'block';
+                    } else {
+                        decorationImg.style.display = 'none';
+                    }
+                }
+                if (bannerEl) {
+                    if (user.accent_color) {
+                        const hex = user.accent_color.toString(16).padStart(6, '0');
+                        bannerEl.style.backgroundColor = `#${hex}`;
+                    } else {
+                        bannerEl.style.backgroundColor = '#5562ea';
+                    }
+                }
             }
 
-            // 3. Update Custom Status
+            // 3. Update Custom Status with Emoji
             const customStatus = presence.activities.find(a => a.type === 4);
             if (customStatusEl) {
-                customStatusEl.textContent = customStatus ? customStatus.state : "";
+                if (customStatus && (customStatus.state || customStatus.emoji)) {
+                    let emojiHtml = '';
+                    if (customStatus.emoji) {
+                        if (customStatus.emoji.id) {
+                            const ext = customStatus.emoji.animated ? 'gif' : 'png';
+                            emojiHtml = `<img class="status-emoji" src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${ext}" alt="${customStatus.emoji.name}">`;
+                        } else if (customStatus.emoji.name) {
+                            emojiHtml = `<span>${customStatus.emoji.name}</span>`;
+                        }
+                    }
+                    customStatusEl.innerHTML = `${emojiHtml} <span>${customStatus.state || ""}</span>`;
+                    customStatusEl.style.display = 'flex';
+                } else {
+                    customStatusEl.style.display = 'none';
+                }
             }
 
             // 4. Update Game/Activity
@@ -99,6 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     
                     activityContainer.innerHTML = `
+                        <div class="activity-header">Playing a game</div>
                         <div class="activity-item">
                             <img class="activity-icon" src="${iconUrl}" alt="Game Icon">
                             <div class="activity-details">
@@ -109,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     `;
                 } else {
-                    activityContainer.innerHTML = `<span class="activity-state">No current activity</span>`;
+                    activityContainer.innerHTML = `<span class="no-activity">No current activity</span>`;
                 }
             }
         }

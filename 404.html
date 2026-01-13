@@ -19,18 +19,22 @@
                 
                 <!-- Discord Profile Card Dropdown -->
                 <div class="status-dropdown">
-                    <div class="profile-header">
+                    <div class="profile-banner" id="discord-banner"></div>
+                    <div class="profile-header-wrap">
                         <div class="avatar-container">
-                            <img id="discord-avatar" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
+                            <div class="avatar-wrapper">
+                                <img id="discord-avatar" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
+                                <img id="discord-decoration" class="avatar-decoration" src="" alt="" style="display:none;">
+                            </div>
                             <div id="avatar-status-dot" class="avatar-status-dot offline"></div>
                         </div>
-                        <div class="profile-info">
-                            <span class="profile-username">viperisuseful</span>
-                            <span id="discord-custom-status" class="profile-custom-status"></span>
-                        </div>
+                        <span class="profile-username">viperisuseful</span>
                     </div>
-                    <div id="discord-activity" class="profile-activity">
-                        <!-- Activity content injected via JS -->
+                    <div class="profile-body">
+                        <div id="discord-custom-status" class="profile-custom-status" style="display:none;"></div>
+                        <div id="discord-activity" class="profile-activity">
+                            <!-- Activity content injected via JS -->
+                        </div>
                     </div>
                 </div>
             </div>
