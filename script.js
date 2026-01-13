@@ -65,10 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const customStatusEl = document.getElementById('discord-custom-status');
         const activityContainer = document.getElementById('discord-activity');
         const badgesContainer = document.getElementById('discord-badges');
+        const usernameEl = document.querySelector('.profile-username');
 
         function updateUI(presence) {
             if (!presence) return;
-            // console.log('Lanyard Data:', presence);
             
             const status = presence.discord_status || 'offline';
             const user = presence.discord_user;
@@ -80,6 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 2. Update Avatar, Decoration & Banner
             if (user) {
+                // Name
+                if (usernameEl) {
+                    usernameEl.textContent = user.global_name || user.username;
+                }
+
                 // Avatar
                 if (avatarImg && user.avatar) {
                     const ext = user.avatar.startsWith('a_') ? 'gif' : 'png';
@@ -92,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const asset = user.avatar_decoration_data.asset;
                         decorationImg.src = `https://cdn.discordapp.com/avatar-decorations/${asset}.png`;
                         decorationImg.style.display = 'block';
-                    } else if (user.avatar_decoration) { // Fallback for older Lanyard versions/API formats
+                    } else if (user.avatar_decoration) { 
                         decorationImg.src = `https://cdn.discordapp.com/avatar-decorations/${user.avatar_decoration}.png`;
                         decorationImg.style.display = 'block';
                     } else {
@@ -115,21 +120,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                // Badges (Simple mapping for common ones)
+                // Badges (Comprehensive mapping)
                 if (badgesContainer) {
                     let badgesHtml = '';
                     const flags = user.public_flags || 0;
                     
-                    // Simple bitwise check for some badges
-                    if (flags & 1) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordstaff.svg" title="Staff">';
-                    if (flags & 2) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordpartner.svg" title="Partner">';
-                    if (flags & 4) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_events.svg" title="HypeSquad Events">';
-                    if (flags & 64) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_bravery.svg" title="Bravery">';
-                    if (flags & 128) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_brilliance.svg" title="Brilliance">';
-                    if (flags & 256) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_balance.svg" title="Balance">';
-                    if (flags & 512) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/earlysupporter.svg" title="Early Supporter">';
-                    if (flags & 16384) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordcertifiedmoderator.svg" title="Certified Moderator">';
-                    if (flags & 131072) badgesHtml += '<img class="badge-icon" src="https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/activedeveloper.svg" title="Active Developer">';
+                    const badgeMap = [
+                        { bit: 1, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordstaff.svg', title: 'Discord Staff' },
+                        { bit: 2, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordpartner.svg', title: 'Partnered Server Owner' },
+                        { bit: 4, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_events.svg', title: 'HypeSquad Events' },
+                        { bit: 64, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_bravery.svg', title: 'HypeSquad Bravery' },
+                        { bit: 128, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_brilliance.svg', title: 'HypeSquad Brilliance' },
+                        { bit: 256, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/hypesquad_balance.svg', title: 'HypeSquad Balance' },
+                        { bit: 512, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/earlysupporter.svg', title: 'Early Supporter' },
+                        { bit: 16384, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/discordcertifiedmoderator.svg', title: 'Discord Certified Moderator' },
+                        { bit: 131072, img: 'https://raw.githubusercontent.com/mezotv/discord-badges/main/assets/activedeveloper.svg', title: 'Active Developer' }
+                    ];
+
+                    badgeMap.forEach(b => {
+                        if (flags & b.bit) {
+                            badgesHtml += `<img class="badge-icon" src="${b.img}" title="${b.title}" alt="${b.title}">`;
+                        }
+                    });
                     
                     badgesContainer.innerHTML = badgesHtml;
                     badgesContainer.style.display = badgesHtml ? 'flex' : 'none';
