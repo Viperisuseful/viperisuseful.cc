@@ -302,8 +302,8 @@ main {
 .profile-custom-status {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.8rem;
+    gap: 5px;
+    font-size: 0.78rem;
     color: #dbdee1;
     margin: 2px 0 0;
     min-height: 20px;
@@ -317,13 +317,13 @@ main {
 }
 
 .status-emoji {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
     flex-shrink: 0;
 }
 
 .status-emoji-text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     flex-shrink: 0;
     line-height: 1;
 }
