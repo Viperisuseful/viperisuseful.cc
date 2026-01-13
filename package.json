@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Static portfolio hosted on Heroku",
   "scripts": {
-    "start": "npx serve -s . -l $PORT"
+    "start": "npx serve . -l $PORT"
   },
   "engines": {
     "node": "20.x"
