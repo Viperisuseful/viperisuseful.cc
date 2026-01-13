@@ -5,31 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 | Page Not Found</title>
     <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
-    <link rel="stylesheet" href="style.css?v=1.0.4">
+    <link rel="stylesheet" href="style.css?v=1.1.1">
 </head>
-<body class="helium-theme error-page">
-    <header>
-        <div class="logo">
-            <a href="/">
-                <img src="resources/Viperisuseful-LOGO.png" alt="Logo">
-            </a>
+<body class="helium-theme" data-lanyard-id="990680811827261490">
+    <canvas id="starfield"></canvas>
+
+    <header class="site-header">
+        <div class="logo-area">
+            <div class="logo">
+                <a href="/" aria-label="Viperisuseful home">
+                    <img src="resources/Viperisuseful-LOGO.png" alt="Logo">
+                </a>
+                
+                <!-- Discord Profile Card Dropdown -->
+                <div class="status-dropdown">
+                    <div class="profile-header">
+                        <div class="avatar-container">
+                            <img id="discord-avatar" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
+                            <div id="avatar-status-dot" class="avatar-status-dot offline"></div>
+                        </div>
+                        <div class="profile-info">
+                            <span class="profile-username">viperisuseful</span>
+                            <span id="discord-custom-status" class="profile-custom-status"></span>
+                        </div>
+                    </div>
+                    <div id="discord-activity" class="profile-activity">
+                        <!-- Activity content injected via JS -->
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="nav-buttons">
-            <a href="/" class="nav-pill">
-                ← Back to Home
-            </a>
-        </div>
+        <nav class="nav-links">
+            <a href="/" class="nav-link">← Back to Home</a>
+        </nav>
     </header>
 
-    <main class="redirect-container error-content">
-        <h1 class="error-code">404</h1>
-        <h2 class="error-title">Page Not Found</h2>
-        <p class="error-message">Looks like this page swam away! The page you're looking for doesn't exist or has been moved.</p>
-        
-        <div class="error-actions">
-            <a href="/" class="nav-pill">Go Home</a>
-            <a href="/quickrunlab/" class="nav-pill">Visit QuickRun Lab</a>
-            <a href="/turtlecave/" class="nav-pill">Enter Turtle Cave</a>
+    <main class="redirect-container">
+        <div class="error-card glass reveal-on-scroll">
+            <h1 class="error-code">404</h1>
+            <h2 class="error-title">Page Not Found</h2>
+            <p class="error-message">Looks like this page swam away into the deep abyss!</p>
+            
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary">Go Home</a>
+                <a href="/quickrunlab/" class="btn btn-ghost">QuickRun Lab</a>
+                <a href="/turtlecave/" class="btn btn-ghost">Turtle Cave</a>
+            </div>
         </div>
     </main>
 
