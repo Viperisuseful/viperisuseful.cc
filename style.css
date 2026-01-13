@@ -125,12 +125,12 @@ main {
 }
 
 .profile-banner {
-    display: none !important;
-    height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    border: none !important;
-    background: transparent !important;
+    display: block;
+    height: 120px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 16px 16px 0 0;
 }
 
 .profile-header {

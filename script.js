@@ -132,8 +132,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const raw = kv.banner_url || kv.banner || kv.profile_banner || null;
             if (!raw) return null;
             const value = String(raw).trim();
-            if (!/^https?:\/\//i.test(value)) return null;
-            return value;
+            // allow http(s) or relative/site-relative paths
+            if (/^https?:\/\//i.test(value)) return value;
+            if (value.startsWith('/') || value.startsWith('resources/') || value.startsWith('./')) return value;
+            return null;
         }
 
         function getKvString(kv, key) {
@@ -210,11 +212,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                // Banner / Accent: we currently hide it in CSS; ensure no inline styling reintroduces it
+                // Banner / Accent: show KV banner if provided, else user banner, else accent color fallback
                 if (bannerEl) {
-                    bannerEl.style.display = 'none';
-                    bannerEl.style.backgroundImage = 'none';
-                    bannerEl.style.backgroundColor = 'transparent';
+                    const kvBanner = getKvBannerUrl(presence.kv);
+                    bannerEl.style.display = 'block';
+
+                    if (kvBanner) {
+                        bannerEl.style.backgroundImage = `url(${kvBanner})`;
+                        bannerEl.style.backgroundColor = '';
+                    } else if (user.banner) {
+                        const ext = String(user.banner).startsWith('a_') ? 'gif' : 'png';
+                        bannerEl.style.backgroundImage = `url(https://cdn.discordapp.com/banners/${user.id}/${user.banner}.${ext}?size=600)`;
+                        bannerEl.style.backgroundColor = '';
+                    } else if (user.accent_color) {
+                        const hex = user.accent_color.toString(16).padStart(6, '0');
+                        bannerEl.style.backgroundImage = 'none';
+                        bannerEl.style.backgroundColor = `#${hex}`;
+                    } else {
+                        bannerEl.style.backgroundImage = 'none';
+                        bannerEl.style.backgroundColor = '#111214';
+                    }
                 }
 
                 // Server badge pills (KV-driven, because Lanyard doesn't include guild/server tags)
