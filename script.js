@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const activityContainer = document.getElementById('discord-activity');
         const badgesContainer = document.getElementById('discord-badges');
         const usernameEl = document.querySelector('.profile-username');
+        const clanTagEl = document.getElementById('discord-clan-tag');
 
         function updateUI(presence) {
             if (!presence) return;
@@ -85,6 +86,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     usernameEl.textContent = user.global_name || user.username;
                 }
 
+                // Clan Tag
+                if (clanTagEl) {
+                    if (user.clan) {
+                        // Discord Clan Badges use the guild id or clan id
+                        const clanBadgeUrl = `https://cdn.discordapp.com/clan-badges/${user.clan.identity_guild_id || user.clan.guild_id}/${user.clan.badge}.png`;
+                        const clanBadge = user.clan.badge ? `<img class="clan-badge-icon" src="${clanBadgeUrl}" onerror="this.style.display='none'">` : '';
+                        clanTagEl.innerHTML = `${clanBadge}<span>${user.clan.tag}</span>`;
+                        clanTagEl.style.display = 'flex';
+                    } else {
+                        clanTagEl.style.display = 'none';
+                    }
+                }
+
                 // Avatar
                 if (avatarImg && user.avatar) {
                     const ext = user.avatar.startsWith('a_') ? 'gif' : 'png';
@@ -95,10 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (decorationImg) {
                     if (user.avatar_decoration_data) {
                         const asset = user.avatar_decoration_data.asset;
-                        decorationImg.src = `https://cdn.discordapp.com/avatar-decorations/${asset}.png`;
+                        // Use presets endpoint for v2 decorations
+                        decorationImg.src = `https://cdn.discordapp.com/avatar-decoration-presets/${asset}.png`;
                         decorationImg.style.display = 'block';
                     } else if (user.avatar_decoration) { 
-                        decorationImg.src = `https://cdn.discordapp.com/avatar-decorations/${user.avatar_decoration}.png`;
+                        decorationImg.src = `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration}.png`;
                         decorationImg.style.display = 'block';
                     } else {
                         decorationImg.style.display = 'none';
