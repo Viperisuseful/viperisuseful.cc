@@ -16,17 +16,24 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
     
-    <link rel="stylesheet" href="style.css?v=1.0.5">
+    <link rel="stylesheet" href="style.css?v=1.0.6">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 </head>
-<body>
+<body data-lanyard-id="990680811827261490">
+    <canvas id="starfield"></canvas>
     <div id="scroll-progress"></div>
 
     <header class="site-header">
-        <div class="logo">
-            <a href="#" aria-label="Viperisuseful home">
-                <img src="resources/Viperisuseful-LOGO.png" alt="Logo">
-            </a>
+        <div class="logo-area">
+            <div class="logo">
+                <a href="#" aria-label="Viperisuseful home">
+                    <img src="resources/Viperisuseful-LOGO.png" alt="Logo">
+                </a>
+            </div>
+            <div id="discord-status" class="status-indicator" title="Discord Status">
+                <span class="status-dot"></span>
+                <span class="status-text">Connecting...</span>
+            </div>
         </div>
         <nav class="nav-links" aria-label="Primary">
             <a href="#projects" class="nav-link">Projects</a>
@@ -103,8 +110,9 @@
                 <p class="eyebrow">Featured work</p>
                 <h2>Projects that keep people moving</h2>
             </div>
-            <div class="project-grid">
-                <article class="project-card glass reveal-on-scroll">
+            <div class="bento-grid">
+                <!-- Large Featured Card -->
+                <article class="project-card bento-item-large glass reveal-on-scroll">
                     <figure class="project-media">
                         <img src="resources/quickrunlab-screenshot.png" loading="lazy" alt="QuickRun Lab interface">
                     </figure>
@@ -117,58 +125,55 @@
                             </div>
                         </div>
                         <p class="project-description">
-                            QuickRun Lab is a secure, browser-based compiler designed to remove the frustration of local setup, allowing beginners to write and execute C and R code instantly from any device. By providing a safe, sandboxed environment with cloud storage and "crash-proof" execution queues, it offers a hassle-free playground where students can experiment and learn without fear of breaking their own computers.
+                            A secure, browser-based compiler designed to remove the frustration of local setup. Write and execute C and R code instantly from any device in a safe, sandboxed environment.
                         </p>
-                        <ul class="project-highlights">
-                            <li>Sandboxed execution with safe isolation</li>
-                            <li>Crash-proof queueing for reliability</li>
-                            <li>Device-agnostic learning experience</li>
-                        </ul>
-                        <a class="project-link" href="quickrunlab/">Open QuickRun Lab</a>
+                        <a class="project-link" href="quickrunlab/">Open Lab</a>
                     </div>
                 </article>
 
-                <article class="project-card glass reveal-on-scroll">
+                <!-- Medium Card -->
+                <article class="project-card bento-item-medium glass reveal-on-scroll">
                     <figure class="project-media">
                         <img src="resources/turtlecave-screenshot.png" loading="lazy" alt="Turtle Cave">
                     </figure>
                     <div class="project-body">
                         <div class="project-top">
-                            <h3>Turtle Cave</h3>
+                            <h3>Turtle Cave Hub</h3>
                             <div class="project-tags">
-                                <span class="tag">JavaScript</span>
+                                <span class="tag">JS</span>
                                 <span class="tag">MongoDB</span>
                             </div>
                         </div>
                         <p class="project-description">
-                            This website serves as the official support and utility hub for our Discord community, allowing members to easily submit appeals, open support tickets, and view evidence records. It works directly with the server's moderation bot to ensure a safe, organized, and transparent experience for everyone in the community.
+                            The support and utility hub for our community. Handles appeals, tickets, and automated moderation transparently.
                         </p>
-                        <ul class="project-highlights">
-                            <li>Appeals and ticket workflows</li>
-                            <li>Evidence access for staff</li>
-                            <li>Automation with community bots</li>
-                        </ul>
-                        <a class="project-link" href="turtlecave/">Enter Turtle Cave</a>
+                        <a class="project-link" href="turtlecave/">Enter Hub</a>
                     </div>
                 </article>
 
-                <article class="project-card glass reveal-on-scroll">
-                    <figure class="project-media">
-                        <img src="resources/DiscordServer-screenshot.png" loading="lazy" alt="Discord community">
-                    </figure>
+                <!-- Small Card 1 -->
+                <article class="project-card bento-item-small glass reveal-on-scroll">
                     <div class="project-body">
                         <div class="project-top">
-                            <h3>The Turtle Cave Server</h3>
+                            <h3>Discord</h3>
                         </div>
                         <p class="project-description">
-                            A welcoming community of turtle lovers with over 200+ custom emotes. Whether you're here for the emotes or simply to find a cozy corner of the internet, we have a shell for everyone. Join our vibrant hub of frens and turtle lovers today.
+                            200+ emotes and a cozy corner for turtle lovers.
                         </p>
-                        <ul class="project-highlights">
-                            <li>Safety tooling and clear policies</li>
-                            <li>High-trust support flows</li>
-                            <li>Always-on welcoming vibe</li>
-                        </ul>
-                        <a class="project-link" href="discord/">Join the server</a>
+                        <a class="project-link" href="discord/">Join Server</a>
+                    </div>
+                </article>
+
+                <!-- Small Card 2 -->
+                <article class="project-card bento-item-small glass reveal-on-scroll">
+                    <div class="project-body">
+                        <div class="project-top">
+                            <h3>Instagram</h3>
+                        </div>
+                        <p class="project-description">
+                            Behind the scenes and project updates.
+                        </p>
+                        <a class="project-link" href="instagram/">Follow me</a>
                     </div>
                 </article>
             </div>
