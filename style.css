@@ -172,10 +172,11 @@ main {
 
 .avatar-decoration {
     position: absolute;
-    top: -6px;
-    left: -6px;
-    width: calc(100% + 12px);
-    height: calc(100% + 12px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 105%;
+    height: 105%;
     pointer-events: none;
     z-index: 10;
     object-fit: contain;
