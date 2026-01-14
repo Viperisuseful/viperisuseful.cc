@@ -88,7 +88,7 @@ main {
     cursor: pointer;
 }
 
-.logo img {
+.logo > a > img {
     height: 48px;
     width: auto;
     transition: transform 0.3s ease;
