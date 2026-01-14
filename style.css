@@ -298,14 +298,19 @@ main {
 
 .profile-badges {
     display: flex;
-    gap: 4px;
+    gap: 2px;
     align-items: center;
-    margin-left: 2px;
+    margin-left: 4px;
+    flex-shrink: 0;
 }
 
 .badge-icon {
-    width: 18px;
-    height: 18px;
+    width: 22px;
+    height: 22px;
+    max-width: 22px;
+    max-height: 22px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .profile-custom-status {
@@ -326,10 +331,10 @@ main {
 }
 
 .status-emoji {
-    width: 14px;
-    height: 14px;
-    max-width: 14px;
-    max-height: 14px;
+    width: 13px;
+    height: 13px;
+    max-width: 13px;
+    max-height: 13px;
     flex-shrink: 0;
     object-fit: contain;
     vertical-align: middle;
