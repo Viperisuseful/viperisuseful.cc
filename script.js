@@ -245,36 +245,28 @@ document.addEventListener('DOMContentLoaded', () => {
                     bannerImg.src = kvBanner || dcdnBanner;
                 }
 
-                // Server badge pills (KV-driven, because Lanyard doesn't include guild/server tags)
-                // Set these in Lanyard KV:
-                // - server_badge_text: "TRTL"
-                // - server_badge_icon_url: "resources/badge-leaf.svg" (or https://...)
-                // - server_badge_secondary_icon_url: "resources/badge-purple.svg" (or https://...)
+                // Clan/Server Tag from primary_guild (like lanyard-ui)
+                // Discord provides: primary_guild.tag, primary_guild.badge, primary_guild.identity_guild_id
                 if (serverBadgeEl) {
-                    const badgeText =
-                        getKvString(presence.kv, 'server_badge_text') ||
-                        getKvString(presence.kv, 'server_tag') ||
-                        'TRTL';
-
-                    const badgeIconUrl = getKvAssetRef(presence.kv, 'server_badge_icon_url') || 'resources/badge-leaf.svg';
-
-                    if (badgeText) {
-                        const iconHtml = badgeIconUrl ? `<img src="${badgeIconUrl}" alt="" onerror="this.style.display='none'">` : '';
-                        serverBadgeEl.innerHTML = `${iconHtml}${escapeHtml(badgeText)}`;
+                    const primaryGuild = user.primary_guild;
+                    if (primaryGuild && primaryGuild.tag) {
+                        const guildId = primaryGuild.identity_guild_id;
+                        const badgeAsset = primaryGuild.badge;
+                        let iconHtml = '';
+                        if (guildId && badgeAsset) {
+                            const badgeUrl = `https://cdn.discordapp.com/clan-badges/${guildId}/${badgeAsset}.png?size=16`;
+                            iconHtml = `<img src="${badgeUrl}" alt="" onerror="this.style.display='none'">`;
+                        }
+                        serverBadgeEl.innerHTML = `${iconHtml}${escapeHtml(primaryGuild.tag)}`;
                         serverBadgeEl.style.display = 'inline-flex';
                     } else {
                         serverBadgeEl.style.display = 'none';
                     }
                 }
 
+                // Hide secondary badge (not using KV-driven badges anymore)
                 if (serverBadgeEl2) {
-                    const secondaryIconUrl = getKvAssetRef(presence.kv, 'server_badge_secondary_icon_url') || 'resources/badge-purple.svg';
-                    if (secondaryIconUrl) {
-                        serverBadgeEl2.innerHTML = `<img src="${secondaryIconUrl}" alt="" onerror="this.style.display='none'">`;
-                        serverBadgeEl2.style.display = 'inline-flex';
-                    } else {
-                        serverBadgeEl2.style.display = 'none';
-                    }
+                    serverBadgeEl2.style.display = 'none';
                 }
 
                 // Badges
