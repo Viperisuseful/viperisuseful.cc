@@ -286,15 +286,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     const badgeMap = [
-                        { bit: 1, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/discordstaff.svg', title: 'Discord Staff' },
-                        { bit: 2, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/discordpartner.svg', title: 'Partnered Server Owner' },
-                        { bit: 4, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/hypesquad_events.svg', title: 'HypeSquad Events' },
-                        { bit: 64, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/hypesquad_bravery.svg', title: 'HypeSquad Bravery' },
-                        { bit: 128, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/hypesquad_brilliance.svg', title: 'HypeSquad Brilliance' },
-                        { bit: 256, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/hypesquad_balance.svg', title: 'HypeSquad Balance' },
-                        { bit: 512, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/earlysupporter.svg', title: 'Early Supporter' },
-                        { bit: 16384, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/discordcertifiedmoderator.svg', title: 'Discord Certified Moderator' },
-                        { bit: 131072, img: 'https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/activedeveloper.svg', title: 'Active Developer' }
+                        { bit: 1, img: 'resources/badges/staff.png', title: 'Discord Staff' },
+                        { bit: 2, img: 'resources/badges/partner.png', title: 'Partnered Server Owner' },
+                        { bit: 4, img: 'resources/badges/hypesquad.png', title: 'HypeSquad Events' },
+                        { bit: 8, img: 'resources/badges/bug_hunter_level_1.png', title: 'Bug Hunter Level 1' },
+                        { bit: 64, img: 'resources/badges/hypesquad_bravery.png', title: 'HypeSquad Bravery' },
+                        { bit: 128, img: 'resources/badges/hypesquad_brilliance.png', title: 'HypeSquad Brilliance' },
+                        { bit: 256, img: 'resources/badges/hypesquad_balance.png', title: 'HypeSquad Balance' },
+                        { bit: 512, img: 'resources/badges/premium_early_supporter.png', title: 'Early Supporter' },
+                        { bit: 16384, img: 'resources/badges/bug_hunter_level_2.png', title: 'Bug Hunter Level 2' },
+                        { bit: 131072, img: 'resources/badges/verified_developer.png', title: 'Early Verified Bot Developer' },
+                        { bit: 262144, img: 'resources/badges/certified_moderator.png', title: 'Discord Certified Moderator' },
+                        { bit: 4194304, img: 'resources/badges/active_developer.png', title: 'Active Developer' }
                     ];
 
                     badgeMap.forEach(b => {
@@ -305,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     // Nitro badge detection from animated avatar (same pattern as lanyard-ui)
                     if (user.avatar && String(user.avatar).startsWith('a_')) {
-                        badgesHtml += `<img class="badge-icon" src="https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/discordnitro.svg" title="Nitro" alt="Nitro" onerror="this.style.display='none'">`;
+                        badgesHtml += `<img class="badge-icon" src="resources/badges/nitro.png" title="Nitro" alt="Nitro" onerror="this.style.display='none'">`;
                     }
 
                     badgesContainer.innerHTML = badgesHtml;
