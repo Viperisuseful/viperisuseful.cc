@@ -193,45 +193,56 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                // Avatar
+                // Avatar (use webp for better quality like lanyard-ui)
                 if (avatarImg && user.avatar) {
-                    const ext = String(user.avatar).startsWith('a_') ? 'gif' : 'png';
-                    avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=160`;
+                    const ext = String(user.avatar).startsWith('a_') ? 'gif' : 'webp';
+                    avatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=512`;
+                } else if (avatarImg && user.id) {
+                    // Default avatar based on user ID (same logic as lanyard-ui)
+                    const index = Number((BigInt(user.id) >> BigInt(22)) % BigInt(6));
+                    avatarImg.src = `https://cdn.discordapp.com/embed/avatars/${index}.png`;
                 }
 
-                // Decoration (usually NOT present in Lanyard payload; keep safe)
+                // Decoration (lanyard-ui pattern with passthrough param)
                 if (decorationImg) {
                     if (user.avatar_decoration_data && user.avatar_decoration_data.asset) {
-                        decorationImg.src = `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration_data.asset}.png`;
-                        decorationImg.style.display = 'block';
-                    } else if (user.avatar_decoration) {
-                        decorationImg.src = `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration}.png`;
+                        decorationImg.src = `https://cdn.discordapp.com/avatar-decoration-presets/${user.avatar_decoration_data.asset}?passthrough=true&size=512`;
                         decorationImg.style.display = 'block';
                     } else {
                         decorationImg.style.display = 'none';
                     }
                 }
 
-                // Banner / Accent: show KV banner if provided, else user banner, else accent color fallback
+                // Banner: use dcdn.dstn.to (same as lanyard-ui) which provides Discord profile banners
                 if (bannerEl) {
                     const kvBanner = getKvBannerUrl(presence.kv);
+                    // Always try to show banner using dcdn.dstn.to which fetches actual Discord profile banner
+                    const dcdnBanner = `https://dcdn.dstn.to/banners/${user.id}?size=512`;
+                    
                     bannerEl.style.display = 'block';
 
                     if (kvBanner) {
                         bannerEl.style.backgroundImage = `url(${kvBanner})`;
                         bannerEl.style.backgroundColor = '';
-                    } else if (user.banner) {
-                        const ext = String(user.banner).startsWith('a_') ? 'gif' : 'png';
-                        bannerEl.style.backgroundImage = `url(https://cdn.discordapp.com/banners/${user.id}/${user.banner}.${ext}?size=600)`;
-                        bannerEl.style.backgroundColor = '';
-                    } else if (user.accent_color) {
-                        const hex = user.accent_color.toString(16).padStart(6, '0');
-                        bannerEl.style.backgroundImage = 'none';
-                        bannerEl.style.backgroundColor = `#${hex}`;
                     } else {
-                        bannerEl.style.backgroundImage = 'none';
-                        bannerEl.style.backgroundColor = '#111214';
+                        // Use dcdn.dstn.to for banner (fetches actual Discord profile banner like lanyard-ui)
+                        bannerEl.style.backgroundImage = `url(${dcdnBanner})`;
+                        bannerEl.style.backgroundColor = '';
                     }
+                    
+                    // Fallback if banner image fails to load
+                    const bannerImg = new Image();
+                    bannerImg.onerror = () => {
+                        if (user.accent_color) {
+                            const hex = user.accent_color.toString(16).padStart(6, '0');
+                            bannerEl.style.backgroundImage = 'none';
+                            bannerEl.style.backgroundColor = `#${hex}`;
+                        } else {
+                            bannerEl.style.backgroundImage = 'none';
+                            bannerEl.style.backgroundColor = '#5865F2';
+                        }
+                    };
+                    bannerImg.src = kvBanner || dcdnBanner;
                 }
 
                 // Server badge pills (KV-driven, because Lanyard doesn't include guild/server tags)
@@ -299,6 +310,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             badgesHtml += `<img class="badge-icon" src="${b.img}" title="${escapeHtml(b.title)}" alt="${escapeHtml(b.title)}" onerror="this.style.display='none'">`;
                         }
                     });
+
+                    // Nitro badge detection from animated avatar (same pattern as lanyard-ui)
+                    if (user.avatar && String(user.avatar).startsWith('a_')) {
+                        badgesHtml += `<img class="badge-icon" src="https://cdn.jsdelivr.net/gh/mezotv/discord-badges@main/assets/discordnitro.svg" title="Nitro" alt="Nitro" onerror="this.style.display='none'">`;
+                    }
 
                     badgesContainer.innerHTML = badgesHtml;
                     badgesContainer.style.display = badgesHtml ? 'flex' : 'none';
