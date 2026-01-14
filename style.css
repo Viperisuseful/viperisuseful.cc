@@ -175,8 +175,8 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 105px;
-    height: 105px;
+    width: 85px;
+    height: 85px;
     max-width: none;
     max-height: none;
     pointer-events: none;
