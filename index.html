@@ -87,9 +87,12 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
             padding: 14px;
             border-radius: 12px;
+            will-change: transform;
         }
 
         .social-link:hover {
@@ -98,7 +101,7 @@
 
         .social-link:hover .social-icon {
             filter: invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-            transform: scale(1.2);
+            transform: scale(1.18);
             opacity: 1;
         }
 
@@ -106,8 +109,11 @@
             width: 32px;
             height: 32px;
             opacity: 0.6;
-            transition: all 0.3s ease;
+            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
             filter: invert(1);
+            will-change: transform, filter, opacity;
         }
 
         .social-icon.no-invert {
@@ -125,7 +131,12 @@
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
             opacity: 1;
         }
-            text-transform: uppercase;
+
+        @media (prefers-reduced-motion: reduce) {
+            .social-link,
+            .social-icon {
+                transition: none;
+            }
         }
 
         @media (max-width: 768px) {
