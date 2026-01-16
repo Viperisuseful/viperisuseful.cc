@@ -25,7 +25,7 @@
 
         body {
             font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
-            background: #0a0a0a;
+            background: #0d1117;
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -84,30 +84,27 @@
 
         .social-link {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
             text-decoration: none;
-            color: rgba(255, 255, 255, 0.4);
             transition: all 0.3s ease;
-            padding: 12px;
+            padding: 14px;
             border-radius: 12px;
         }
 
         .social-link:hover {
-            color: #9ad4ff;
             transform: translateY(-6px);
-            text-shadow: 0 0 20px rgba(154, 212, 255, 0.5);
         }
 
         .social-link:hover .social-icon {
-            filter: drop-shadow(0 0 8px rgba(154, 212, 255, 0.6));
-            transform: scale(1.15);
+            filter: invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+            transform: scale(1.2);
+            opacity: 1;
         }
 
         .social-icon {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             opacity: 0.6;
             transition: all 0.3s ease;
             filter: invert(1);
@@ -115,19 +112,19 @@
 
         .social-icon.no-invert {
             filter: none;
+            opacity: 0.7;
         }
 
-        .social-link:hover .social-icon {
-            opacity: 1;
+        .social-icon.wide {
+            width: auto;
+            height: 28px;
+            max-width: 60px;
         }
 
         .social-link:hover .social-icon.no-invert {
-            filter: drop-shadow(0 0 8px rgba(154, 212, 255, 0.6));
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+            opacity: 1;
         }
-
-        .social-label {
-            font-size: 11px;
-            letter-spacing: 0.1em;
             text-transform: uppercase;
         }
 
@@ -172,27 +169,21 @@
         <div class="social-links">
             <a href="discord/" class="social-link" title="Discord">
                 <img src="resources/discord-icon.svg" alt="Discord" class="social-icon">
-                <span class="social-label">Discord</span>
             </a>
             <a href="https://github.com/Viperisuseful" target="_blank" rel="noreferrer" class="social-link" title="GitHub">
                 <img src="resources/github-icon.svg" alt="GitHub" class="social-icon">
-                <span class="social-label">GitHub</span>
             </a>
             <a href="instagram/" class="social-link" title="Instagram">
                 <img src="resources/instagram-icon.svg" alt="Instagram" class="social-icon">
-                <span class="social-label">Instagram</span>
             </a>
             <a href="mailto:viper@viperisuseful.cc" class="social-link" title="Email">
                 <img src="resources/email-icon.svg" alt="Email" class="social-icon">
-                <span class="social-label">Email</span>
             </a>
             <a href="quickrunlab/" class="social-link" title="QuickRunLab">
-                <img src="resources/logoquickrun.png" alt="QuickRunLab" class="social-icon no-invert">
-                <span class="social-label">QuickRunLab</span>
+                <img src="resources/logoquickrun.png" alt="QuickRunLab" class="social-icon no-invert wide">
             </a>
             <a href="turtlecave/" class="social-link" title="Turtle Cave">
                 <img src="resources/turtleicon.png" alt="Turtle Cave" class="social-icon no-invert">
-                <span class="social-label">TurtleCave</span>
             </a>
         </div>
     </div>
@@ -204,8 +195,8 @@
         const blobs = new AsciiBlobs(container, {
             className: getThemeClassName('dracula'),
             colors: { 
-                primary: '#9ad4ff',
-                background: '#0a0a0a'
+                primary: '#58a6ff',
+                background: '#0d1117'
             },
             blobBehavior: { 
                 count: 8, 
