@@ -15,6 +15,7 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
+    <link rel="stylesheet" href="style.css?v=1.3.0">
     
     <style>
         * {
@@ -52,6 +53,30 @@
             pointer-events: none;
         }
 
+        .name-wrap {
+            position: relative;
+            display: inline-block;
+            pointer-events: auto;
+        }
+
+        .name-wrap .status-dropdown {
+            position: absolute;
+            top: calc(100% + 16px);
+            left: 50%;
+            transform: translate(-50%, 8px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            width: min(420px, 92vw);
+            z-index: 50;
+        }
+
+        .name-wrap:hover .status-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
         .ascii-name {
             font-family: 'Courier New', monospace;
             font-size: clamp(6px, 1.2vw, 14px);
@@ -87,9 +112,9 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             padding: 14px;
             border-radius: 12px;
             will-change: transform;
@@ -109,9 +134,9 @@
             width: 32px;
             height: 32px;
             opacity: 0.6;
-            transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
             filter: invert(1);
             will-change: transform, filter, opacity;
         }
@@ -162,18 +187,51 @@
         }
     </style>
 </head>
-<body>
+<body data-lanyard-id="990680811827261490">
     <div id="ascii-container"></div>
     
     <div class="content">
-        <pre class="ascii-name">
+        <div class="name-wrap">
+            <pre class="ascii-name">
 ██╗   ██╗██╗██████╗ ███████╗██████╗ ██╗███████╗██╗   ██╗███████╗███████╗███████╗██╗   ██╗██╗     
 ██║   ██║██║██╔══██╗██╔════╝██╔══██╗██║██╔════╝██║   ██║██╔════╝██╔════╝██╔════╝██║   ██║██║     
 ██║   ██║██║██████╔╝█████╗  ██████╔╝██║███████╗██║   ██║███████╗█████╗  █████╗  ██║   ██║██║     
 ╚██╗ ██╔╝██║██╔═══╝ ██╔══╝  ██╔══██╗██║╚════██║██║   ██║╚════██║██╔══╝  ██╔══╝  ██║   ██║██║     
  ╚████╔╝ ██║██║     ███████╗██║  ██║██║███████║╚██████╔╝███████║███████╗██║     ╚██████╔╝███████╗
   ╚═══╝  ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝      ╚═════╝ ╚══════╝
-        </pre>
+            </pre>
+
+            <div class="status-dropdown">
+                <div class="profile-banner" id="discord-banner" aria-hidden="true"></div>
+                <div class="profile-header">
+                    <div class="avatar-container">
+                        <div class="avatar-wrapper">
+                            <img id="discord-avatar" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
+                        </div>
+                        <img id="discord-decoration" class="avatar-decoration" src="" alt="" style="display:none;">
+                        <div id="avatar-status-dot" class="avatar-status-dot offline"></div>
+                    </div>
+
+                    <div class="profile-header-right">
+                        <div class="profile-title-row">
+                            <span class="profile-username">viperisuseful</span>
+                            <span id="discord-server-badge" class="server-badge" style="display:none;"></span>
+                            <span id="discord-server-badge-2" class="server-badge server-badge-icon" style="display:none;"></span>
+                            <span id="discord-primary-badge" class="profile-primary-badge" style="display:none;"></span>
+                            <div id="discord-clan-tag" class="clan-tag" style="display:none;"></div>
+                            <div id="discord-badges" class="profile-badges" aria-hidden="true"></div>
+                        </div>
+                        <div id="discord-custom-status" class="profile-custom-status" style="display:none;"></div>
+                    </div>
+                </div>
+                <div class="profile-body">
+                    <div class="profile-divider" aria-hidden="true"></div>
+                    <div id="discord-activity" class="profile-activity">
+                        <!-- Activity content injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
         
         <p class="tagline">Developer • Community Builder • Creator</p>
         
@@ -219,5 +277,6 @@
             }
         });
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
