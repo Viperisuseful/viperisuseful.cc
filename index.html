@@ -90,16 +90,19 @@
             text-decoration: none;
             color: rgba(255, 255, 255, 0.4);
             transition: all 0.3s ease;
+            padding: 12px;
+            border-radius: 12px;
         }
 
         .social-link:hover {
-            color: #fff;
-            transform: translateY(-4px);
+            color: #9ad4ff;
+            transform: translateY(-6px);
+            text-shadow: 0 0 20px rgba(154, 212, 255, 0.5);
         }
 
         .social-link:hover .social-icon {
-            filter: brightness(1.2);
-            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px rgba(154, 212, 255, 0.6));
+            transform: scale(1.15);
         }
 
         .social-icon {
@@ -110,34 +113,22 @@
             filter: invert(1);
         }
 
+        .social-icon.no-invert {
+            filter: none;
+        }
+
         .social-link:hover .social-icon {
             opacity: 1;
+        }
+
+        .social-link:hover .social-icon.no-invert {
+            filter: drop-shadow(0 0 8px rgba(154, 212, 255, 0.6));
         }
 
         .social-label {
             font-size: 11px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-        }
-
-        .credit {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.3);
-            z-index: 100;
-            pointer-events: auto;
-        }
-
-        .credit a {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .credit a:hover {
-            color: #fff;
         }
 
         @media (max-width: 768px) {
@@ -195,20 +186,15 @@
                 <img src="resources/email-icon.svg" alt="Email" class="social-icon">
                 <span class="social-label">Email</span>
             </a>
-            <a href="quickrunlab/" class="social-link" title="QuickRun Lab">
-                <img src="resources/Viperisuseful-LOGO.png" alt="QuickRun Lab" class="social-icon" style="filter: none; opacity: 0.8;">
-                <span class="social-label">QuickRun</span>
+            <a href="quickrunlab/" class="social-link" title="QuickRunLab">
+                <img src="resources/logoquickrun.png" alt="QuickRunLab" class="social-icon no-invert">
+                <span class="social-label">QuickRunLab</span>
             </a>
             <a href="turtlecave/" class="social-link" title="Turtle Cave">
-                <img src="resources/Viperisuseful-LOGO.png" alt="Turtle Cave" class="social-icon" style="filter: none; opacity: 0.8;">
+                <img src="resources/turtleicon.png" alt="Turtle Cave" class="social-icon no-invert">
                 <span class="social-label">TurtleCave</span>
             </a>
         </div>
-    </div>
-
-    <div class="credit">
-        <a href="https://www.npmjs.com/package/ascii-blobs" target="_blank">ascii-blobs</a> • 
-        <a href="https://github.com/DaanHessen/ASCII-blobs" target="_blank">git</a>
     </div>
 
     <script type="module">
