@@ -82,7 +82,13 @@ function staggerHero() {
     });
   }, 100);
 }
-window.addEventListener('DOMContentLoaded', staggerHero);
+
+// Fade-in for above-the-fold content (ASCII name, tagline)
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.fade-in-onload').forEach(el => {
+    setTimeout(() => el.classList.add('visible'), 60);
+  });
+});
 
 // 5. PERFORMANCE: DEBOUNCED RESIZE/SCROLL EVENTS (if needed)
 function debounce(fn, ms) {

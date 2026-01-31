@@ -1,3 +1,13 @@
+/* Fade-in for above-the-fold content */
+.fade-in-onload {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--scroll-reveal-ease), transform 0.7s var(--scroll-reveal-ease);
+}
+.fade-in-onload.visible {
+  opacity: 1;
+  transform: none;
+}
 /*
   animations.css
   Smooth hover, scroll-triggered, and micro-interaction effects for viperisuseful.cc
