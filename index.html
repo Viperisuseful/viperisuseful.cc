@@ -16,182 +16,17 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
     <link rel="stylesheet" href="style.css?v=1.3.0">
+    <!-- Animations: hover, scroll, micro-interactions -->
+    <link rel="stylesheet" href="animations.css?v=1.0.0">
     
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
-            background: #0d1117;
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        #ascii-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-        }
-
-        .content {
-            position: relative;
-            z-index: 10;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            pointer-events: none;
-        }
-
-        .name-wrap {
-            position: relative;
-            display: inline-block;
-            pointer-events: auto;
-        }
-
-        .name-wrap .status-dropdown {
-            position: absolute;
-            top: calc(100% + 16px);
-            left: 50%;
-            transform: translate(-50%, 8px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            width: min(420px, 92vw);
-            z-index: 50;
-        }
-
-        .name-wrap:hover .status-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, 0);
-        }
-
-        .ascii-name {
-            font-family: 'Courier New', monospace;
-            font-size: clamp(6px, 1.2vw, 14px);
-            line-height: 1.1;
-            letter-spacing: 0.1em;
-            white-space: pre;
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(154, 212, 255, 0.3);
-            margin-bottom: 40px;
-            user-select: none;
-        }
-
-        .tagline {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 60px;
-            text-align: center;
-            letter-spacing: 0.05em;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            pointer-events: auto;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            padding: 14px;
-            border-radius: 12px;
-            will-change: transform;
-        }
-
-        .social-link:hover {
-            transform: translateY(-6px);
-        }
-
-        .social-link:hover .social-icon {
-            filter: invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-            transform: scale(1.18);
-            opacity: 1;
-        }
-
-        .social-icon {
-            width: 32px;
-            height: 32px;
-            opacity: 0.6;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            filter: invert(1);
-            will-change: transform, filter, opacity;
-        }
-
-        .social-icon.no-invert {
-            filter: none;
-            opacity: 0.7;
-        }
-
-        .social-icon.wide {
-            width: auto;
-            height: 28px;
-            max-width: 60px;
-        }
-
-        .social-link:hover .social-icon.no-invert {
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-            opacity: 1;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .social-link,
-            .social-icon {
-                transition: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .ascii-name {
-                font-size: clamp(4px, 2vw, 8px);
-            }
-            
-            .social-links {
-                gap: 20px;
-            }
-
-            .social-icon {
-                width: 24px;
-                height: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .ascii-name {
-                font-size: 4px;
-                letter-spacing: 0;
-            }
-        }
-    </style>
+    <!-- ...existing code... -->
 </head>
 <body data-lanyard-id="990680811827261490">
     <div id="ascii-container"></div>
     
     <div class="content">
-        <div class="name-wrap">
+        <!-- Hero name with staggered animation -->
+        <div class="name-wrap hero-stagger scroll-reveal">
             <pre class="ascii-name">
 ██╗   ██╗██╗██████╗ ███████╗██████╗ ██╗███████╗██╗   ██╗███████╗███████╗███████╗██╗   ██╗██╗     
 ██║   ██║██║██╔══██╗██╔════╝██╔══██╗██║██╔════╝██║   ██║██╔════╝██╔════╝██╔════╝██║   ██║██║     
@@ -201,7 +36,7 @@
   ╚═══╝  ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝      ╚═════╝ ╚══════╝
             </pre>
 
-            <div class="status-dropdown">
+            <div class="status-dropdown card">
                 <div class="profile-banner" id="discord-banner" aria-hidden="true"></div>
                 <div class="profile-header">
                     <div class="avatar-container">
@@ -233,33 +68,33 @@
             </div>
         </div>
         
-        <p class="tagline">Developer • Community Builder • Creator</p>
+        <p class="tagline scroll-reveal">Developer • Community Builder • Creator</p>
         
-        <div class="social-links">
-            <a href="discord/" class="social-link" title="Discord">
-                <img src="resources/discord-icon.svg" alt="Discord" class="social-icon">
+        <div class="social-links scroll-reveal">
+            <a href="discord/" class="social-link button magnetic link" title="Discord">
+                <span class="img-zoom"><img src="resources/discord-icon.svg" alt="Discord" class="social-icon"></span>
             </a>
-            <a href="https://github.com/Viperisuseful" target="_blank" rel="noreferrer" class="social-link" title="GitHub">
-                <img src="resources/github-icon.svg" alt="GitHub" class="social-icon">
+            <a href="https://github.com/Viperisuseful" target="_blank" rel="noreferrer" class="social-link button magnetic link" title="GitHub">
+                <span class="img-zoom"><img src="resources/github-icon.svg" alt="GitHub" class="social-icon"></span>
             </a>
-            <a href="instagram/" class="social-link" title="Instagram">
-                <img src="resources/instagram-icon.svg" alt="Instagram" class="social-icon">
+            <a href="instagram/" class="social-link button magnetic link" title="Instagram">
+                <span class="img-zoom"><img src="resources/instagram-icon.svg" alt="Instagram" class="social-icon"></span>
             </a>
-            <a href="mailto:viper@viperisuseful.cc" class="social-link" title="Email">
-                <img src="resources/email-icon.svg" alt="Email" class="social-icon">
+            <a href="mailto:viper@viperisuseful.cc" class="social-link button magnetic link" title="Email">
+                <span class="img-zoom"><img src="resources/email-icon.svg" alt="Email" class="social-icon"></span>
             </a>
-            <a href="quickrunlab/" class="social-link" title="QuickRunLab">
-                <img src="resources/logoquickrun.png" alt="QuickRunLab" class="social-icon no-invert wide">
+            <a href="quickrunlab/" class="social-link button magnetic link" title="QuickRunLab">
+                <span class="img-zoom"><img src="resources/logoquickrun.png" alt="QuickRunLab" class="social-icon no-invert wide"></span>
             </a>
-            <a href="turtlecave/" class="social-link" title="Turtle Cave">
-                <img src="resources/turtleicon.png" alt="Turtle Cave" class="social-icon no-invert">
+            <a href="turtlecave/" class="social-link button magnetic link" title="Turtle Cave">
+                <span class="img-zoom"><img src="resources/turtleicon.png" alt="Turtle Cave" class="social-icon no-invert"></span>
             </a>
         </div>
     </div>
 
+    <!-- ASCII blobs background -->
     <script type="module">
         import { AsciiBlobs, getThemeClassName } from 'https://esm.sh/ascii-blobs@1.0.3/vanilla';
-        
         const container = document.getElementById('ascii-container');
         const blobs = new AsciiBlobs(container, {
             className: getThemeClassName('dracula'),
@@ -277,6 +112,8 @@
             }
         });
     </script>
+    <!-- Animations: hover, scroll, micro-interactions -->
+    <script src="animations.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
