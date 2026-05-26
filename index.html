@@ -3,280 +3,867 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viperisuseful</title>
-    
-    <!-- SEO & Social Media Preview -->
-    <meta name="description" content="Personal portfolio of Viperisuseful. Creator of QuickRun Lab, Turtle Cave, and more.">
-    <meta property="og:title" content="Viperisuseful | Portfolio">
-    <meta property="og:description" content="Developer and creator of high-quality tools and communities.">
+    <title>viperisuseful</title>
+
+    <meta name="description" content="viperisuseful — solo developer building Minecraft mods, Discord bots, and web apps.">
+    <meta property="og:title" content="viperisuseful">
+    <meta property="og:description" content="Solo developer. Minecraft mods, Discord communities, web apps.">
     <meta property="og:image" content="resources/Viperisuseful-LOGO.png">
     <meta property="og:url" content="https://viperisuseful.cc">
     <meta name="twitter:card" content="summary_large_image">
-    
-    <!-- Favicon -->
+
     <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
-    <link rel="stylesheet" href="style.css?v=1.3.0">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:       #070709;
+            --bg2:      #0E0E12;
+            --accent:   #C8FF00;
+            --text:     #EFEFEF;
+            --muted:    #46464F;
+            --border:   #1A1A20;
+            --display:  'Unbounded', sans-serif;
+            --mono:     'JetBrains Mono', monospace;
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
-            background: #0d1117;
-            color: #fff;
+            font-family: var(--mono);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
+            cursor: none;
         }
 
-        #ascii-container {
+        /* ── DOT GRID BG ── */
+        body::before {
+            content: '';
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            inset: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 32px 32px;
+            pointer-events: none;
             z-index: 0;
         }
 
-        .content {
+        /* ── CURSOR ── */
+        #cur, #cur-ring {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        #cur {
+            width: 7px;
+            height: 7px;
+            background: var(--accent);
+            transition: transform 0.08s;
+        }
+        #cur-ring {
+            width: 34px;
+            height: 34px;
+            border: 1px solid rgba(200,255,0,0.4);
+            transition: width 0.2s, height 0.2s;
+        }
+        body.link-hover #cur { transform: translate(-50%, -50%) scale(2.5); }
+        body.link-hover #cur-ring { width: 56px; height: 56px; }
+
+        /* ── HEADER ── */
+        header {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 26px 48px;
+            background: linear-gradient(to bottom, rgba(7,7,9,0.85) 0%, transparent 100%);
+            backdrop-filter: blur(0);
+        }
+
+        .hdr-logo {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .hdr-logo:hover { color: var(--text); }
+
+        .hdr-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--mono);
+            font-size: 0.66rem;
+            color: var(--muted);
+        }
+
+        .s-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--muted);
+            flex-shrink: 0;
+            transition: background 0.4s, box-shadow 0.4s;
+        }
+        .s-dot.online  { background: #3BA55C; box-shadow: 0 0 7px #3BA55C88; }
+        .s-dot.idle    { background: #FAA81A; box-shadow: 0 0 7px #FAA81A88; }
+        .s-dot.dnd     { background: #ED4245; box-shadow: 0 0 7px #ED424588; }
+
+        /* ── HERO ── */
+        .hero {
             position: relative;
-            z-index: 10;
-            min-height: 100vh;
+            z-index: 1;
+            min-height: 100svh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            pointer-events: none;
+            justify-content: flex-end;
+            padding: 0 48px 72px;
         }
 
-        .name-wrap {
-            position: relative;
-            display: inline-block;
-            pointer-events: auto;
-        }
-
-        .name-wrap .status-dropdown {
-            position: absolute;
-            top: calc(100% + 16px);
-            left: 50%;
-            transform: translate(-50%, 8px);
+        .hero-eyebrow {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.22em;
+            margin-bottom: 20px;
             opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            width: min(420px, 92vw);
-            z-index: 50;
+            animation: fadeup 0.6s 0.05s cubic-bezier(0.16,1,0.3,1) forwards;
         }
 
-        .name-wrap:hover .status-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, 0);
-        }
-
-        .ascii-name {
-            font-family: 'Courier New', monospace;
-            font-size: clamp(6px, 1.2vw, 14px);
-            line-height: 1.1;
-            letter-spacing: 0.1em;
-            white-space: pre;
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(154, 212, 255, 0.3);
-            margin-bottom: 40px;
+        .hero-name {
+            font-family: var(--display);
+            font-weight: 900;
+            font-size: clamp(64px, 13.5vw, 196px);
+            line-height: 0.87;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
             user-select: none;
+            margin-bottom: 48px;
         }
 
-        .tagline {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin-bottom: 60px;
-            text-align: center;
-            letter-spacing: 0.05em;
+        .name-line { display: block; overflow: hidden; }
+        .name-line span {
+            display: block;
+            opacity: 0;
+            animation: slideup 0.85s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+        .name-line:nth-child(1) span { animation-delay: 0.10s; }
+        .name-line:nth-child(2) span { animation-delay: 0.19s; }
+        .name-line:nth-child(3) span { animation-delay: 0.28s; color: var(--accent); }
+
+        @keyframes slideup {
+            from { transform: translateY(105%); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+        @keyframes fadeup {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
-        .social-links {
+        .hero-foot {
             display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
             gap: 32px;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            pointer-events: auto;
+            opacity: 0;
+            animation: fadeup 0.7s 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
         }
 
-        .social-link {
+        .hero-tagline {
+            font-family: var(--mono);
+            font-size: clamp(0.68rem, 1.1vw, 0.85rem);
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 400px;
+        }
+        .hero-tagline em { color: var(--accent); font-style: normal; }
+
+        .hero-scroll {
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 14px;
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            white-space: nowrap;
+        }
+        .hero-scroll::after {
+            content: '';
+            display: block;
+            width: 44px;
+            height: 1px;
+            background: var(--muted);
+        }
+
+        /* ── MARQUEE ── */
+        .marquee-wrap {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll 36s linear infinite;
+        }
+        .marquee-track:hover { animation-play-state: paused; }
+
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        .m-item {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            padding: 0 28px;
+            flex-shrink: 0;
+        }
+        .m-item.hi { color: var(--accent); }
+
+        /* ── SECTION HEAD ── */
+        .sec-head {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 80px 0 44px;
+        }
+
+        .sec-num {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+            flex-shrink: 0;
+        }
+
+        .sec-title {
+            font-family: var(--display);
+            font-weight: 700;
+            font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+        }
+
+        .sec-rule {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ── WRAPPER ── */
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
+        /* ── PROJECTS ── */
+        .proj-list { padding-bottom: 80px; }
+
+        .proj {
+            display: grid;
+            grid-template-columns: 52px 1fr max-content;
+            gap: 28px;
+            align-items: start;
+            border-top: 1px solid var(--border);
+            padding: 30px 0;
+            cursor: default;
+            transition: border-color 0.25s;
+        }
+        .proj:last-child { border-bottom: 1px solid var(--border); }
+        .proj:hover { border-top-color: rgba(200,255,0,0.25); }
+        .proj:hover .proj-n { color: var(--accent); }
+        .proj:hover .proj-name { letter-spacing: -0.01em; }
+
+        .proj-n {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--muted);
+            padding-top: 5px;
+            transition: color 0.25s;
+        }
+
+        .proj-name {
+            font-family: var(--display);
+            font-weight: 700;
+            font-size: clamp(1.1rem, 2.2vw, 1.75rem);
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+            margin-bottom: 10px;
+            transition: letter-spacing 0.3s;
+        }
+
+        .proj-desc {
+            font-family: var(--mono);
+            font-size: 0.73rem;
+            color: var(--muted);
+            line-height: 1.75;
+            max-width: 580px;
+        }
+
+        .proj-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-top: 14px;
+        }
+
+        .tag {
+            font-family: var(--mono);
+            font-size: 0.57rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 3px 9px;
+        }
+
+        .proj-aside {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            padding-top: 4px;
+        }
+
+        .proj-status {
+            font-family: var(--mono);
+            font-size: 0.58rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+        }
+        .proj-status.live     { color: #3BA55C; }
+        .proj-status.archived { color: #FAA81A; }
+
+        .proj-link {
+            font-family: var(--mono);
+            font-size: 0.62rem;
             text-decoration: none;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            padding: 14px;
-            border-radius: 12px;
-            will-change: transform;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1px;
+            transition: color 0.2s, border-color 0.2s;
+        }
+        .proj-link:hover { color: var(--accent); border-color: var(--accent); }
+
+        /* ── STATUS / DISCORD ── */
+        .status-block {
+            padding-bottom: 80px;
         }
 
-        .social-link:hover {
-            transform: translateY(-6px);
+        .dc-card {
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            padding: 28px 32px;
+            display: grid;
+            grid-template-columns: 68px 1fr;
+            gap: 24px;
+            align-items: center;
+            max-width: 480px;
+            transition: border-color 0.3s;
+        }
+        .dc-card:hover { border-color: rgba(200,255,0,0.2); }
+
+        .dc-av-wrap { position: relative; display: inline-block; }
+        .dc-av {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+        .dc-av-dot {
+            position: absolute;
+            bottom: 2px;
+            right: 2px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2.5px solid var(--bg2);
+            background: var(--muted);
+            transition: background 0.4s;
+        }
+        .dc-av-dot.online { background: #3BA55C; }
+        .dc-av-dot.idle   { background: #FAA81A; }
+        .dc-av-dot.dnd    { background: #ED4245; }
+
+        .dc-name {
+            font-family: var(--display);
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 4px;
         }
 
-        .social-link:hover .social-icon {
-            filter: invert(1) drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-            transform: scale(1.18);
-            opacity: 1;
+        .dc-cstatus {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--muted);
+            margin-bottom: 10px;
         }
 
-        .social-icon {
-            width: 32px;
-            height: 32px;
-            opacity: 0.6;
-            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-                opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-            filter: invert(1);
-            will-change: transform, filter, opacity;
+        .dc-activity {
+            font-family: var(--mono);
+            font-size: 0.67rem;
+            color: var(--muted);
+            border-left: 2px solid var(--accent);
+            padding-left: 10px;
+            line-height: 1.5;
+        }
+        .dc-activity strong { color: var(--text); font-weight: 500; }
+
+        /* ── CONNECT ── */
+        .connect-block { padding-bottom: 120px; }
+
+        .connect-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
         }
 
-        .social-icon.no-invert {
-            filter: none;
-            opacity: 0.7;
+        .c-link {
+            display: flex;
+            flex-direction: column;
+            padding: 28px 24px;
+            text-decoration: none;
+            color: var(--text);
+            border-right: 1px solid var(--border);
+            transition: background 0.22s, color 0.22s;
+            min-height: 140px;
+        }
+        .c-link:last-child { border-right: none; }
+        .c-link:hover {
+            background: var(--accent);
+            color: var(--bg);
+        }
+        .c-link:hover .c-sub { color: var(--bg); opacity: 0.6; }
+        .c-link:hover .c-arr { color: var(--bg); }
+
+        .c-name {
+            font-family: var(--display);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+            margin-bottom: 6px;
         }
 
-        .social-icon.wide {
-            width: auto;
-            height: 28px;
-            max-width: 60px;
+        .c-sub {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--muted);
+            flex: 1;
+            line-height: 1.5;
+            transition: color 0.22s;
         }
 
-        .social-link:hover .social-icon.no-invert {
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
-            opacity: 1;
+        .c-arr {
+            margin-top: 20px;
+            font-size: 1rem;
+            align-self: flex-end;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 28px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        footer p {
+            font-family: var(--mono);
+            font-size: 0.62rem;
+            color: var(--muted);
+        }
+
+        /* ── REVEAL ── */
+        .rv {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s cubic-bezier(0.16,1,0.3,1), transform 0.65s cubic-bezier(0.16,1,0.3,1);
+        }
+        .rv.vis { opacity: 1; transform: none; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 900px) {
+            header  { padding: 22px 24px; }
+            .hero   { padding: 0 24px 56px; }
+            .wrap   { padding: 0 24px; }
+            footer  { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+
+            .proj   { grid-template-columns: 40px 1fr; }
+            .proj-aside { display: none; }
+
+            .connect-grid { grid-template-columns: repeat(2, 1fr); }
+            .c-link { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+            .c-link:nth-child(2n) { border-right: none; }
+            .c-link:nth-last-child(-n+1) { border-bottom: none; }
+
+            body { cursor: auto; }
+            #cur, #cur-ring { display: none; }
+        }
+
+        @media (max-width: 540px) {
+            .connect-grid { grid-template-columns: 1fr; }
+            .c-link { border-right: none !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .social-link,
-            .social-icon {
-                transition: none;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .ascii-name {
-                font-size: clamp(4px, 2vw, 8px);
-            }
-            
-            .social-links {
-                gap: 20px;
-            }
-
-            .social-icon {
-                width: 24px;
-                height: 24px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .ascii-name {
-                font-size: 4px;
-                letter-spacing: 0;
-            }
+            .name-line span, .hero-eyebrow, .hero-foot { animation: none; opacity: 1; transform: none; }
+            .marquee-track { animation: none; }
+            .rv { transition: none; opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body data-lanyard-id="990680811827261490">
-    <div id="ascii-container"></div>
-    
-    <div class="content">
-        <div class="name-wrap">
-            <pre class="ascii-name">
-██╗   ██╗██╗██████╗ ███████╗██████╗ ██╗███████╗██╗   ██╗███████╗███████╗███████╗██╗   ██╗██╗     
-██║   ██║██║██╔══██╗██╔════╝██╔══██╗██║██╔════╝██║   ██║██╔════╝██╔════╝██╔════╝██║   ██║██║     
-██║   ██║██║██████╔╝█████╗  ██████╔╝██║███████╗██║   ██║███████╗█████╗  █████╗  ██║   ██║██║     
-╚██╗ ██╔╝██║██╔═══╝ ██╔══╝  ██╔══██╗██║╚════██║██║   ██║╚════██║██╔══╝  ██╔══╝  ██║   ██║██║     
- ╚████╔╝ ██║██║     ███████╗██║  ██║██║███████║╚██████╔╝███████║███████╗██║     ╚██████╔╝███████╗
-  ╚═══╝  ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝╚══════╝ ╚═════╝ ╚══════╝╚══════╝╚═╝      ╚═════╝ ╚══════╝
-            </pre>
 
-            <div class="status-dropdown">
-                <div class="profile-banner" id="discord-banner" aria-hidden="true"></div>
-                <div class="profile-header">
-                    <div class="avatar-container">
-                        <div class="avatar-wrapper">
-                            <img id="discord-avatar" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
-                        </div>
-                        <img id="discord-decoration" class="avatar-decoration" src="" alt="" style="display:none;">
-                        <div id="avatar-status-dot" class="avatar-status-dot offline"></div>
-                    </div>
+    <!-- Cursor -->
+    <div id="cur"></div>
+    <div id="cur-ring"></div>
 
-                    <div class="profile-header-right">
-                        <div class="profile-title-row">
-                            <span class="profile-username">viperisuseful</span>
-                            <span id="discord-server-badge" class="server-badge" style="display:none;"></span>
-                            <span id="discord-server-badge-2" class="server-badge server-badge-icon" style="display:none;"></span>
-                            <span id="discord-primary-badge" class="profile-primary-badge" style="display:none;"></span>
-                            <div id="discord-clan-tag" class="clan-tag" style="display:none;"></div>
-                            <div id="discord-badges" class="profile-badges" aria-hidden="true"></div>
-                        </div>
-                        <div id="discord-custom-status" class="profile-custom-status" style="display:none;"></div>
+    <!-- Header -->
+    <header>
+        <a href="/" class="hdr-logo">viperisuseful.cc</a>
+        <div class="hdr-right">
+            <div class="s-dot" id="hdr-dot"></div>
+            <span id="hdr-txt">—</span>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <p class="hero-eyebrow">solo developer — building things that work</p>
+        <h1 class="hero-name">
+            <span class="name-line"><span>VIPER</span></span>
+            <span class="name-line"><span>IS</span></span>
+            <span class="name-line"><span>USEFUL</span></span>
+        </h1>
+        <div class="hero-foot">
+            <p class="hero-tagline">
+                Minecraft mods · Discord communities · Web apps.<br>
+                <em>Java, Python, Node.js</em> — PTY terminals to Fabric APIs.
+            </p>
+            <div class="hero-scroll">scroll</div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="marquee-wrap">
+        <div class="marquee-track" id="mq"></div>
+    </div>
+
+    <!-- Projects -->
+    <div class="wrap">
+        <div class="proj-list">
+            <div class="sec-head rv">
+                <span class="sec-num">01</span>
+                <h2 class="sec-title">Projects</h2>
+                <div class="sec-rule"></div>
+            </div>
+
+            <div class="proj rv">
+                <div class="proj-n">01</div>
+                <div>
+                    <h3 class="proj-name">Viperproxy</h3>
+                    <p class="proj-desc">Fabric Minecraft mod that routes all multiplayer connections through SOCKS5, HTTP, or HTTPS proxies. Features a kill switch, 15-second heartbeat, multi-profile encrypted credentials stored on-disk, and a custom config UI injected directly into the Multiplayer screen.</p>
+                    <div class="proj-tags">
+                        <span class="tag">Java 21</span>
+                        <span class="tag">Fabric API</span>
+                        <span class="tag">Minecraft 1.21</span>
+                        <span class="tag">Netty</span>
+                        <span class="tag">Gradle</span>
                     </div>
                 </div>
-                <div class="profile-body">
-                    <div class="profile-divider" aria-hidden="true"></div>
-                    <div id="discord-activity" class="profile-activity">
-                        <!-- Activity content injected via JS -->
+                <div class="proj-aside">
+                    <span class="proj-status live">Live</span>
+                    <a href="https://modrinth.com/user/viperisuseful" target="_blank" rel="noreferrer" class="proj-link">Modrinth ↗</a>
+                    <a href="https://github.com/Viperisuseful/viperproxy" target="_blank" rel="noreferrer" class="proj-link">GitHub ↗</a>
+                </div>
+            </div>
+
+            <div class="proj rv">
+                <div class="proj-n">02</div>
+                <div>
+                    <h3 class="proj-name">Turtle Cave</h3>
+                    <p class="proj-desc">Full-stack Discord community platform with a web dashboard and moderation bot. OAuth login, mod logs, appeals, tickets, giveaways, booster tracking, and a live Minecraft–Discord bridge. Three processes: web server, Discord bot, and background workers — all on Heroku.</p>
+                    <div class="proj-tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Discord.js v14</span>
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">Express</span>
+                        <span class="tag">Sentry</span>
+                        <span class="tag">Heroku</span>
                     </div>
+                </div>
+                <div class="proj-aside">
+                    <span class="proj-status live">Live</span>
+                    <a href="turtlecave/" class="proj-link">Visit ↗</a>
+                </div>
+            </div>
+
+            <div class="proj rv">
+                <div class="proj-n">03</div>
+                <div>
+                    <h3 class="proj-name">QuickRunLab</h3>
+                    <p class="proj-desc">Cloud code execution platform supporting C, Python, and R via a PTY-backed interactive terminal over WebSocket. Shipped with a Gemini AI tutor with model fallback, Cloudflare Turnstile CAPTCHA, email-verified auth, API key system, run quotas, and monthly usage reports via Brevo.</p>
+                    <div class="proj-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Flask</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Redis</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">SocketIO</span>
+                        <span class="tag">Gemini AI</span>
+                    </div>
+                </div>
+                <div class="proj-aside">
+                    <span class="proj-status archived">Archived</span>
+                    <a href="quickrunlab/" class="proj-link">Archive ↗</a>
+                </div>
+            </div>
+
+            <div class="proj rv">
+                <div class="proj-n">04</div>
+                <div>
+                    <h3 class="proj-name">DulkirMod Port</h3>
+                    <p class="proj-desc">Independent port of DulkirMod-Fabric — a Hypixel Skyblock utility mod — forward to Minecraft 1.21.11. Written in Kotlin and Java on the Fabric toolchain, tracking upstream changes from the original repository.</p>
+                    <div class="proj-tags">
+                        <span class="tag">Kotlin</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Fabric</span>
+                        <span class="tag">Minecraft 1.21</span>
+                    </div>
+                </div>
+                <div class="proj-aside">
+                    <span class="proj-status live">Active</span>
                 </div>
             </div>
         </div>
-        
-        <p class="tagline">Developer • Community Builder • Creator</p>
-        
-        <div class="social-links">
-            <a href="discord/" class="social-link" title="Discord">
-                <img src="resources/discord-icon.svg" alt="Discord" class="social-icon">
-            </a>
-            <a href="https://github.com/Viperisuseful" target="_blank" rel="noreferrer" class="social-link" title="GitHub">
-                <img src="resources/github-icon.svg" alt="GitHub" class="social-icon">
-            </a>
-            <a href="instagram/" class="social-link" title="Instagram">
-                <img src="resources/instagram-icon.svg" alt="Instagram" class="social-icon">
-            </a>
-            <a href="mailto:viper@viperisuseful.cc" class="social-link" title="Email">
-                <img src="resources/email-icon.svg" alt="Email" class="social-icon">
-            </a>
-            <a href="quickrunlab/" class="social-link" title="QuickRunLab">
-                <img src="resources/logoquickrun.png" alt="QuickRunLab" class="social-icon no-invert wide">
-            </a>
-            <a href="turtlecave/" class="social-link" title="Turtle Cave">
-                <img src="resources/turtleicon.png" alt="Turtle Cave" class="social-icon no-invert">
-            </a>
+
+        <!-- Discord Status -->
+        <div class="status-block">
+            <div class="sec-head rv">
+                <span class="sec-num">02</span>
+                <h2 class="sec-title">Status</h2>
+                <div class="sec-rule"></div>
+            </div>
+            <div class="dc-card rv" id="dc-card">
+                <div class="dc-av-wrap">
+                    <img class="dc-av" id="dc-av" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
+                    <div class="dc-av-dot" id="dc-av-dot"></div>
+                </div>
+                <div>
+                    <div class="dc-name" id="dc-name">viperisuseful</div>
+                    <div class="dc-cstatus" id="dc-cs" style="display:none"></div>
+                    <div class="dc-activity" id="dc-act" style="display:none"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Connect -->
+        <div class="connect-block">
+            <div class="sec-head rv">
+                <span class="sec-num">03</span>
+                <h2 class="sec-title">Connect</h2>
+                <div class="sec-rule"></div>
+            </div>
+            <div class="connect-grid rv">
+                <a href="https://github.com/Viperisuseful" target="_blank" rel="noreferrer" class="c-link">
+                    <div class="c-name">GitHub</div>
+                    <div class="c-sub">Viperisuseful</div>
+                    <div class="c-arr">↗</div>
+                </a>
+                <a href="discord/" class="c-link">
+                    <div class="c-name">Discord</div>
+                    <div class="c-sub">_viperisuseful_</div>
+                    <div class="c-arr">↗</div>
+                </a>
+                <a href="https://modrinth.com/user/viperisuseful" target="_blank" rel="noreferrer" class="c-link">
+                    <div class="c-name">Modrinth</div>
+                    <div class="c-sub">Minecraft mods</div>
+                    <div class="c-arr">↗</div>
+                </a>
+                <a href="instagram/" class="c-link">
+                    <div class="c-name">Instagram</div>
+                    <div class="c-sub">@viperisuseful</div>
+                    <div class="c-arr">↗</div>
+                </a>
+                <a href="mailto:viper@viperisuseful.cc" class="c-link">
+                    <div class="c-name">Email</div>
+                    <div class="c-sub">viper@<wbr>viperisuseful.cc</div>
+                    <div class="c-arr">↗</div>
+                </a>
+            </div>
         </div>
     </div>
 
-    <script type="module">
-        import { AsciiBlobs, getThemeClassName } from 'https://esm.sh/ascii-blobs@1.0.3/vanilla';
-        
-        const container = document.getElementById('ascii-container');
-        const blobs = new AsciiBlobs(container, {
-            className: getThemeClassName('dracula'),
-            colors: { 
-                primary: '#58a6ff',
-                background: '#0d1117'
-            },
-            blobBehavior: { 
-                count: 8, 
-                maxRadius: 200,
-                minRadius: 80
-            },
-            animation: { 
-                frameInterval: 42 
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 viperisuseful</p>
+        <p>built from scratch · viperisuseful.cc</p>
+    </footer>
+
+    <script>
+    (() => {
+        // Custom cursor
+        const cur = document.getElementById('cur');
+        const ring = document.getElementById('cur-ring');
+        if (cur && ring) {
+            let mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', e => {
+                mx = e.clientX; my = e.clientY;
+                cur.style.left = mx + 'px';
+                cur.style.top  = my + 'px';
+            });
+            const raf = () => {
+                rx += (mx - rx) * 0.13;
+                ry += (my - ry) * 0.13;
+                ring.style.left = rx + 'px';
+                ring.style.top  = ry + 'px';
+                requestAnimationFrame(raf);
+            };
+            raf();
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('link-hover'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('link-hover'));
+            });
+        }
+
+        // Marquee
+        const stack = ['Java','·','Python','·','Node.js','·','Fabric API','·','Discord.js','·','FastAPI','·','MongoDB','·','PostgreSQL','·','Redis','·','Docker','·','Flask','·','Gradle','·','Kotlin','·','SocketIO','·','Heroku','·','Playwright','·','Netty'];
+        const mq = document.getElementById('mq');
+        if (mq) {
+            [...stack, ...stack].forEach(s => {
+                const el = document.createElement('span');
+                el.className = 'm-item' + (s === '·' ? ' hi' : '');
+                el.textContent = s;
+                mq.appendChild(el);
+            });
+        }
+
+        // Reveal on scroll
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+        // Lanyard
+        const uid = document.body.dataset.lanyardId;
+        if (!uid) return;
+
+        const hdrDot  = document.getElementById('hdr-dot');
+        const hdrTxt  = document.getElementById('hdr-txt');
+        const dcAv    = document.getElementById('dc-av');
+        const dcAvDot = document.getElementById('dc-av-dot');
+        const dcName  = document.getElementById('dc-name');
+        const dcCs    = document.getElementById('dc-cs');
+        const dcAct   = document.getElementById('dc-act');
+
+        const esc = v => String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+        const STATUS_LABEL = { online: 'Online', idle: 'Away', dnd: 'Do not disturb', offline: 'Offline' };
+
+        function applyStatus(s) {
+            const cls = ['online','idle','dnd'].includes(s) ? s : 'offline';
+            [hdrDot, dcAvDot].forEach(d => { if (d) { d.className = (d === hdrDot ? 's-dot' : 'dc-av-dot') + ' ' + cls; } });
+            if (hdrTxt) hdrTxt.textContent = STATUS_LABEL[cls] ?? 'Offline';
+        }
+
+        function render(p) {
+            if (!p) return;
+            applyStatus(p.discord_status);
+            const u = p.discord_user;
+            if (u) {
+                if (dcName) dcName.textContent = u.global_name || u.username || 'viperisuseful';
+                if (dcAv && u.avatar) {
+                    const ext = u.avatar.startsWith('a_') ? 'gif' : 'webp';
+                    dcAv.src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${ext}?size=128`;
+                }
             }
-        });
+
+            const activities = Array.isArray(p.activities) ? p.activities : [];
+            const custom = activities.find(a => a?.type === 4);
+            if (dcCs) {
+                if (custom?.state) { dcCs.textContent = custom.state; dcCs.style.display = ''; }
+                else dcCs.style.display = 'none';
+            }
+            if (dcAct) {
+                const game    = activities.find(a => a?.type === 0);
+                const spotify = p.listening_to_spotify ? p.spotify : null;
+                if (game) {
+                    dcAct.innerHTML = `Playing <strong>${esc(game.name)}</strong>${game.details ? '<br>' + esc(game.details) : ''}`;
+                    dcAct.style.display = '';
+                } else if (spotify) {
+                    dcAct.innerHTML = `Listening to <strong>${esc(spotify.song)}</strong><br>${esc(spotify.artist)}`;
+                    dcAct.style.display = '';
+                } else {
+                    dcAct.style.display = 'none';
+                }
+            }
+        }
+
+        fetch(`https://api.lanyard.rest/v1/users/${uid}`, { cache: 'no-store' })
+            .then(r => r.json()).then(j => { if (j?.success) render(j.data); }).catch(() => {});
+
+        let ws, hb, rt, attempt = 0;
+        function cleanup() {
+            clearInterval(hb); clearTimeout(rt);
+            if (ws) { const s = ws; ws = null; try { s.close(); } catch {} }
+        }
+        function connect() {
+            cleanup();
+            const sock = new WebSocket('wss://api.lanyard.rest/socket');
+            ws = sock;
+            sock.onmessage = e => {
+                if (sock !== ws) return;
+                let p; try { p = JSON.parse(e.data); } catch { return; }
+                if (p.op === 1) {
+                    hb = setInterval(() => { try { sock.send(JSON.stringify({ op: 3 })); } catch {} }, p.d.heartbeat_interval);
+                    sock.send(JSON.stringify({ op: 2, d: { subscribe_to_id: uid } }));
+                } else if (p.op === 0) {
+                    const pr = p.t === 'INIT_STATE' ? p.d[uid] : p.t === 'PRESENCE_UPDATE' ? p.d : null;
+                    if (pr) { attempt = 0; render(pr); }
+                }
+            };
+            sock.onerror = () => { if (sock === ws) try { sock.close(); } catch {} };
+            sock.onclose = () => {
+                if (sock !== ws) return;
+                clearInterval(hb);
+                rt = setTimeout(connect, Math.min(15000, 500 * Math.pow(2, attempt++)));
+            };
+        }
+        connect();
+    })();
     </script>
-    <script src="script.js"></script>
 </body>
 </html>
