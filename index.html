@@ -124,8 +124,9 @@
             min-height: 100svh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            padding: 0 52px 72px;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 52px 0;
         }
 
         .hero::before {
@@ -150,42 +151,105 @@
             transform: rotate(180deg);
         }
 
-        /* Staircase name */
+        /* ── HERO NAME (EDITORIAL STROKE × FILL) ── */
         .hero-name {
-            margin-bottom: 40px;
             position: relative;
             z-index: 1;
+            text-align: center;
+            user-select: none;
+            width: 100%;
         }
 
-        .hn {
+        .sr-only {
+            position: absolute;
+            width: 1px; height: 1px;
+            padding: 0; margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
+
+        .hn-row {
+            display: block;
+            line-height: 0.88;
+            position: relative;
+        }
+
+        /* Outlined ghost text */
+        .hn-stroke {
             display: block;
             font-family: var(--serif);
             font-style: italic;
-            line-height: 0.86;
+            font-weight: 700;
+            font-size: clamp(76px, 17vw, 240px);
+            letter-spacing: -0.025em;
+            -webkit-text-stroke: 1.5px var(--ink);
+            color: transparent;
+            position: relative;
+            z-index: 1;
             opacity: 0;
-            animation: press 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: press 0.9s 0.08s cubic-bezier(0.16,1,0.3,1) forwards;
         }
 
-        .hn-v {
+        /* Cursor-reveal fill — clips to mouse position */
+        .hn-fill {
+            display: block;
+            font-family: var(--serif);
+            font-style: italic;
             font-weight: 700;
-            font-size: clamp(72px, 13.8vw, 204px);
+            font-size: clamp(76px, 17vw, 240px);
             letter-spacing: -0.025em;
-            animation-delay: 0.06s;
+            color: var(--ink);
+            position: absolute;
+            inset: 0;
+            text-align: center;
+            clip-path: circle(0px at 50% 50%);
+            transition: clip-path 0.35s cubic-bezier(0.16,1,0.3,1);
+            z-index: 2;
+            pointer-events: none;
         }
-        .hn-i {
+
+        /* "is" connector row */
+        .hn-row-is {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            padding: 14px 0 10px;
+            line-height: 1;
+        }
+
+        .hn-rule {
+            flex: 1;
+            max-width: 160px;
+            height: 1px;
+            background: var(--fade);
+            opacity: 0;
+            animation: appear 0.5s 0.42s forwards;
+        }
+
+        .hn-connector {
+            font-family: var(--serif);
+            font-style: italic;
             font-weight: 300;
-            font-size: clamp(46px, 8.8vw, 130px);
-            letter-spacing: -0.01em;
-            color: var(--dim);
-            padding-left: 24%;
-            animation-delay: 0.2s;
+            font-size: clamp(28px, 5.5vw, 72px);
+            color: var(--accent);
+            letter-spacing: 0.02em;
+            opacity: 0;
+            animation: appear 0.5s 0.42s forwards;
         }
-        .hn-u {
+
+        /* Solid filled bottom word */
+        .hn-solid {
+            display: block;
+            font-family: var(--serif);
+            font-style: italic;
             font-weight: 700;
-            font-size: clamp(72px, 13.8vw, 204px);
+            font-size: clamp(76px, 17vw, 240px);
             letter-spacing: -0.025em;
-            text-align: right;
-            animation-delay: 0.34s;
+            color: var(--ink);
+            opacity: 0;
+            animation: press 0.9s 0.58s cubic-bezier(0.16,1,0.3,1) forwards;
         }
 
         @keyframes press {
@@ -194,7 +258,10 @@
         }
 
         .hero-foot {
-            position: relative;
+            position: absolute;
+            bottom: 72px;
+            left: 52px;
+            right: 52px;
             z-index: 1;
             border-top: 1px solid var(--fade);
             padding-top: 22px;
@@ -203,7 +270,7 @@
             justify-content: space-between;
             gap: 24px;
             opacity: 0;
-            animation: appear 0.7s 0.62s forwards;
+            animation: appear 0.7s 0.72s forwards;
         }
 
         @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
@@ -544,10 +611,12 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 860px) {
-            header, .hero, footer { padding-left: 24px; padding-right: 24px; }
+            header, footer { padding-left: 24px; padding-right: 24px; }
+            .hero { padding: 80px 24px 0; }
             .wrap { padding-left: 24px; padding-right: 24px; }
             .hero-stamp { right: 24px; }
-            .hn-i { padding-left: 12%; }
+            .hero-foot { bottom: 40px; left: 24px; right: 24px; }
+            .hn-rule { max-width: 60px; }
             .proj { grid-template-columns: 1fr; }
             .proj-aside { display: none; }
             .proj-wm { font-size: 72px; }
@@ -558,7 +627,10 @@
         }
 
         @media (prefers-reduced-motion: reduce) {
-            .hn, .hero-foot { animation: none !important; opacity: 1 !important; transform: none !important; }
+            .hn-stroke, .hn-connector, .hn-rule, .hn-solid, .hero-foot {
+                animation: none !important; opacity: 1 !important; transform: none !important;
+            }
+            .hn-fill { clip-path: circle(100% at 50% 50%) !important; transition: none !important; }
             .mq-track { animation: none; }
             .rv { transition: none; opacity: 1; transform: none; }
         }
@@ -580,10 +652,20 @@
     <!-- Hero -->
     <section class="hero">
         <span class="hero-stamp">MMXXV · Portfolio</span>
-        <div class="hero-name">
-            <span class="hn hn-v">Viper</span>
-            <span class="hn hn-i">Is</span>
-            <span class="hn hn-u">Useful</span>
+        <div class="hero-name" id="hero-name">
+            <h1 class="sr-only">Viper is Useful</h1>
+            <div class="hn-row">
+                <span class="hn-stroke" aria-hidden="true">Viper</span>
+                <span class="hn-fill" aria-hidden="true">Viper</span>
+            </div>
+            <div class="hn-row hn-row-is">
+                <span class="hn-rule" aria-hidden="true"></span>
+                <span class="hn-connector" aria-hidden="true">is</span>
+                <span class="hn-rule" aria-hidden="true"></span>
+            </div>
+            <div class="hn-row">
+                <span class="hn-solid">Useful</span>
+            </div>
         </div>
         <div class="hero-foot">
             <p class="hero-tl">
@@ -767,6 +849,32 @@
             entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
         }, { threshold: 0.07 });
         document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+        // Hero fill reveal — cursor spotlight on outlined "Viper"
+        (function() {
+            const nm = document.getElementById('hero-name');
+            const fl = nm && nm.querySelector('.hn-fill');
+            if (!fl) return;
+            if (!window.matchMedia('(hover: hover)').matches) {
+                fl.style.clipPath = 'circle(100% at 50% 50%)';
+                return;
+            }
+            let active = false;
+            nm.addEventListener('mousemove', e => {
+                const r = fl.getBoundingClientRect();
+                const x = e.clientX - r.left;
+                const y = e.clientY - r.top;
+                if (!active) {
+                    fl.style.transition = 'clip-path 0.35s cubic-bezier(0.16,1,0.3,1)';
+                    active = true;
+                }
+                fl.style.clipPath = `circle(110px at ${x}px ${y}px)`;
+            });
+            nm.addEventListener('mouseleave', () => {
+                active = false;
+                fl.style.clipPath = 'circle(0px at 50% 50%)';
+            });
+        })();
 
         // Lanyard
         const uid = document.body.dataset.lanyardId;
