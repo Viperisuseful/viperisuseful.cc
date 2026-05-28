@@ -3,28 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to Instagram...</title>
+    <title>Instagram ↗ viperisuseful</title>
     <link rel="icon" type="image/png" href="../resources/Viperisuseful-LOGO.png">
-    <link rel="stylesheet" href="../style.css?v=1.0.6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg:     #F0EBE0;
+            --ink:    #141210;
+            --dim:    #7A6E65;
+            --fade:   #C4B8AE;
+            --accent: #C84B20;
+            --serif:  'Cormorant Garamond', Georgia, serif;
+            --sans:   'Syne', sans-serif;
+            --mono:   'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--mono);
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100svh;
+            overflow-x: hidden;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 8000;
+            opacity: 0.032;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        header {
+            position: fixed;
+            inset: 0 0 auto 0;
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 26px 52px;
+        }
+
+        .hdr-logo {
+            font-family: var(--sans);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--dim);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .hdr-logo:hover { color: var(--ink); }
+
+        main {
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 52px;
+        }
+
+        .rd-label {
+            font-family: var(--sans);
+            font-size: 0.58rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: appear 0.5s 0.1s forwards;
+        }
+
+        .rd-name {
+            font-family: var(--serif);
+            font-style: italic;
+            font-weight: 700;
+            font-size: clamp(56px, 11vw, 148px);
+            letter-spacing: -0.025em;
+            color: var(--ink);
+            line-height: 0.9;
+            margin-bottom: 16px;
+            opacity: 0;
+            animation: lift 0.7s 0.15s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+
+        .rd-url {
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            color: var(--dim);
+            margin-bottom: 52px;
+            opacity: 0;
+            animation: appear 0.5s 0.35s forwards;
+        }
+
+        .rd-bar-wrap {
+            width: min(360px, 70vw);
+            height: 1px;
+            background: var(--fade);
+            position: relative;
+            margin-bottom: 18px;
+            opacity: 0;
+            animation: appear 0.5s 0.4s forwards;
+        }
+
+        .rd-bar {
+            position: absolute;
+            top: 0; left: 0;
+            height: 1px;
+            background: var(--ink);
+            width: 0%;
+        }
+
+        .rd-count {
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            color: var(--dim);
+            letter-spacing: 0.08em;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: appear 0.5s 0.4s forwards;
+        }
+
+        .rd-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            animation: appear 0.5s 0.5s forwards;
+        }
+
+        .rd-now {
+            font-family: var(--sans);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+        .rd-now a { color: var(--accent); text-decoration: none; }
+        .rd-now a:hover { text-decoration: underline; }
+
+        .rd-back {
+            font-family: var(--sans);
+            font-size: 0.58rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .rd-back a { color: var(--dim); text-decoration: none; }
+        .rd-back a:hover { color: var(--ink); }
+
+        @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes lift { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 860px) {
+            header { padding: 26px 24px; }
+            main { padding: 80px 24px; }
+        }
+    </style>
 </head>
-<body data-redirect="https://www.instagram.com/viperisuseful/">
+<body>
     <header>
-        <div class="logo">
-             <a href="../">
-                <img src="../resources/Viperisuseful-LOGO.png" alt="Logo">
-             </a>
-        </div>
+        <a href="/" class="hdr-logo">viperisuseful.cc</a>
     </header>
 
-    <main class="redirect-container">
-        <h1>Heading to Instagram</h1>
-        <p>Please wait while we transport you to @viperisuseful...</p>
-        
-        <div class="loading-bar-container">
-            <div id="loading-bar" class="loading-bar"></div>
+    <main>
+        <p class="rd-label">Redirecting to</p>
+        <h1 class="rd-name">Instagram</h1>
+        <p class="rd-url">@viperisuseful</p>
+        <div class="rd-bar-wrap">
+            <div class="rd-bar" id="rd-bar"></div>
+        </div>
+        <p class="rd-count" id="rd-count">3 seconds</p>
+        <div class="rd-actions">
+            <p class="rd-now"><a href="https://www.instagram.com/viperisuseful/">Go now ↗</a></p>
+            <p class="rd-back"><a href="/">← Back to portfolio</a></p>
         </div>
     </main>
 
-    <script src="../script.js"></script>
+    <script>
+        const dest = 'https://www.instagram.com/viperisuseful/';
+        const bar = document.getElementById('rd-bar');
+        const count = document.getElementById('rd-count');
+
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            bar.style.transition = 'width 3s linear';
+            bar.style.width = '100%';
+        }));
+
+        let s = 3;
+        const tick = setInterval(() => {
+            s--;
+            if (s === 1) count.textContent = '1 second';
+            else if (s <= 0) { count.textContent = 'Redirecting…'; clearInterval(tick); window.location.href = dest; }
+            else count.textContent = s + ' seconds';
+        }, 1000);
+    </script>
 </body>
 </html>

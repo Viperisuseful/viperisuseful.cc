@@ -137,20 +137,6 @@
             pointer-events: none;
         }
 
-        .hero-stamp {
-            position: absolute;
-            top: 30px;
-            right: 52px;
-            font-family: var(--sans);
-            font-size: 0.55rem;
-            font-weight: 700;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--fade);
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-        }
-
         /* ── HERO NAME (EDITORIAL STROKE × FILL) ── */
         .hero-name {
             position: relative;
@@ -614,7 +600,6 @@
             header, footer { padding-left: 24px; padding-right: 24px; }
             .hero { padding: 80px 24px 0; }
             .wrap { padding-left: 24px; padding-right: 24px; }
-            .hero-stamp { right: 24px; }
             .hero-foot { bottom: 40px; left: 24px; right: 24px; }
             .hn-rule { max-width: 60px; }
             .proj { grid-template-columns: 1fr; }
@@ -651,7 +636,6 @@
 
     <!-- Hero -->
     <section class="hero">
-        <span class="hero-stamp">MMXXV · Portfolio</span>
         <div class="hero-name" id="hero-name">
             <h1 class="sr-only">Viper is Useful</h1>
             <div class="hn-row">
@@ -718,7 +702,7 @@
                 <div>
                     <div class="proj-wm">02</div>
                     <h3 class="proj-name">Turtle Cave</h3>
-                    <p class="proj-desc">Full-stack Discord community platform — web dashboard, moderation bot, OAuth login, mod logs, appeals, tickets, giveaways, booster tracking, and a live Minecraft–Discord bridge. Three Heroku processes running in tandem: web, bot, and background workers.</p>
+                    <p class="proj-desc">Full-stack Discord community platform — web dashboard, moderation bot, OAuth login, mod logs, appeals, tickets, giveaways, booster tracking, and a live Minecraft–Discord bridge.</p>
                     <div class="proj-tags">
                         <span class="tag">Node.js</span>
                         <span class="tag">Discord.js v14</span>
@@ -738,7 +722,7 @@
                 <div>
                     <div class="proj-wm">03</div>
                     <h3 class="proj-name">QuickRunLab</h3>
-                    <p class="proj-desc">Cloud code execution platform — C, Python, and R via a PTY-backed interactive terminal over WebSocket. Ships a Gemini AI tutor with model fallback, Cloudflare Turnstile CAPTCHA, email-verified auth, API key system, run quotas, and monthly Brevo usage reports.</p>
+                    <p class="proj-desc">Cloud code execution platform — C, Python, and R via a PTY-backed interactive terminal over WebSocket. Ships a Gemini AI tutor with model fallback, email-verified auth, API key system, and run quotas.</p>
                     <div class="proj-tags">
                         <span class="tag">Python</span>
                         <span class="tag">Flask</span>
@@ -801,9 +785,9 @@
                 <div class="sh-rule"></div>
             </div>
             <nav class="c-links rv" aria-label="Social links">
-                <a href="https://github.com/Viperisuseful" target="_blank" rel="noreferrer" class="c-link">GitHub<span class="c-sup">↗</span></a>
+                <a href="github/" class="c-link">GitHub<span class="c-sup">↗</span></a>
                 <a href="discord/" class="c-link">Discord<span class="c-sup">↗</span></a>
-                <a href="https://modrinth.com/user/viperisuseful1" target="_blank" rel="noreferrer" class="c-link">Modrinth<span class="c-sup">↗</span></a>
+                <a href="modrinth/" class="c-link">Modrinth<span class="c-sup">↗</span></a>
                 <a href="instagram/" class="c-link">Instagram<span class="c-sup">↗</span></a>
                 <a href="mailto:viper@viperisuseful.cc" class="c-link">Email<span class="c-sup">↗</span></a>
             </nav>
