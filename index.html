@@ -92,6 +92,10 @@
             color: var(--dim);
             text-decoration: none;
             transition: color 0.2s;
+            /* Extend tap area to 44px without changing visual size */
+            padding: 16px 0;
+            display: inline-flex;
+            align-items: center;
         }
         .hdr-logo:hover { color: var(--ink); }
 
@@ -609,6 +613,11 @@
             footer { flex-direction: column; gap: 10px; }
             body { cursor: auto; }
             #xhair { display: none; }
+        }
+
+        /* Show fill fully on touch-only devices (no hover capability) */
+        @media (hover: none) {
+            .hn-fill { clip-path: circle(100% at 50% 50%) !important; transition: none !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
