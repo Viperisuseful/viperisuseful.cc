@@ -1,5 +1,12 @@
 [
   {
+    "slug": "quickrunlab-is-back",
+    "title": "QuickRunLab is back, with more room to run",
+    "date": "2026-05-29",
+    "tags": ["QuickRunLab", "Infra", "Update"],
+    "excerpt": "I shut QuickRunLab down a while back because I couldn't justify the hosting bill. Oracle's free tier is the reason it's running again, with more compute than it ever had."
+  },
+  {
     "slug": "viperproxy-26x",
     "title": "Porting Viperproxy to 26.x (and every version after)",
     "date": "2026-05-29",
