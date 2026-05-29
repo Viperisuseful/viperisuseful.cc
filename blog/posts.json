@@ -1,0 +1,16 @@
+[
+  {
+    "slug": "a-new-home",
+    "title": "A new home for viperisuseful.cc",
+    "date": "2026-05-29",
+    "tags": ["Meta", "Design"],
+    "excerpt": "I rebuilt the site from scratch with an editorial, print-inspired look — and added this journal so I can actually write about what I'm shipping."
+  },
+  {
+    "slug": "viperproxy-routing",
+    "title": "How Viperproxy routes Minecraft through a proxy",
+    "date": "2026-05-20",
+    "tags": ["Minecraft", "Fabric", "Deep Dive"],
+    "excerpt": "A look under the hood at how the mod tunnels every multiplayer connection through SOCKS5 or HTTP, with a kill switch that fails closed."
+  }
+]

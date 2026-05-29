@@ -99,6 +99,27 @@
         }
         .hdr-logo:hover { color: var(--ink); }
 
+        .hdr-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .hdr-link {
+            font-family: var(--sans);
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--dim);
+            text-decoration: none;
+            transition: color 0.2s;
+            padding: 16px 0;
+            display: inline-flex;
+            align-items: center;
+        }
+        .hdr-link:hover { color: var(--accent); }
+
         .hdr-status {
             display: flex;
             align-items: center;
@@ -637,9 +658,12 @@
     <!-- Header -->
     <header>
         <a href="/" class="hdr-logo">viperisuseful.cc</a>
-        <div class="hdr-status">
-            <div class="sdot" id="hdr-dot"></div>
-            <span id="hdr-txt">—</span>
+        <div class="hdr-right">
+            <a href="blog/" class="hdr-link">Journal</a>
+            <div class="hdr-status">
+                <div class="sdot" id="hdr-dot"></div>
+                <span id="hdr-txt">—</span>
+            </div>
         </div>
     </header>
 
