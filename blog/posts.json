@@ -1,9 +1,9 @@
 [
   {
     "slug": "viperproxy-26x",
-    "title": "Porting Viperproxy to 26.x — and every version after it",
+    "title": "Porting Viperproxy to 26.x (and every version after)",
     "date": "2026-05-29",
     "tags": ["Minecraft", "Fabric", "Release"],
-    "excerpt": "Minecraft 26.x rewired the part of the client Viperproxy hooks into. Here's how I got the proxy working again — and why every future version gets the same treatment."
+    "excerpt": "Minecraft 26.x moved the part of the client Viperproxy hooks into. Here's how I got the proxy working again, and how I'll keep it working on every version after."
   }
 ]
