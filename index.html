@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>try{var t=localStorage.getItem('theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
     <title>viperisuseful</title>
     <meta name="description" content="viperisuseful — solo developer. Minecraft mods, Discord communities, web apps.">
     <meta property="og:title" content="viperisuseful">
@@ -14,6 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/theme.css">
 
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -491,7 +493,7 @@
         .now-block { padding-bottom: 84px; }
 
         .dc-card {
-            background: #FDFAF5;
+            background: var(--card);
             border: 1px solid var(--fade);
             padding: 24px 28px;
             display: grid;
@@ -517,7 +519,7 @@
             width: 14px;
             height: 14px;
             border-radius: 50%;
-            border: 2.5px solid #FDFAF5;
+            border: 2.5px solid var(--card);
             background: var(--fade);
             transition: background 0.4s;
         }
@@ -624,6 +626,8 @@
         @media (max-width: 860px) {
             header, footer { padding-left: 24px; padding-right: 24px; }
             .hero { padding: 80px 24px 0; }
+            .hdr-right { gap: 14px; }
+            #hdr-txt { display: none; }
             .wrap { padding-left: 24px; padding-right: 24px; }
             .hero-foot { bottom: 40px; left: 24px; right: 24px; }
             .hn-rule { max-width: 60px; }
@@ -664,6 +668,10 @@
                 <div class="sdot" id="hdr-dot"></div>
                 <span id="hdr-txt">—</span>
             </div>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M2.5 12h2M19.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"/></svg>
+            </button>
         </div>
     </header>
 
@@ -973,5 +981,6 @@
         connect();
     })();
     </script>
+    <script src="/theme.js"></script>
 </body>
 </html>

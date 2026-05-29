@@ -1,0 +1,62 @@
+/* ════════════════════════════════════════════
+   Global theme: warm dark palette + toggle control
+   Shared across every page. Light values live in each
+   page's own :root; this file adds the dark overrides
+   and styles the toggle button. Dark rules use
+   :root[data-theme="dark"] so they win regardless of
+   stylesheet order.
+   ════════════════════════════════════════════ */
+
+/* Light default for the card surface (homepage Discord card).
+   Every other light value is defined per page. */
+:root { --card: #FDFAF5; }
+
+/* Warm espresso dark theme */
+:root[data-theme="dark"] {
+    --bg:     #15120E;
+    --ink:    #ECE3D6;
+    --dim:    #9A8B7B;
+    --fade:   #38302A;
+    --accent: #E0683C;
+    --inv:    #26211A;
+    --inv-t:  #D8CFC2;
+    --card:   #211C16;
+}
+
+/* Component touch-ups the variables can't express on their own */
+:root[data-theme="dark"] .dc-card {
+    box-shadow: 0 10px 36px rgba(0,0,0,0.40);
+}
+:root[data-theme="dark"] .post-body code {
+    background: rgba(255,255,255,0.07);
+    border-color: rgba(255,255,255,0.13);
+}
+:root[data-theme="dark"] .post-body pre {
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: none;
+    border: 0;
+    color: var(--dim);
+    transition: color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle:hover { color: var(--accent); }
+.theme-toggle svg {
+    width: 17px;
+    height: 17px;
+    display: block;
+}
+
+/* Show the moon in light mode (tap to go dark), sun in dark mode */
+.theme-toggle .icon-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+:root[data-theme="dark"] .theme-toggle .icon-sun { display: block; }

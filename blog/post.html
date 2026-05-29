@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>try{var t=localStorage.getItem('theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
     <title>Journal · viperisuseful</title>
     <meta name="description" content="A post from the viperisuseful journal.">
     <link rel="icon" type="image/png" href="../resources/Viperisuseful-LOGO.png">
@@ -10,13 +11,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="/theme.css">
 </head>
 <body>
     <div id="xhair"></div>
 
     <header>
         <a href="/" class="hdr-logo">viperisuseful.cc</a>
-        <a href="./" class="hdr-crumb"><span class="dot">&larr;</span> Journal</a>
+        <div class="hdr-right">
+            <a href="./" class="hdr-crumb"><span class="dot">&larr;</span> Journal</a>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
+                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M2.5 12h2M19.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"/></svg>
+            </button>
+        </div>
     </header>
 
     <article class="article">
@@ -38,5 +46,6 @@
     </footer>
 
     <script src="blog.js"></script>
+    <script src="/theme.js"></script>
 </body>
 </html>

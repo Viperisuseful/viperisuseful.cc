@@ -103,6 +103,12 @@ header {
 .hdr-crumb:hover { color: var(--accent); }
 .hdr-crumb .dot { color: var(--fade); }
 
+.hdr-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 /* ── WRAP ── */
 .wrap {
     max-width: 1160px;
