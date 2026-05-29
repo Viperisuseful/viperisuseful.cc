@@ -1,16 +1,9 @@
 [
   {
-    "slug": "a-new-home",
-    "title": "A new home for viperisuseful.cc",
+    "slug": "viperproxy-26x",
+    "title": "Porting Viperproxy to 26.x — and every version after it",
     "date": "2026-05-29",
-    "tags": ["Meta", "Design"],
-    "excerpt": "I rebuilt the site from scratch with an editorial, print-inspired look — and added this journal so I can actually write about what I'm shipping."
-  },
-  {
-    "slug": "viperproxy-routing",
-    "title": "How Viperproxy routes Minecraft through a proxy",
-    "date": "2026-05-20",
-    "tags": ["Minecraft", "Fabric", "Deep Dive"],
-    "excerpt": "A look under the hood at how the mod tunnels every multiplayer connection through SOCKS5 or HTTP, with a kill switch that fails closed."
+    "tags": ["Minecraft", "Fabric", "Release"],
+    "excerpt": "Minecraft 26.x rewired the part of the client Viperproxy hooks into. Here's how I got the proxy working again — and why every future version gets the same treatment."
   }
 ]
