@@ -20,10 +20,12 @@ More compute than the old box ever had. In practice that means longer runs and a
 
 You can also have a real account now. Sign up with an email, or link straight through Google or GitHub if you'd rather not make another password. Your work follows you around instead of vanishing the moment you close the tab.
 
-## One honest warning: rootz is a mess
+## A heads-up about the file manager
 
-The file manager, rootz, is in shambles right now. I'm not going to pretend otherwise. It half works, it does things I never asked it to, and I'm in the middle of tearing it apart to rebuild it properly. If you poke at it and it acts strange, you're not imagining things. It really is like that.
+QuickRunLab's file manager runs on rootz, a service that gave me free API access so I didn't have to pay to store anyone's files. For a project living on a free server, that was a real help.
 
-Everything else is solid. The file manager just needs a few more late nights.
+The problem is rootz itself. Their dashboard has gotten buggy lately and the whole site feels off, and when the thing underneath you turns unreliable, everything sitting on top of it does too. So the file manager feels rough right now, and most of that isn't something I can fix from my end.
 
-So go run something at [quickrunlab.tech](https://www.quickrunlab.tech/). And if rootz eats your file, well, now you know why.
+The rest of QuickRunLab is steady. File storage is the weak spot, so I'm moving it onto a different service. Until that's done, the file manager is the one part I wouldn't fully trust.
+
+So go run something at [quickrunlab.tech](https://www.quickrunlab.tech/). Just don't hand the file manager anything you can't afford to lose until I've moved it somewhere steadier.
