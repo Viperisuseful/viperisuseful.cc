@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>try{var t=localStorage.getItem('theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
     <title>viperisuseful</title>
-    <meta name="description" content="viperisuseful — solo developer. Minecraft mods, Discord communities, web apps.">
+    <meta name="description" content="viperisuseful, solo developer. Minecraft mods, Discord communities, web apps.">
     <meta property="og:title" content="viperisuseful">
     <meta property="og:description" content="Solo developer. Minecraft mods, Discord bots, web apps.">
     <meta property="og:image" content="resources/Viperisuseful-LOGO.png">
@@ -321,7 +321,6 @@
             white-space: nowrap;
             animation: slide 40s linear infinite;
         }
-        .mq-track:hover { animation-play-state: paused; }
 
         @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
@@ -666,7 +665,7 @@
             <a href="blog/" class="hdr-link">Journal</a>
             <div class="hdr-status">
                 <div class="sdot" id="hdr-dot"></div>
-                <span id="hdr-txt">—</span>
+                <span id="hdr-txt">·</span>
             </div>
             <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
                 <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -699,7 +698,7 @@
             </p>
             <div class="hero-disc">
                 <div class="sdot" id="hero-dot"></div>
-                <span id="hero-txt">—</span>
+                <span id="hero-txt">·</span>
             </div>
         </div>
     </section>
@@ -723,7 +722,7 @@
                 <div>
                     <div class="proj-wm">01</div>
                     <h3 class="proj-name">Viperproxy</h3>
-                    <p class="proj-desc">Fabric Minecraft mod that routes all multiplayer connections through SOCKS5, HTTP, or HTTPS proxies. Features a kill switch, 15-second heartbeat, multi-profile encrypted credentials on-disk, and a custom config UI injected directly into the Multiplayer screen.</p>
+                    <p class="proj-desc">A Fabric mod that routes your Minecraft multiplayer traffic through a SOCKS5, HTTP, or HTTPS proxy. It has a kill switch that fails closed so a dropped proxy never leaks your real IP, a 15-second heartbeat, encrypted multi-profile credentials on disk, and a config screen built right into the multiplayer menu.</p>
                     <div class="proj-tags">
                         <span class="tag">Java 21</span>
                         <span class="tag">Fabric API</span>
@@ -734,7 +733,7 @@
                 </div>
                 <div class="proj-aside">
                     <span class="proj-st live">Live</span>
-                    <a href="https://modrinth.com/user/viperisuseful1" target="_blank" rel="noreferrer" class="proj-lnk">Modrinth ↗</a>
+                    <a href="https://modrinth.com/mod/viperproxy" target="_blank" rel="noreferrer" class="proj-lnk">Modrinth ↗</a>
                     <a href="https://github.com/Viperisuseful/viperproxy" target="_blank" rel="noreferrer" class="proj-lnk">GitHub ↗</a>
                 </div>
             </div>
@@ -743,14 +742,13 @@
                 <div>
                     <div class="proj-wm">02</div>
                     <h3 class="proj-name">Turtle Cave</h3>
-                    <p class="proj-desc">Full-stack Discord community platform — web dashboard, moderation bot, OAuth login, mod logs, appeals, tickets, giveaways, booster tracking, and a live Minecraft–Discord bridge.</p>
+                    <p class="proj-desc">A full-stack Discord community platform with a web dashboard and a moderation bot. It handles OAuth login, mod logs, appeals, tickets, giveaways, and booster tracking.</p>
                     <div class="proj-tags">
                         <span class="tag">Node.js</span>
                         <span class="tag">Discord.js v14</span>
                         <span class="tag">MongoDB</span>
                         <span class="tag">Express</span>
                         <span class="tag">Sentry</span>
-                        <span class="tag">Heroku</span>
                     </div>
                 </div>
                 <div class="proj-aside">
@@ -763,7 +761,7 @@
                 <div>
                     <div class="proj-wm">03</div>
                     <h3 class="proj-name">QuickRunLab</h3>
-                    <p class="proj-desc">Cloud code execution platform — C, Python, and R via a PTY-backed interactive terminal over WebSocket. Ships a Gemini AI tutor with model fallback, email-verified auth, API key system, and run quotas.</p>
+                    <p class="proj-desc">A cloud platform that runs C, Python, and R in a real interactive terminal in your browser, backed by a PTY over WebSocket. It also has a Gemini AI tutor with model fallback, email-verified accounts, an API key system, and run quotas.</p>
                     <div class="proj-tags">
                         <span class="tag">Python</span>
                         <span class="tag">Flask</span>
@@ -784,7 +782,7 @@
                 <div>
                     <div class="proj-wm">04</div>
                     <h3 class="proj-name">DulkirMod Port</h3>
-                    <p class="proj-desc">Independent port of DulkirMod-Fabric — a Hypixel Skyblock utility mod — to Minecraft 1.21.11. Written in Kotlin and Java on the Fabric toolchain, tracking upstream changes from the original inglettronald repository.</p>
+                    <p class="proj-desc">An independent port of DulkirMod-Fabric, a Hypixel Skyblock utility mod, brought up to Minecraft 1.21.11. Written in Kotlin and Java on the Fabric toolchain, it stays in sync with upstream changes from the original inglettronald repo.</p>
                     <div class="proj-tags">
                         <span class="tag">Kotlin</span>
                         <span class="tag">Java</span>
@@ -858,7 +856,7 @@
         }
 
         // Marquee
-        const items = ['Java','·','Python','·','Node.js','·','Fabric API','·','Discord.js v14','·','FastAPI','·','MongoDB','·','PostgreSQL','·','Redis','·','Docker','·','Flask','·','Kotlin','·','Gradle','·','SocketIO','·','Heroku','·','Playwright','·','Netty'];
+        const items = ['Java','·','Python','·','Node.js','·','Fabric API','·','Discord.js v14','·','FastAPI','·','MongoDB','·','PostgreSQL','·','Redis','·','Docker','·','Flask','·','Kotlin','·','Gradle','·','SocketIO','·','Playwright','·','Netty'];
         const mq = document.getElementById('mq');
         if (mq) {
             [...items, ...items].forEach(s => {
