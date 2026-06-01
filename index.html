@@ -1,984 +1,1398 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script>try{var t=localStorage.getItem('theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-    <title>viperisuseful</title>
-    <meta name="description" content="viperisuseful, solo developer. Minecraft mods, Discord communities, web apps.">
-    <meta property="og:title" content="viperisuseful">
-    <meta property="og:description" content="Solo developer. Minecraft mods, Discord bots, web apps.">
-    <meta property="og:image" content="resources/Viperisuseful-LOGO.png">
-    <meta property="og:url" content="https://viperisuseful.cc">
-    <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/theme.css">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script>
+            try {
+                var t =
+                    localStorage.getItem("theme") ||
+                    (window.matchMedia &&
+                    matchMedia("(prefers-color-scheme:dark)").matches
+                        ? "dark"
+                        : "light");
+                document.documentElement.setAttribute("data-theme", t);
+            } catch (e) {}
+        </script>
+        <title>viperisuseful</title>
+        <meta
+            name="description"
+            content="viperisuseful, solo developer. Minecraft mods, Discord communities, web apps."
+        />
+        <meta property="og:title" content="viperisuseful" />
+        <meta
+            property="og:description"
+            content="Solo developer. Minecraft mods, Discord bots, web apps."
+        />
+        <meta property="og:image" content="resources/Viperisuseful-LOGO.png" />
+        <meta property="og:url" content="https://viperisuseful.cc" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <link
+            rel="icon"
+            type="image/png"
+            href="resources/Viperisuseful-LOGO.png"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="/theme.css" />
 
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --bg:     #F1EEE4;
-            --ink:    #17191A;
-            --dim:    #66675E;
-            --fade:   #C9C5B8;
-            --accent: #2E5C4B;
-            --inv:    #17191A;
-            --inv-t:  #DBDAD2;
-            --serif:  'Cormorant Garamond', Georgia, serif;
-            --sans:   'Syne', sans-serif;
-            --mono:   'JetBrains Mono', monospace;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: var(--mono);
-            background: var(--bg);
-            color: var(--ink);
-            min-height: 100svh;
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* ── PAPER GRAIN ── */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 8000;
-            opacity: 0.032;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
-
-        /* ── CROSSHAIR CURSOR ── */
-        #xhair {
-            position: fixed;
-            width: 24px;
-            height: 24px;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: transform 0.12s cubic-bezier(0.16,1,0.3,1);
-        }
-        #xhair::before, #xhair::after {
-            content: '';
-            position: absolute;
-            background: var(--accent);
-        }
-        #xhair::before { width: 1px; height: 100%; left: calc(50% - 0.5px); top: 0; }
-        #xhair::after  { height: 1px; width: 100%; top: calc(50% - 0.5px); left: 0; }
-        body.on-link #xhair { transform: translate(-50%, -50%) scale(1.8); opacity: 0.7; }
-
-        /* ── HEADER ── */
-        header {
-            position: fixed;
-            inset: 0 0 auto 0;
-            z-index: 500;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 26px 52px;
-        }
-
-        .hdr-logo {
-            font-family: var(--sans);
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--dim);
-            text-decoration: none;
-            transition: color 0.2s;
-            /* Extend tap area to 44px without changing visual size */
-            padding: 16px 0;
-            display: inline-flex;
-            align-items: center;
-        }
-        .hdr-logo:hover { color: var(--ink); }
-
-        .hdr-right {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .hdr-link {
-            font-family: var(--sans);
-            font-size: 0.62rem;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--dim);
-            text-decoration: none;
-            transition: color 0.2s;
-            padding: 16px 0;
-            display: inline-flex;
-            align-items: center;
-        }
-        .hdr-link:hover { color: var(--accent); }
-
-        .hdr-status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--sans);
-            font-size: 0.6rem;
-            font-weight: 500;
-            color: var(--dim);
-            letter-spacing: 0.08em;
-        }
-
-        .sdot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--fade);
-            flex-shrink: 0;
-            transition: background 0.4s, box-shadow 0.4s;
-        }
-        .sdot.online { background: #3BA55C; box-shadow: 0 0 0 2px rgba(59,165,92,.2); }
-        .sdot.idle   { background: #FAA81A; box-shadow: 0 0 0 2px rgba(250,168,26,.2); }
-        .sdot.dnd    { background: #ED4245; box-shadow: 0 0 0 2px rgba(237,66,69,.2); }
-
-        /* ── HERO ── */
-        .hero {
-            position: relative;
-            min-height: 100svh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 80px 52px 0;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 80% 60% at 50% 60%, transparent 50%, rgba(20,18,16,0.03) 100%);
-            pointer-events: none;
-        }
-
-        /* ── HERO NAME (EDITORIAL STROKE × FILL) ── */
-        .hero-name {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            user-select: none;
-            width: 100%;
-        }
-
-        .sr-only {
-            position: absolute;
-            width: 1px; height: 1px;
-            padding: 0; margin: -1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
-            border: 0;
-        }
-
-        .hn-row {
-            display: block;
-            line-height: 0.88;
-            position: relative;
-        }
-
-        /* Outlined ghost text */
-        .hn-stroke {
-            display: block;
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 700;
-            font-size: clamp(76px, 17vw, 240px);
-            letter-spacing: -0.025em;
-            -webkit-text-stroke: 1.5px var(--ink);
-            color: transparent;
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            animation: press 0.9s 0.08s cubic-bezier(0.16,1,0.3,1) forwards;
-        }
-
-        /* Cursor-reveal fill — clips to mouse position */
-        .hn-fill {
-            display: block;
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 700;
-            font-size: clamp(76px, 17vw, 240px);
-            letter-spacing: -0.025em;
-            color: var(--ink);
-            position: absolute;
-            inset: 0;
-            text-align: center;
-            clip-path: circle(0px at 50% 50%);
-            transition: clip-path 0.35s cubic-bezier(0.16,1,0.3,1);
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        /* "is" connector row */
-        .hn-row-is {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 24px;
-            padding: 14px 0 10px;
-            line-height: 1;
-        }
-
-        .hn-rule {
-            flex: 1;
-            max-width: 160px;
-            height: 1px;
-            background: var(--fade);
-            opacity: 0;
-            animation: appear 0.5s 0.42s forwards;
-        }
-
-        .hn-connector {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 300;
-            font-size: clamp(28px, 5.5vw, 72px);
-            color: var(--accent);
-            letter-spacing: 0.02em;
-            opacity: 0;
-            animation: appear 0.5s 0.42s forwards;
-        }
-
-        /* Solid filled bottom word */
-        .hn-solid {
-            display: block;
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 700;
-            font-size: clamp(76px, 17vw, 240px);
-            letter-spacing: -0.025em;
-            color: var(--ink);
-            opacity: 0;
-            animation: press 0.9s 0.58s cubic-bezier(0.16,1,0.3,1) forwards;
-        }
-
-        @keyframes press {
-            from { opacity: 0; transform: scale(1.04) translateY(6px); }
-            to   { opacity: 1; transform: scale(1)    translateY(0); }
-        }
-
-        .hero-foot {
-            position: absolute;
-            bottom: 72px;
-            left: 52px;
-            right: 52px;
-            z-index: 1;
-            border-top: 1px solid var(--fade);
-            padding-top: 22px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 24px;
-            opacity: 0;
-            animation: appear 0.7s 0.72s forwards;
-        }
-
-        @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
-
-        .hero-tl {
-            font-family: var(--mono);
-            font-size: 0.7rem;
-            color: var(--dim);
-            line-height: 1.75;
-        }
-        .hero-tl em { color: var(--accent); font-style: normal; }
-
-        .hero-disc {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--mono);
-            font-size: 0.62rem;
-            color: var(--dim);
-            white-space: nowrap;
-            flex-shrink: 0;
-        }
-
-        /* ── MARQUEE (PINE BAND) ── */
-        .mq-band {
-            background: var(--band);
-            padding: 15px 0;
-            overflow: hidden;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-
-        .mq-track {
-            display: flex;
-            white-space: nowrap;
-            animation: slide 40s linear infinite;
-        }
-
-        @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-        .mq-item {
-            font-family: var(--mono);
-            font-size: 0.66rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: rgba(238,235,225,0.5);
-            padding: 0 26px;
-            flex-shrink: 0;
-        }
-        .mq-item.hi { color: rgba(238,235,225,0.92); }
-
-        /* ── WRAP ── */
-        .wrap {
-            max-width: 1160px;
-            margin: 0 auto;
-            padding: 0 52px;
-        }
-
-        /* ── SECTION HEADING ── */
-        .sh {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            padding: 84px 0 48px;
-        }
-        .sh-tag {
-            font-family: var(--sans);
-            font-size: 0.56rem;
-            font-weight: 800;
-            letter-spacing: 0.22em;
-            text-transform: uppercase;
-            color: var(--accent);
-            flex-shrink: 0;
-        }
-        .sh-title {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 600;
-            font-size: clamp(1.3rem, 2.3vw, 1.9rem);
-        }
-        .sh-rule {
-            flex: 1;
-            height: 1px;
-            background: var(--fade);
-        }
-
-        /* ── PROJECTS ── */
-        .projs { padding-bottom: 84px; }
-
-        .proj {
-            position: relative;
-            display: grid;
-            grid-template-columns: 1fr max-content;
-            gap: 0 40px;
-            align-items: start;
-            padding: 38px 0;
-            border-top: 1px solid var(--fade);
-            overflow: hidden;
-            transition: border-top-color 0.3s;
-        }
-        .proj:last-child { border-bottom: 1px solid var(--fade); }
-        .proj:hover { border-top-color: rgba(46,92,75,0.3); }
-
-        /* Watermark numeral */
-        .proj-wm {
-            position: absolute;
-            right: 0;
-            top: -10px;
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 300;
-            font-size: 112px;
-            line-height: 1;
-            color: rgba(196,184,174,0.2);
-            user-select: none;
-            pointer-events: none;
-            transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), color 0.3s;
-        }
-        .proj:hover .proj-wm {
-            transform: scale(1.06) translateY(-4px);
-            color: rgba(46,92,75,0.08);
-        }
-
-        .proj-name {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 700;
-            font-size: clamp(1.7rem, 3.2vw, 2.8rem);
-            line-height: 1;
-            margin-bottom: 14px;
-            transition: color 0.25s;
-            position: relative;
-            display: inline-block;
-        }
-        .proj:hover .proj-name { color: var(--accent); }
-
-        .proj-desc {
-            font-family: var(--mono);
-            font-size: 0.73rem;
-            color: var(--dim);
-            line-height: 1.8;
-            max-width: 580px;
-            margin-bottom: 18px;
-        }
-
-        .proj-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .tag {
-            font-family: var(--sans);
-            font-size: 0.53rem;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--dim);
-            border: 1px solid var(--fade);
-            padding: 3px 9px;
-            transition: border-color 0.2s, color 0.2s;
-        }
-        .proj:hover .tag { border-color: rgba(46,92,75,0.2); }
-
-        .proj-aside {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 10px;
-            padding-top: 6px;
-        }
-
-        .proj-st {
-            font-family: var(--sans);
-            font-size: 0.52rem;
-            font-weight: 800;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--fade);
-        }
-        .proj-st.live     { color: #3BA55C; }
-        .proj-st.archived { color: #FAA81A; }
-
-        .proj-lnk {
-            font-family: var(--sans);
-            font-size: 0.58rem;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-decoration: none;
-            color: var(--ink);
-            position: relative;
-        }
-        .proj-lnk::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width 0.35s cubic-bezier(0.16,1,0.3,1);
-        }
-        .proj-lnk:hover { color: var(--accent); }
-        .proj-lnk:hover::after { width: 100%; }
-
-        /* ── DISCORD STATUS ── */
-        .now-block { padding-bottom: 84px; }
-
-        .dc-card {
-            background: var(--card);
-            border: 1px solid var(--fade);
-            padding: 24px 28px;
-            display: grid;
-            grid-template-columns: 64px 1fr;
-            gap: 20px;
-            align-items: center;
-            max-width: 430px;
-            box-shadow: 0 8px 40px rgba(20,18,16,0.07), 0 2px 8px rgba(20,18,16,0.04);
-        }
-
-        .dc-aw { position: relative; display: inline-block; }
-        .dc-av {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-        }
-        .dc-sd {
-            position: absolute;
-            bottom: 1px;
-            right: 1px;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            border: 2.5px solid var(--card);
-            background: var(--fade);
-            transition: background 0.4s;
-        }
-        .dc-sd.online { background: #3BA55C; }
-        .dc-sd.idle   { background: #FAA81A; }
-        .dc-sd.dnd    { background: #ED4245; }
-
-        .dc-nm {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 700;
-            font-size: 1.2rem;
-            margin-bottom: 4px;
-        }
-        .dc-cs {
-            font-family: var(--mono);
-            font-size: 0.63rem;
-            color: var(--dim);
-            margin-bottom: 10px;
-        }
-        .dc-ac {
-            font-family: var(--mono);
-            font-size: 0.63rem;
-            color: var(--dim);
-            border-left: 2px solid var(--accent);
-            padding-left: 10px;
-            line-height: 1.55;
-        }
-        .dc-ac strong { color: var(--ink); font-weight: 500; }
-
-        /* ── CONNECT ── */
-        .connect-block { padding-bottom: 130px; }
-
-        .c-links {
-            display: flex;
-            flex-wrap: wrap;
-            row-gap: 4px;
-            column-gap: 0;
-            align-items: baseline;
-        }
-
-        .c-link {
-            font-family: var(--serif);
-            font-style: italic;
-            font-weight: 700;
-            font-size: clamp(1.8rem, 3.6vw, 3.2rem);
-            text-decoration: none;
-            color: var(--ink);
-            padding: 10px 44px 10px 0;
-            position: relative;
-            white-space: nowrap;
-            transition: color 0.25s;
-        }
-        .c-link::after {
-            content: '';
-            position: absolute;
-            bottom: 8px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
-        .c-link:hover { color: var(--accent); }
-        .c-link:hover::after { width: calc(100% - 44px); }
-
-        .c-sup {
-            font-family: var(--sans);
-            font-style: normal;
-            font-size: 0.5rem;
-            font-weight: 700;
-            vertical-align: super;
-            margin-left: 3px;
-            opacity: 0.4;
-            letter-spacing: 0.04em;
-        }
-
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid var(--fade);
-            padding: 28px 52px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        footer p {
-            font-family: var(--sans);
-            font-size: 0.58rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--fade);
-        }
-
-        /* ── REVEAL ── */
-        .rv {
-            opacity: 0;
-            transform: translateY(22px);
-            transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
-        }
-        .rv.vis { opacity: 1; transform: none; }
-
-        /* ── RESPONSIVE ── */
-        @media (max-width: 860px) {
-            header, footer { padding-left: 24px; padding-right: 24px; }
-            .hero { padding: 80px 24px 0; }
-            .hdr-right { gap: 14px; }
-            #hdr-txt { display: none; }
-            .wrap { padding-left: 24px; padding-right: 24px; }
-            .hero-foot { bottom: 40px; left: 24px; right: 24px; }
-            .hn-rule { max-width: 60px; }
-            .proj { grid-template-columns: 1fr; }
-            .proj-aside { display: none; }
-            .proj-wm { font-size: 72px; }
-            .c-link { padding-right: 28px; }
-            footer { flex-direction: column; gap: 10px; }
-            body { cursor: auto; }
-            #xhair { display: none; }
-        }
-
-        /* Show fill fully on touch-only devices (no hover capability) */
-        @media (hover: none) {
-            .hn-fill { clip-path: circle(100% at 50% 50%) !important; transition: none !important; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .hn-stroke, .hn-connector, .hn-rule, .hn-solid, .hero-foot {
-                animation: none !important; opacity: 1 !important; transform: none !important;
+        <style>
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
-            .hn-fill { clip-path: circle(100% at 50% 50%) !important; transition: none !important; }
-            .mq-track { animation: none; }
-            .rv { transition: none; opacity: 1; transform: none; }
-        }
-    </style>
-</head>
-<body data-lanyard-id="990680811827261490">
 
-    <div id="xhair"></div>
+            :root {
+                --bg: #f1eee4;
+                --ink: #17191a;
+                --dim: #66675e;
+                --fade: #c9c5b8;
+                --accent: #2e5c4b;
+                --inv: #17191a;
+                --inv-t: #dbdad2;
+                --serif: "Cormorant Garamond", Georgia, serif;
+                --sans: "Syne", sans-serif;
+                --mono: "JetBrains Mono", monospace;
+            }
 
-    <!-- Header -->
-    <header>
-        <a href="/" class="hdr-logo">viperisuseful.cc</a>
-        <div class="hdr-right">
-            <a href="blog/" class="hdr-link">Journal</a>
-            <div class="hdr-status">
-                <div class="sdot" id="hdr-dot"></div>
-                <span id="hdr-txt">·</span>
-            </div>
-            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
-                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M2.5 12h2M19.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"/></svg>
-            </button>
-        </div>
-    </header>
+            html {
+                scroll-behavior: smooth;
+            }
 
-    <!-- Hero -->
-    <section class="hero">
-        <div class="hero-name" id="hero-name">
-            <h1 class="sr-only">Viper is Useful</h1>
-            <div class="hn-row">
-                <span class="hn-stroke" aria-hidden="true">Viper</span>
-                <span class="hn-fill" aria-hidden="true">Viper</span>
-            </div>
-            <div class="hn-row hn-row-is">
-                <span class="hn-rule" aria-hidden="true"></span>
-                <span class="hn-connector" aria-hidden="true">is</span>
-                <span class="hn-rule" aria-hidden="true"></span>
-            </div>
-            <div class="hn-row">
-                <span class="hn-solid">Useful</span>
-            </div>
-        </div>
-        <div class="hero-foot">
-            <p class="hero-tl">
-                Solo developer · <em>Java · Python · Node.js</em><br>
-                Minecraft mods &nbsp;·&nbsp; Discord bots &nbsp;·&nbsp; Web apps
-            </p>
-            <div class="hero-disc">
-                <div class="sdot" id="hero-dot"></div>
-                <span id="hero-txt">·</span>
-            </div>
-        </div>
-    </section>
+            body {
+                font-family: var(--mono);
+                background: var(--bg);
+                color: var(--ink);
+                min-height: 100svh;
+                overflow-x: hidden;
+                cursor: none;
+            }
 
-    <!-- Marquee band -->
-    <div class="mq-band">
-        <div class="mq-track" id="mq"></div>
-    </div>
+            /* ── PAPER GRAIN ── */
+            body::after {
+                content: "";
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                z-index: 8000;
+                opacity: 0.032;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+            }
 
-    <div class="wrap">
+            /* ── CROSSHAIR CURSOR ── */
+            #xhair {
+                position: fixed;
+                width: 24px;
+                height: 24px;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            #xhair::before,
+            #xhair::after {
+                content: "";
+                position: absolute;
+                background: var(--accent);
+            }
+            #xhair::before {
+                width: 1px;
+                height: 100%;
+                left: calc(50% - 0.5px);
+                top: 0;
+            }
+            #xhair::after {
+                height: 1px;
+                width: 100%;
+                top: calc(50% - 0.5px);
+                left: 0;
+            }
+            body.on-link #xhair {
+                transform: translate(-50%, -50%) scale(1.8);
+                opacity: 0.7;
+            }
 
-        <!-- Projects -->
-        <section class="projs">
-            <div class="sh rv">
-                <span class="sh-tag">Work</span>
-                <span class="sh-title">Selected Projects</span>
-                <div class="sh-rule"></div>
-            </div>
+            /* ── HEADER ── */
+            header {
+                position: fixed;
+                inset: 0 0 auto 0;
+                z-index: 500;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 26px 52px;
+            }
 
-            <div class="proj rv">
-                <div>
-                    <div class="proj-wm">01</div>
-                    <h3 class="proj-name">Viperproxy</h3>
-                    <p class="proj-desc">A Fabric mod that routes your Minecraft multiplayer traffic through a SOCKS5, HTTP, or HTTPS proxy. It has a kill switch that fails closed so a dropped proxy never leaks your real IP, a 15-second heartbeat, encrypted multi-profile credentials on disk, and a config screen built right into the multiplayer menu.</p>
-                    <div class="proj-tags">
-                        <span class="tag">Java 21</span>
-                        <span class="tag">Fabric API</span>
-                        <span class="tag">Minecraft 1.21</span>
-                        <span class="tag">Netty</span>
-                        <span class="tag">Gradle</span>
-                    </div>
+            .hdr-logo {
+                font-family: var(--sans);
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--dim);
+                text-decoration: none;
+                transition: color 0.2s;
+                /* Extend tap area to 44px without changing visual size */
+                padding: 16px 0;
+                display: inline-flex;
+                align-items: center;
+            }
+            .hdr-logo:hover {
+                color: var(--ink);
+            }
+
+            .hdr-right {
+                display: flex;
+                align-items: center;
+                gap: 24px;
+            }
+
+            .hdr-link {
+                font-family: var(--sans);
+                font-size: 0.62rem;
+                font-weight: 700;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--dim);
+                text-decoration: none;
+                transition: color 0.2s;
+                padding: 16px 0;
+                display: inline-flex;
+                align-items: center;
+            }
+            .hdr-link:hover {
+                color: var(--accent);
+            }
+
+            .hdr-status {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-family: var(--sans);
+                font-size: 0.6rem;
+                font-weight: 500;
+                color: var(--dim);
+                letter-spacing: 0.08em;
+            }
+
+            .sdot {
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: var(--fade);
+                flex-shrink: 0;
+                transition:
+                    background 0.4s,
+                    box-shadow 0.4s;
+            }
+            .sdot.online {
+                background: #3ba55c;
+                box-shadow: 0 0 0 2px rgba(59, 165, 92, 0.2);
+            }
+            .sdot.idle {
+                background: #faa81a;
+                box-shadow: 0 0 0 2px rgba(250, 168, 26, 0.2);
+            }
+            .sdot.dnd {
+                background: #ed4245;
+                box-shadow: 0 0 0 2px rgba(237, 66, 69, 0.2);
+            }
+
+            /* ── HERO ── */
+            .hero {
+                position: relative;
+                min-height: 100svh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 80px 52px 0;
+            }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: radial-gradient(
+                    ellipse 80% 60% at 50% 60%,
+                    transparent 50%,
+                    rgba(20, 18, 16, 0.03) 100%
+                );
+                pointer-events: none;
+            }
+
+            /* ── HERO NAME (EDITORIAL STROKE × FILL) ── */
+            .hero-name {
+                position: relative;
+                z-index: 1;
+                text-align: center;
+                user-select: none;
+                width: 100%;
+            }
+
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                border: 0;
+            }
+
+            .hn-row {
+                display: block;
+                line-height: 0.88;
+                position: relative;
+            }
+
+            /* Outlined ghost text */
+            .hn-stroke {
+                display: block;
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 700;
+                font-size: clamp(76px, 17vw, 240px);
+                letter-spacing: -0.025em;
+                -webkit-text-stroke: 1.5px var(--ink);
+                color: transparent;
+                position: relative;
+                z-index: 1;
+                opacity: 0;
+                animation: press 0.9s 0.08s cubic-bezier(0.16, 1, 0.3, 1)
+                    forwards;
+            }
+
+            /* Cursor-reveal fill — clips to mouse position */
+            .hn-fill {
+                display: block;
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 700;
+                font-size: clamp(76px, 17vw, 240px);
+                letter-spacing: -0.025em;
+                color: var(--ink);
+                position: absolute;
+                inset: 0;
+                text-align: center;
+                clip-path: circle(0px at 50% 50%);
+                transition: clip-path 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            /* "is" connector row */
+            .hn-row-is {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 24px;
+                padding: 14px 0 10px;
+                line-height: 1;
+            }
+
+            .hn-rule {
+                flex: 1;
+                max-width: 160px;
+                height: 1px;
+                background: var(--fade);
+                opacity: 0;
+                animation: appear 0.5s 0.42s forwards;
+            }
+
+            .hn-connector {
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 300;
+                font-size: clamp(28px, 5.5vw, 72px);
+                color: var(--accent);
+                letter-spacing: 0.02em;
+                opacity: 0;
+                animation: appear 0.5s 0.42s forwards;
+            }
+
+            /* Solid filled bottom word */
+            .hn-solid {
+                display: block;
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 700;
+                font-size: clamp(76px, 17vw, 240px);
+                letter-spacing: -0.025em;
+                color: var(--ink);
+                opacity: 0;
+                animation: press 0.9s 0.58s cubic-bezier(0.16, 1, 0.3, 1)
+                    forwards;
+            }
+
+            @keyframes press {
+                from {
+                    opacity: 0;
+                    transform: scale(1.04) translateY(6px);
+                }
+                to {
+                    opacity: 1;
+                    transform: scale(1) translateY(0);
+                }
+            }
+
+            .hero-foot {
+                position: absolute;
+                bottom: 72px;
+                left: 52px;
+                right: 52px;
+                z-index: 1;
+                border-top: 1px solid var(--fade);
+                padding-top: 22px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 24px;
+                opacity: 0;
+                animation: appear 0.7s 0.72s forwards;
+            }
+
+            @keyframes appear {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .hero-tl {
+                font-family: var(--mono);
+                font-size: 0.7rem;
+                color: var(--dim);
+                line-height: 1.75;
+            }
+            .hero-tl em {
+                color: var(--accent);
+                font-style: normal;
+            }
+
+            .hero-disc {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                font-family: var(--mono);
+                font-size: 0.62rem;
+                color: var(--dim);
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            /* ── MARQUEE (PINE BAND) ── */
+            .mq-band {
+                background: var(--band);
+                padding: 15px 0;
+                overflow: hidden;
+                border-top: 1px solid rgba(255, 255, 255, 0.05);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            .mq-track {
+                display: flex;
+                white-space: nowrap;
+                animation: slide 40s linear infinite;
+            }
+
+            @keyframes slide {
+                from {
+                    transform: translateX(0);
+                }
+                to {
+                    transform: translateX(-50%);
+                }
+            }
+
+            .mq-item {
+                font-family: var(--mono);
+                font-size: 0.66rem;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: rgba(238, 235, 225, 0.5);
+                padding: 0 26px;
+                flex-shrink: 0;
+            }
+            .mq-item.hi {
+                color: rgba(238, 235, 225, 0.92);
+            }
+
+            /* ── WRAP ── */
+            .wrap {
+                max-width: 1160px;
+                margin: 0 auto;
+                padding: 0 52px;
+            }
+
+            /* ── SECTION HEADING ── */
+            .sh {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                padding: 84px 0 48px;
+            }
+            .sh-tag {
+                font-family: var(--sans);
+                font-size: 0.56rem;
+                font-weight: 800;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                color: var(--accent);
+                flex-shrink: 0;
+            }
+            .sh-title {
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 600;
+                font-size: clamp(1.3rem, 2.3vw, 1.9rem);
+            }
+            .sh-rule {
+                flex: 1;
+                height: 1px;
+                background: var(--fade);
+            }
+
+            /* ── PROJECTS ── */
+            .projs {
+                padding-bottom: 84px;
+            }
+
+            .proj {
+                position: relative;
+                display: grid;
+                grid-template-columns: 1fr max-content;
+                gap: 0 40px;
+                align-items: start;
+                padding: 38px 0;
+                border-top: 1px solid var(--fade);
+                overflow: hidden;
+                transition: border-top-color 0.3s;
+            }
+            .proj:last-child {
+                border-bottom: 1px solid var(--fade);
+            }
+            .proj:hover {
+                border-top-color: rgba(46, 92, 75, 0.3);
+            }
+
+            /* Watermark numeral */
+            .proj-wm {
+                position: absolute;
+                right: 0;
+                top: -10px;
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 300;
+                font-size: 112px;
+                line-height: 1;
+                color: rgba(196, 184, 174, 0.2);
+                user-select: none;
+                pointer-events: none;
+                transition:
+                    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                    color 0.3s;
+            }
+            .proj:hover .proj-wm {
+                transform: scale(1.06) translateY(-4px);
+                color: rgba(46, 92, 75, 0.08);
+            }
+
+            .proj-name {
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 700;
+                font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+                line-height: 1;
+                margin-bottom: 14px;
+                transition: color 0.25s;
+                position: relative;
+                display: inline-block;
+            }
+            .proj:hover .proj-name {
+                color: var(--accent);
+            }
+
+            .proj-desc {
+                font-family: var(--mono);
+                font-size: 0.73rem;
+                color: var(--dim);
+                line-height: 1.8;
+                max-width: 580px;
+                margin-bottom: 18px;
+            }
+
+            .proj-tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .tag {
+                font-family: var(--sans);
+                font-size: 0.53rem;
+                font-weight: 700;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--dim);
+                border: 1px solid var(--fade);
+                padding: 3px 9px;
+                transition:
+                    border-color 0.2s,
+                    color 0.2s;
+            }
+            .proj:hover .tag {
+                border-color: rgba(46, 92, 75, 0.2);
+            }
+
+            .proj-aside {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 10px;
+                padding-top: 6px;
+            }
+
+            .proj-st {
+                font-family: var(--sans);
+                font-size: 0.52rem;
+                font-weight: 800;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                color: var(--fade);
+            }
+            .proj-st.live {
+                color: #3ba55c;
+            }
+            .proj-st.archived {
+                color: #faa81a;
+            }
+
+            .proj-lnk {
+                font-family: var(--sans);
+                font-size: 0.58rem;
+                font-weight: 600;
+                letter-spacing: 0.06em;
+                text-decoration: none;
+                color: var(--ink);
+                position: relative;
+            }
+            .proj-lnk::after {
+                content: "";
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 1px;
+                background: var(--accent);
+                transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .proj-lnk:hover {
+                color: var(--accent);
+            }
+            .proj-lnk:hover::after {
+                width: 100%;
+            }
+
+            /* ── DISCORD STATUS ── */
+            .now-block {
+                padding-bottom: 84px;
+            }
+
+            .dc-card {
+                background: var(--card);
+                border: 1px solid var(--fade);
+                padding: 24px 28px;
+                display: grid;
+                grid-template-columns: 64px 1fr;
+                gap: 20px;
+                align-items: center;
+                max-width: 430px;
+                box-shadow:
+                    0 8px 40px rgba(20, 18, 16, 0.07),
+                    0 2px 8px rgba(20, 18, 16, 0.04);
+            }
+
+            .dc-aw {
+                position: relative;
+                display: inline-block;
+            }
+            .dc-av {
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                object-fit: cover;
+                display: block;
+            }
+            .dc-sd {
+                position: absolute;
+                bottom: 1px;
+                right: 1px;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                border: 2.5px solid var(--card);
+                background: var(--fade);
+                transition: background 0.4s;
+            }
+            .dc-sd.online {
+                background: #3ba55c;
+            }
+            .dc-sd.idle {
+                background: #faa81a;
+            }
+            .dc-sd.dnd {
+                background: #ed4245;
+            }
+
+            .dc-nm {
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 700;
+                font-size: 1.2rem;
+                margin-bottom: 4px;
+            }
+            .dc-cs {
+                font-family: var(--mono);
+                font-size: 0.63rem;
+                color: var(--dim);
+                margin-bottom: 10px;
+            }
+            .dc-ac {
+                font-family: var(--mono);
+                font-size: 0.63rem;
+                color: var(--dim);
+                border-left: 2px solid var(--accent);
+                padding-left: 10px;
+                line-height: 1.55;
+            }
+            .dc-ac strong {
+                color: var(--ink);
+                font-weight: 500;
+            }
+
+            /* ── CONNECT ── */
+            .connect-block {
+                padding-bottom: 130px;
+            }
+
+            .c-links {
+                display: flex;
+                flex-wrap: wrap;
+                row-gap: 4px;
+                column-gap: 0;
+                align-items: baseline;
+            }
+
+            .c-link {
+                font-family: var(--serif);
+                font-style: italic;
+                font-weight: 700;
+                font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+                text-decoration: none;
+                color: var(--ink);
+                padding: 10px 44px 10px 0;
+                position: relative;
+                white-space: nowrap;
+                transition: color 0.25s;
+            }
+            .c-link::after {
+                content: "";
+                position: absolute;
+                bottom: 8px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: var(--accent);
+                transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .c-link:hover {
+                color: var(--accent);
+            }
+            .c-link:hover::after {
+                width: calc(100% - 44px);
+            }
+
+            .c-sup {
+                font-family: var(--sans);
+                font-style: normal;
+                font-size: 0.5rem;
+                font-weight: 700;
+                vertical-align: super;
+                margin-left: 3px;
+                opacity: 0.4;
+                letter-spacing: 0.04em;
+            }
+
+            /* ── FOOTER ── */
+            footer {
+                border-top: 1px solid var(--fade);
+                padding: 28px 52px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            footer p {
+                font-family: var(--sans);
+                font-size: 0.58rem;
+                font-weight: 600;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--fade);
+            }
+
+            /* ── REVEAL ── */
+            .rv {
+                opacity: 0;
+                transform: translateY(22px);
+                transition:
+                    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .rv.vis {
+                opacity: 1;
+                transform: none;
+            }
+
+            /* ── RESPONSIVE ── */
+            @media (max-width: 860px) {
+                header,
+                footer {
+                    padding-left: 24px;
+                    padding-right: 24px;
+                }
+                .hero {
+                    padding: 80px 24px 0;
+                }
+                .hdr-right {
+                    gap: 14px;
+                }
+                #hdr-txt {
+                    display: none;
+                }
+                .wrap {
+                    padding-left: 24px;
+                    padding-right: 24px;
+                }
+                .hero-foot {
+                    bottom: 40px;
+                    left: 24px;
+                    right: 24px;
+                }
+                .hn-rule {
+                    max-width: 60px;
+                }
+                .proj {
+                    grid-template-columns: 1fr;
+                }
+                .proj-aside {
+                    display: none;
+                }
+                .proj-wm {
+                    font-size: 72px;
+                }
+                .c-link {
+                    padding-right: 28px;
+                }
+                footer {
+                    flex-direction: column;
+                    gap: 10px;
+                }
+                body {
+                    cursor: auto;
+                }
+                #xhair {
+                    display: none;
+                }
+            }
+
+            /* Show fill fully on touch-only devices (no hover capability) */
+            @media (hover: none) {
+                .hn-fill {
+                    clip-path: circle(100% at 50% 50%) !important;
+                    transition: none !important;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .hn-stroke,
+                .hn-connector,
+                .hn-rule,
+                .hn-solid,
+                .hero-foot {
+                    animation: none !important;
+                    opacity: 1 !important;
+                    transform: none !important;
+                }
+                .hn-fill {
+                    clip-path: circle(100% at 50% 50%) !important;
+                    transition: none !important;
+                }
+                .mq-track {
+                    animation: none;
+                }
+                .rv {
+                    transition: none;
+                    opacity: 1;
+                    transform: none;
+                }
+            }
+        </style>
+    </head>
+    <body data-lanyard-id="990680811827261490">
+        <div id="xhair"></div>
+
+        <!-- Header -->
+        <header>
+            <a href="/" class="hdr-logo">viperisuseful.cc</a>
+            <div class="hdr-right">
+                <a href="blog/" class="hdr-link">Journal</a>
+                <div class="hdr-status">
+                    <div class="sdot" id="hdr-dot"></div>
+                    <span id="hdr-txt">·</span>
                 </div>
-                <div class="proj-aside">
-                    <span class="proj-st live">Live</span>
-                    <a href="https://modrinth.com/mod/viperproxy" target="_blank" rel="noreferrer" class="proj-lnk">Modrinth ↗</a>
-                    <a href="https://github.com/Viperisuseful/viperproxy" target="_blank" rel="noreferrer" class="proj-lnk">GitHub ↗</a>
+                <button
+                    class="theme-toggle"
+                    id="theme-toggle"
+                    type="button"
+                    aria-label="Toggle dark mode"
+                    title="Toggle theme"
+                >
+                    <svg
+                        class="icon-moon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <path
+                            d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"
+                        />
+                    </svg>
+                    <svg
+                        class="icon-sun"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        aria-hidden="true"
+                    >
+                        <circle cx="12" cy="12" r="4.5" />
+                        <path
+                            d="M12 2.5v2M12 19.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M2.5 12h2M19.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"
+                        />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-name" id="hero-name">
+                <h1 class="sr-only">Viper is Useful</h1>
+                <div class="hn-row">
+                    <span class="hn-stroke" aria-hidden="true">Viper</span>
+                    <span class="hn-fill" aria-hidden="true">Viper</span>
+                </div>
+                <div class="hn-row hn-row-is">
+                    <span class="hn-rule" aria-hidden="true"></span>
+                    <span class="hn-connector" aria-hidden="true">is</span>
+                    <span class="hn-rule" aria-hidden="true"></span>
+                </div>
+                <div class="hn-row">
+                    <span class="hn-solid">Useful</span>
                 </div>
             </div>
-
-            <div class="proj rv">
-                <div>
-                    <div class="proj-wm">02</div>
-                    <h3 class="proj-name">Turtle Cave</h3>
-                    <p class="proj-desc">A full-stack Discord community platform with a web dashboard and a moderation bot. It handles OAuth login, mod logs, appeals, tickets, giveaways, and booster tracking.</p>
-                    <div class="proj-tags">
-                        <span class="tag">Node.js</span>
-                        <span class="tag">Discord.js v14</span>
-                        <span class="tag">MongoDB</span>
-                        <span class="tag">Express</span>
-                        <span class="tag">Sentry</span>
-                    </div>
-                </div>
-                <div class="proj-aside">
-                    <span class="proj-st live">Live</span>
-                    <a href="turtlecave/" class="proj-lnk">Visit ↗</a>
-                </div>
-            </div>
-
-            <div class="proj rv">
-                <div>
-                    <div class="proj-wm">03</div>
-                    <h3 class="proj-name">QuickRunLab</h3>
-                    <p class="proj-desc">A cloud platform that runs C, Python, and R in a real interactive terminal in your browser, backed by a PTY over WebSocket. It also has a Gemini AI tutor with model fallback, email-verified accounts, an API key system, and run quotas.</p>
-                    <div class="proj-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Flask</span>
-                        <span class="tag">PostgreSQL</span>
-                        <span class="tag">Redis</span>
-                        <span class="tag">Docker</span>
-                        <span class="tag">SocketIO</span>
-                        <span class="tag">Gemini AI</span>
-                    </div>
-                </div>
-                <div class="proj-aside">
-                    <span class="proj-st live">Live</span>
-                    <a href="https://www.quickrunlab.tech/" target="_blank" rel="noreferrer" class="proj-lnk">quickrunlab.tech ↗</a>
-                </div>
-            </div>
-
-            <div class="proj rv">
-                <div>
-                    <div class="proj-wm">04</div>
-                    <h3 class="proj-name">DulkirMod Port</h3>
-                    <p class="proj-desc">An independent port of DulkirMod-Fabric, a Hypixel Skyblock utility mod, brought up to Minecraft 1.21.11. Written in Kotlin and Java on the Fabric toolchain, it stays in sync with upstream changes from the original inglettronald repo.</p>
-                    <div class="proj-tags">
-                        <span class="tag">Kotlin</span>
-                        <span class="tag">Java</span>
-                        <span class="tag">Fabric</span>
-                        <span class="tag">Minecraft 1.21</span>
-                    </div>
-                </div>
-                <div class="proj-aside">
-                    <span class="proj-st live">Active</span>
+            <div class="hero-foot">
+                <p class="hero-tl">
+                    Developer · <em>Java · Python · Node.js</em><br />
+                    Minecraft mods &nbsp;·&nbsp; Discord bots &nbsp;·&nbsp; Web
+                    apps
+                </p>
+                <div class="hero-disc">
+                    <div class="sdot" id="hero-dot"></div>
+                    <span id="hero-txt">·</span>
                 </div>
             </div>
         </section>
 
-        <!-- Discord Status -->
-        <section class="now-block">
-            <div class="sh rv">
-                <span class="sh-tag">Now</span>
-                <span class="sh-title">Current Status</span>
-                <div class="sh-rule"></div>
-            </div>
-            <div class="dc-card rv" id="dc-card">
-                <div class="dc-aw">
-                    <img class="dc-av" id="dc-av" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
-                    <div class="dc-sd" id="dc-sd"></div>
+        <!-- Marquee band -->
+        <div class="mq-band">
+            <div class="mq-track" id="mq"></div>
+        </div>
+
+        <div class="wrap">
+            <!-- Projects -->
+            <section class="projs">
+                <div class="sh rv">
+                    <span class="sh-tag">Work</span>
+                    <span class="sh-title">Selected Projects</span>
+                    <div class="sh-rule"></div>
                 </div>
-                <div>
-                    <div class="dc-nm" id="dc-nm">viperisuseful</div>
-                    <div class="dc-cs" id="dc-cs" style="display:none"></div>
-                    <div class="dc-ac" id="dc-ac" style="display:none"></div>
+
+                <div class="proj rv">
+                    <div>
+                        <div class="proj-wm">01</div>
+                        <h3 class="proj-name">Viperproxy</h3>
+                        <p class="proj-desc">
+                            A Fabric mod that routes your Minecraft multiplayer
+                            traffic through a SOCKS5, HTTP, or HTTPS proxy. It
+                            has a kill switch that fails closed so a dropped
+                            proxy never leaks your real IP, a 15-second
+                            heartbeat, encrypted multi-profile credentials on
+                            disk, and a config screen built right into the
+                            multiplayer menu.
+                        </p>
+                        <div class="proj-tags">
+                            <span class="tag">Java 21</span>
+                            <span class="tag">Fabric API</span>
+                            <span class="tag">Minecraft 1.21</span>
+                            <span class="tag">Netty</span>
+                            <span class="tag">Gradle</span>
+                        </div>
+                    </div>
+                    <div class="proj-aside">
+                        <span class="proj-st live">Live</span>
+                        <a
+                            href="https://modrinth.com/mod/viperproxy"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="proj-lnk"
+                            >Modrinth ↗</a
+                        >
+                        <a
+                            href="https://github.com/Viperisuseful/viperproxy"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="proj-lnk"
+                            >GitHub ↗</a
+                        >
+                    </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Connect -->
-        <section class="connect-block">
-            <div class="sh rv">
-                <span class="sh-tag">Connect</span>
-                <span class="sh-title">Find Me</span>
-                <div class="sh-rule"></div>
-            </div>
-            <nav class="c-links rv" aria-label="Social links">
-                <a href="github/" class="c-link">GitHub<span class="c-sup">↗</span></a>
-                <a href="discord/" class="c-link">Discord<span class="c-sup">↗</span></a>
-                <a href="modrinth/" class="c-link">Modrinth<span class="c-sup">↗</span></a>
-                <a href="instagram/" class="c-link">Instagram<span class="c-sup">↗</span></a>
-                <a href="mailto:viper@viperisuseful.cc" class="c-link">Email<span class="c-sup">↗</span></a>
-            </nav>
-        </section>
+                <div class="proj rv">
+                    <div>
+                        <div class="proj-wm">02</div>
+                        <h3 class="proj-name">Turtle Cave</h3>
+                        <p class="proj-desc">
+                            A full-stack Discord community platform with a web
+                            dashboard and a moderation bot. It handles OAuth
+                            login, mod logs, appeals, tickets, giveaways, and
+                            booster tracking.
+                        </p>
+                        <div class="proj-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Discord.js v14</span>
+                            <span class="tag">MongoDB</span>
+                            <span class="tag">Express</span>
+                            <span class="tag">Sentry</span>
+                        </div>
+                    </div>
+                    <div class="proj-aside">
+                        <span class="proj-st live">Live</span>
+                        <a href="turtlecave/" class="proj-lnk">Visit ↗</a>
+                    </div>
+                </div>
 
-    </div>
+                <div class="proj rv">
+                    <div>
+                        <div class="proj-wm">03</div>
+                        <h3 class="proj-name">QuickRunLab</h3>
+                        <p class="proj-desc">
+                            A cloud platform that runs C, Python, and R in a
+                            real interactive terminal in your browser, backed by
+                            a PTY over WebSocket. It also has a Gemini AI tutor
+                            with model fallback, email-verified accounts, an API
+                            key system, and run quotas.
+                        </p>
+                        <div class="proj-tags">
+                            <span class="tag">Python</span>
+                            <span class="tag">Flask</span>
+                            <span class="tag">PostgreSQL</span>
+                            <span class="tag">Redis</span>
+                            <span class="tag">Docker</span>
+                            <span class="tag">SocketIO</span>
+                            <span class="tag">Gemini AI</span>
+                        </div>
+                    </div>
+                    <div class="proj-aside">
+                        <span class="proj-st live">Live</span>
+                        <a
+                            href="https://www.quickrunlab.tech/"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="proj-lnk"
+                            >quickrunlab.tech ↗</a
+                        >
+                    </div>
+                </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2025 Viperisuseful</p>
-        <p>viperisuseful.cc</p>
-    </footer>
+                <div class="proj rv">
+                    <div>
+                        <div class="proj-wm">04</div>
+                        <h3 class="proj-name">DulkirMod Port</h3>
+                        <p class="proj-desc">
+                            An independent port of DulkirMod-Fabric, a Hypixel
+                            Skyblock utility mod, brought up to Minecraft
+                            1.21.11. Written in Kotlin and Java on the Fabric
+                            toolchain, it stays in sync with upstream changes
+                            from the original inglettronald repo.
+                        </p>
+                        <div class="proj-tags">
+                            <span class="tag">Kotlin</span>
+                            <span class="tag">Java</span>
+                            <span class="tag">Fabric</span>
+                            <span class="tag">Minecraft 1.21</span>
+                        </div>
+                    </div>
+                    <div class="proj-aside">
+                        <span class="proj-st live">Active</span>
+                    </div>
+                </div>
+            </section>
 
-    <script>
-    (() => {
-        // Crosshair cursor
-        const xh = document.getElementById('xhair');
-        if (xh) {
-            document.addEventListener('mousemove', e => {
-                xh.style.left = e.clientX + 'px';
-                xh.style.top  = e.clientY + 'px';
-            });
-            document.querySelectorAll('a,button').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('on-link'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('on-link'));
-            });
-        }
+            <!-- Discord Status -->
+            <section class="now-block">
+                <div class="sh rv">
+                    <span class="sh-tag">Now</span>
+                    <span class="sh-title">Current Status</span>
+                    <div class="sh-rule"></div>
+                </div>
+                <div class="dc-card rv" id="dc-card">
+                    <div class="dc-aw">
+                        <img
+                            class="dc-av"
+                            id="dc-av"
+                            src="resources/Viperisuseful-LOGO.png"
+                            alt="Avatar"
+                        />
+                        <div class="dc-sd" id="dc-sd"></div>
+                    </div>
+                    <div>
+                        <div class="dc-nm" id="dc-nm">viperisuseful</div>
+                        <div
+                            class="dc-cs"
+                            id="dc-cs"
+                            style="display: none"
+                        ></div>
+                        <div
+                            class="dc-ac"
+                            id="dc-ac"
+                            style="display: none"
+                        ></div>
+                    </div>
+                </div>
+            </section>
 
-        // Marquee
-        const items = ['Java','·','Python','·','Node.js','·','Fabric API','·','Discord.js v14','·','FastAPI','·','MongoDB','·','PostgreSQL','·','Redis','·','Docker','·','Flask','·','Kotlin','·','Gradle','·','SocketIO','·','Playwright','·','Netty'];
-        const mq = document.getElementById('mq');
-        if (mq) {
-            [...items, ...items].forEach(s => {
-                const el = document.createElement('span');
-                el.className = 'mq-item' + (s === '·' ? ' hi' : '');
-                el.textContent = s;
-                mq.appendChild(el);
-            });
-        }
+            <!-- Connect -->
+            <section class="connect-block">
+                <div class="sh rv">
+                    <span class="sh-tag">Connect</span>
+                    <span class="sh-title">Find Me</span>
+                    <div class="sh-rule"></div>
+                </div>
+                <nav class="c-links rv" aria-label="Social links">
+                    <a href="github/" class="c-link"
+                        >GitHub<span class="c-sup">↗</span></a
+                    >
+                    <a href="discord/" class="c-link"
+                        >Discord<span class="c-sup">↗</span></a
+                    >
+                    <a href="modrinth/" class="c-link"
+                        >Modrinth<span class="c-sup">↗</span></a
+                    >
+                    <a href="instagram/" class="c-link"
+                        >Instagram<span class="c-sup">↗</span></a
+                    >
+                    <a href="mailto:viper@viperisuseful.cc" class="c-link"
+                        >Email<span class="c-sup">↗</span></a
+                    >
+                </nav>
+            </section>
+        </div>
 
-        // Scroll reveal
-        const io = new IntersectionObserver(entries => {
-            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); io.unobserve(e.target); } });
-        }, { threshold: 0.07 });
-        document.querySelectorAll('.rv').forEach(el => io.observe(el));
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Viperisuseful</p>
+            <p>viperisuseful.cc</p>
+        </footer>
 
-        // Hero fill reveal — cursor spotlight on outlined "Viper"
-        (function() {
-            const nm = document.getElementById('hero-name');
-            const fl = nm && nm.querySelector('.hn-fill');
-            if (!fl) return;
-            if (!window.matchMedia('(hover: hover)').matches) {
-                fl.style.clipPath = 'circle(100% at 50% 50%)';
-                return;
-            }
-            let active = false;
-            nm.addEventListener('mousemove', e => {
-                const r = fl.getBoundingClientRect();
-                const x = e.clientX - r.left;
-                const y = e.clientY - r.top;
-                if (!active) {
-                    fl.style.transition = 'clip-path 0.35s cubic-bezier(0.16,1,0.3,1)';
-                    active = true;
+        <script>
+            (() => {
+                // Crosshair cursor
+                const xh = document.getElementById("xhair");
+                if (xh) {
+                    document.addEventListener("mousemove", (e) => {
+                        xh.style.left = e.clientX + "px";
+                        xh.style.top = e.clientY + "px";
+                    });
+                    document.querySelectorAll("a,button").forEach((el) => {
+                        el.addEventListener("mouseenter", () =>
+                            document.body.classList.add("on-link"),
+                        );
+                        el.addEventListener("mouseleave", () =>
+                            document.body.classList.remove("on-link"),
+                        );
+                    });
                 }
-                fl.style.clipPath = `circle(110px at ${x}px ${y}px)`;
-            });
-            nm.addEventListener('mouseleave', () => {
-                active = false;
-                fl.style.clipPath = 'circle(0px at 50% 50%)';
-            });
-        })();
 
-        // Lanyard
-        const uid = document.body.dataset.lanyardId;
-        if (!uid) return;
-
-        const $ = id => document.getElementById(id);
-        const E = {
-            hdrDot: $('hdr-dot'), hdrTxt: $('hdr-txt'),
-            heroDot: $('hero-dot'), heroTxt: $('hero-txt'),
-            av: $('dc-av'), sd: $('dc-sd'), nm: $('dc-nm'),
-            cs: $('dc-cs'), ac: $('dc-ac'),
-        };
-
-        const esc = v => String(v ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        const STAT = { online: 'Online', idle: 'Away', dnd: 'Do not disturb', offline: 'Offline' };
-
-        function applyStatus(s) {
-            const cls = ['online','idle','dnd'].includes(s) ? s : '';
-            if (E.hdrDot)  E.hdrDot.className  = `sdot ${cls}`;
-            if (E.heroDot) E.heroDot.className  = `sdot ${cls}`;
-            if (E.sd)      E.sd.className       = `dc-sd ${cls}`;
-            const lbl = STAT[s] || 'Offline';
-            if (E.hdrTxt)  E.hdrTxt.textContent  = lbl;
-            if (E.heroTxt) E.heroTxt.textContent  = lbl;
-        }
-
-        function render(p) {
-            if (!p) return;
-            applyStatus(p.discord_status);
-            const u = p.discord_user;
-            if (u) {
-                if (E.nm) E.nm.textContent = u.global_name || u.username || 'viperisuseful';
-                if (E.av && u.avatar) {
-                    const ext = u.avatar.startsWith('a_') ? 'gif' : 'webp';
-                    E.av.src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${ext}?size=128`;
+                // Marquee
+                const items = [
+                    "Java",
+                    "·",
+                    "Python",
+                    "·",
+                    "Node.js",
+                    "·",
+                    "Fabric API",
+                    "·",
+                    "Discord.js v14",
+                    "·",
+                    "FastAPI",
+                    "·",
+                    "MongoDB",
+                    "·",
+                    "PostgreSQL",
+                    "·",
+                    "Redis",
+                    "·",
+                    "Docker",
+                    "·",
+                    "Flask",
+                    "·",
+                    "Kotlin",
+                    "·",
+                    "Gradle",
+                    "·",
+                    "SocketIO",
+                    "·",
+                    "Playwright",
+                    "·",
+                    "Netty",
+                ];
+                const mq = document.getElementById("mq");
+                if (mq) {
+                    [...items, ...items].forEach((s) => {
+                        const el = document.createElement("span");
+                        el.className = "mq-item" + (s === "·" ? " hi" : "");
+                        el.textContent = s;
+                        mq.appendChild(el);
+                    });
                 }
-            }
-            const acts = Array.isArray(p.activities) ? p.activities : [];
-            const cs = acts.find(a => a?.type === 4);
-            if (E.cs) { E.cs.textContent = cs?.state || ''; E.cs.style.display = cs?.state ? '' : 'none'; }
-            const game = acts.find(a => a?.type === 0);
-            const spot = p.listening_to_spotify ? p.spotify : null;
-            if (E.ac) {
-                if (game) {
-                    E.ac.innerHTML = `Playing <strong>${esc(game.name)}</strong>${game.details ? '<br>' + esc(game.details) : ''}`;
-                    E.ac.style.display = '';
-                } else if (spot) {
-                    E.ac.innerHTML = `Listening to <strong>${esc(spot.song)}</strong><br>${esc(spot.artist)}`;
-                    E.ac.style.display = '';
-                } else {
-                    E.ac.style.display = 'none';
-                }
-            }
-        }
 
-        fetch(`https://api.lanyard.rest/v1/users/${uid}`, { cache: 'no-store' })
-            .then(r => r.json()).then(j => { if (j?.success) render(j.data); }).catch(() => {});
+                // Scroll reveal
+                const io = new IntersectionObserver(
+                    (entries) => {
+                        entries.forEach((e) => {
+                            if (e.isIntersecting) {
+                                e.target.classList.add("vis");
+                                io.unobserve(e.target);
+                            }
+                        });
+                    },
+                    { threshold: 0.07 },
+                );
+                document
+                    .querySelectorAll(".rv")
+                    .forEach((el) => io.observe(el));
 
-        let ws, hb, rt, att = 0;
-        const cleanup = () => { clearInterval(hb); clearTimeout(rt); if (ws) { const s = ws; ws = null; try { s.close(); } catch {} } };
-        const connect = () => {
-            cleanup();
-            const sock = new WebSocket('wss://api.lanyard.rest/socket');
-            ws = sock;
-            sock.onmessage = ev => {
-                if (sock !== ws) return;
-                let p; try { p = JSON.parse(ev.data); } catch { return; }
-                if (p.op === 1) {
-                    hb = setInterval(() => { try { sock.send(JSON.stringify({ op: 3 })); } catch {} }, p.d.heartbeat_interval);
-                    sock.send(JSON.stringify({ op: 2, d: { subscribe_to_id: uid } }));
-                } else if (p.op === 0) {
-                    const pr = p.t === 'INIT_STATE' ? p.d[uid] : p.t === 'PRESENCE_UPDATE' ? p.d : null;
-                    if (pr) { att = 0; render(pr); }
+                // Hero fill reveal — cursor spotlight on outlined "Viper"
+                (function () {
+                    const nm = document.getElementById("hero-name");
+                    const fl = nm && nm.querySelector(".hn-fill");
+                    if (!fl) return;
+                    if (!window.matchMedia("(hover: hover)").matches) {
+                        fl.style.clipPath = "circle(100% at 50% 50%)";
+                        return;
+                    }
+                    let active = false;
+                    nm.addEventListener("mousemove", (e) => {
+                        const r = fl.getBoundingClientRect();
+                        const x = e.clientX - r.left;
+                        const y = e.clientY - r.top;
+                        if (!active) {
+                            fl.style.transition =
+                                "clip-path 0.35s cubic-bezier(0.16,1,0.3,1)";
+                            active = true;
+                        }
+                        fl.style.clipPath = `circle(110px at ${x}px ${y}px)`;
+                    });
+                    nm.addEventListener("mouseleave", () => {
+                        active = false;
+                        fl.style.clipPath = "circle(0px at 50% 50%)";
+                    });
+                })();
+
+                // Lanyard
+                const uid = document.body.dataset.lanyardId;
+                if (!uid) return;
+
+                const $ = (id) => document.getElementById(id);
+                const E = {
+                    hdrDot: $("hdr-dot"),
+                    hdrTxt: $("hdr-txt"),
+                    heroDot: $("hero-dot"),
+                    heroTxt: $("hero-txt"),
+                    av: $("dc-av"),
+                    sd: $("dc-sd"),
+                    nm: $("dc-nm"),
+                    cs: $("dc-cs"),
+                    ac: $("dc-ac"),
+                };
+
+                const esc = (v) =>
+                    String(v ?? "")
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;");
+                const STAT = {
+                    online: "Online",
+                    idle: "Away",
+                    dnd: "Do not disturb",
+                    offline: "Offline",
+                };
+
+                function applyStatus(s) {
+                    const cls = ["online", "idle", "dnd"].includes(s) ? s : "";
+                    if (E.hdrDot) E.hdrDot.className = `sdot ${cls}`;
+                    if (E.heroDot) E.heroDot.className = `sdot ${cls}`;
+                    if (E.sd) E.sd.className = `dc-sd ${cls}`;
+                    const lbl = STAT[s] || "Offline";
+                    if (E.hdrTxt) E.hdrTxt.textContent = lbl;
+                    if (E.heroTxt) E.heroTxt.textContent = lbl;
                 }
-            };
-            sock.onerror = () => { if (sock === ws) try { sock.close(); } catch {} };
-            sock.onclose = () => { if (sock !== ws) return; clearInterval(hb); rt = setTimeout(connect, Math.min(15000, 500 * Math.pow(2, att++))); };
-        };
-        connect();
-    })();
-    </script>
-    <script src="/theme.js"></script>
-</body>
+
+                function render(p) {
+                    if (!p) return;
+                    applyStatus(p.discord_status);
+                    const u = p.discord_user;
+                    if (u) {
+                        if (E.nm)
+                            E.nm.textContent =
+                                u.global_name || u.username || "viperisuseful";
+                        if (E.av && u.avatar) {
+                            const ext = u.avatar.startsWith("a_")
+                                ? "gif"
+                                : "webp";
+                            E.av.src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.${ext}?size=128`;
+                        }
+                    }
+                    const acts = Array.isArray(p.activities)
+                        ? p.activities
+                        : [];
+                    const cs = acts.find((a) => a?.type === 4);
+                    if (E.cs) {
+                        E.cs.textContent = cs?.state || "";
+                        E.cs.style.display = cs?.state ? "" : "none";
+                    }
+                    const game = acts.find((a) => a?.type === 0);
+                    const spot = p.listening_to_spotify ? p.spotify : null;
+                    if (E.ac) {
+                        if (game) {
+                            E.ac.innerHTML = `Playing <strong>${esc(game.name)}</strong>${game.details ? "<br>" + esc(game.details) : ""}`;
+                            E.ac.style.display = "";
+                        } else if (spot) {
+                            E.ac.innerHTML = `Listening to <strong>${esc(spot.song)}</strong><br>${esc(spot.artist)}`;
+                            E.ac.style.display = "";
+                        } else {
+                            E.ac.style.display = "none";
+                        }
+                    }
+                }
+
+                fetch(`https://api.lanyard.rest/v1/users/${uid}`, {
+                    cache: "no-store",
+                })
+                    .then((r) => r.json())
+                    .then((j) => {
+                        if (j?.success) render(j.data);
+                    })
+                    .catch(() => {});
+
+                let ws,
+                    hb,
+                    rt,
+                    att = 0;
+                const cleanup = () => {
+                    clearInterval(hb);
+                    clearTimeout(rt);
+                    if (ws) {
+                        const s = ws;
+                        ws = null;
+                        try {
+                            s.close();
+                        } catch {}
+                    }
+                };
+                const connect = () => {
+                    cleanup();
+                    const sock = new WebSocket("wss://api.lanyard.rest/socket");
+                    ws = sock;
+                    sock.onmessage = (ev) => {
+                        if (sock !== ws) return;
+                        let p;
+                        try {
+                            p = JSON.parse(ev.data);
+                        } catch {
+                            return;
+                        }
+                        if (p.op === 1) {
+                            hb = setInterval(() => {
+                                try {
+                                    sock.send(JSON.stringify({ op: 3 }));
+                                } catch {}
+                            }, p.d.heartbeat_interval);
+                            sock.send(
+                                JSON.stringify({
+                                    op: 2,
+                                    d: { subscribe_to_id: uid },
+                                }),
+                            );
+                        } else if (p.op === 0) {
+                            const pr =
+                                p.t === "INIT_STATE"
+                                    ? p.d[uid]
+                                    : p.t === "PRESENCE_UPDATE"
+                                      ? p.d
+                                      : null;
+                            if (pr) {
+                                att = 0;
+                                render(pr);
+                            }
+                        }
+                    };
+                    sock.onerror = () => {
+                        if (sock === ws)
+                            try {
+                                sock.close();
+                            } catch {}
+                    };
+                    sock.onclose = () => {
+                        if (sock !== ws) return;
+                        clearInterval(hb);
+                        rt = setTimeout(
+                            connect,
+                            Math.min(15000, 500 * Math.pow(2, att++)),
+                        );
+                    };
+                };
+                connect();
+            })();
+        </script>
+        <script src="/theme.js"></script>
+    </body>
 </html>
