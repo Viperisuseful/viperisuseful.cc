@@ -21,13 +21,13 @@
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg:     #F0EBE0;
-            --ink:    #141210;
-            --dim:    #7A6E65;
-            --fade:   #C4B8AE;
-            --accent: #C84B20;
-            --inv:    #141210;
-            --inv-t:  #D4CEC6;
+            --bg:     #F1EEE4;
+            --ink:    #17191A;
+            --dim:    #66675E;
+            --fade:   #C9C5B8;
+            --accent: #2E5C4B;
+            --inv:    #17191A;
+            --inv-t:  #DBDAD2;
             --serif:  'Cormorant Garamond', Georgia, serif;
             --sans:   'Syne', sans-serif;
             --mono:   'JetBrains Mono', monospace;
@@ -307,9 +307,9 @@
             flex-shrink: 0;
         }
 
-        /* ── MARQUEE (INVERTED BAND) ── */
+        /* ── MARQUEE (PINE BAND) ── */
         .mq-band {
-            background: var(--inv);
+            background: var(--band);
             padding: 15px 0;
             overflow: hidden;
             border-top: 1px solid rgba(255,255,255,0.05);
@@ -329,11 +329,11 @@
             font-size: 0.66rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: rgba(212,206,198,0.4);
+            color: rgba(238,235,225,0.5);
             padding: 0 26px;
             flex-shrink: 0;
         }
-        .mq-item.hi { color: var(--accent); }
+        .mq-item.hi { color: rgba(238,235,225,0.92); }
 
         /* ── WRAP ── */
         .wrap {
@@ -385,7 +385,7 @@
             transition: border-top-color 0.3s;
         }
         .proj:last-child { border-bottom: 1px solid var(--fade); }
-        .proj:hover { border-top-color: rgba(200,75,32,0.3); }
+        .proj:hover { border-top-color: rgba(46,92,75,0.3); }
 
         /* Watermark numeral */
         .proj-wm {
@@ -404,7 +404,7 @@
         }
         .proj:hover .proj-wm {
             transform: scale(1.06) translateY(-4px);
-            color: rgba(200,75,32,0.08);
+            color: rgba(46,92,75,0.08);
         }
 
         .proj-name {
@@ -445,7 +445,7 @@
             padding: 3px 9px;
             transition: border-color 0.2s, color 0.2s;
         }
-        .proj:hover .tag { border-color: rgba(200,75,32,0.2); }
+        .proj:hover .tag { border-color: rgba(46,92,75,0.2); }
 
         .proj-aside {
             display: flex;
@@ -693,7 +693,7 @@
         </div>
         <div class="hero-foot">
             <p class="hero-tl">
-                Solo developer &mdash; <em>Java · Python · Node.js</em><br>
+                Solo developer · <em>Java · Python · Node.js</em><br>
                 Minecraft mods &nbsp;·&nbsp; Discord bots &nbsp;·&nbsp; Web apps
             </p>
             <div class="hero-disc">

@@ -9,18 +9,21 @@
 
 /* Light default for the card surface (homepage Discord card).
    Every other light value is defined per page. */
-:root { --card: #FDFAF5; }
+:root {
+    --card: #FAF7EF;   /* light card surface (Discord card) */
+    --band: #2C5747;   /* pine marquee band — same in both modes */
+}
 
-/* Warm espresso dark theme */
+/* Pine-on-cream dark theme */
 :root[data-theme="dark"] {
-    --bg:     #15120E;
-    --ink:    #ECE3D6;
-    --dim:    #9A8B7B;
-    --fade:   #38302A;
-    --accent: #E0683C;
-    --inv:    #26211A;
-    --inv-t:  #D8CFC2;
-    --card:   #211C16;
+    --bg:     #111512;
+    --ink:    #E9EAE2;
+    --dim:    #8E9087;
+    --fade:   #2C322C;
+    --accent: #5FA98A;
+    --inv:    #1C211D;
+    --inv-t:  #D6D8CE;
+    --card:   #1A201B;
 }
 
 /* Component touch-ups the variables can't express on their own */

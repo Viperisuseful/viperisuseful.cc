@@ -6,13 +6,13 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-    --bg:     #F0EBE0;
-    --ink:    #141210;
-    --dim:    #7A6E65;
-    --fade:   #C4B8AE;
-    --accent: #C84B20;
-    --inv:    #141210;
-    --inv-t:  #D4CEC6;
+    --bg:     #F1EEE4;
+    --ink:    #17191A;
+    --dim:    #66675E;
+    --fade:   #C9C5B8;
+    --accent: #2E5C4B;
+    --inv:    #17191A;
+    --inv-t:  #DBDAD2;
     --serif:  'Cormorant Garamond', Georgia, serif;
     --sans:   'Syne', sans-serif;
     --mono:   'JetBrains Mono', monospace;
@@ -175,7 +175,7 @@ header {
     transition: border-top-color 0.3s;
 }
 .entries .entry:last-child { border-bottom: 1px solid var(--fade); }
-.entry:hover { border-top-color: rgba(200,75,32,0.35); }
+.entry:hover { border-top-color: rgba(46,92,75,0.35); }
 
 .entry-meta {
     font-family: var(--mono);
@@ -329,7 +329,7 @@ header {
 .post-body a {
     color: var(--accent);
     text-decoration: none;
-    border-bottom: 1px solid rgba(200,75,32,0.35);
+    border-bottom: 1px solid rgba(46,92,75,0.35);
     transition: border-color 0.2s;
 }
 .post-body a:hover { border-bottom-color: var(--accent); }
