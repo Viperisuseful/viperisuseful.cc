@@ -419,7 +419,7 @@ footer {
     text-transform: uppercase;
     color: var(--fade);
 }
-footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
+footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; padding: 6px 0; }
 footer a:hover { color: var(--accent); }
 
 /* ── ANIMATIONS ── */
