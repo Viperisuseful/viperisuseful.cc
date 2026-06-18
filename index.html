@@ -815,7 +815,12 @@
                     grid-template-columns: 1fr;
                 }
                 .proj-aside {
-                    display: none;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: flex-start;
+                    flex-wrap: wrap;
+                    gap: 10px 14px;
+                    padding-top: 18px;
                 }
                 .proj-wm {
                     font-size: 72px;
@@ -967,6 +972,45 @@
                 <div class="proj rv">
                     <div>
                         <div class="proj-wm">01</div>
+                        <h3 class="proj-name">ViperCode</h3>
+                        <p class="proj-desc">
+                            A Windows coding-agent desktop app forked from T3
+                            Code. I’m building it into an even better version
+                            with the fixes I think it needs: cleaner agent flow,
+                            better diffs, smoother releases, and fewer
+                            distractions.
+                        </p>
+                        <div class="proj-tags">
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Electron</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">Claude Code</span>
+                            <span class="tag">Codex</span>
+                        </div>
+                    </div>
+                    <div class="proj-aside">
+                        <span class="proj-st live">Active</span>
+                        <a
+                            href="https://github.com/Viperisuseful/ViperCode"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="proj-lnk"
+                            >GitHub ↗</a
+                        >
+                        <a
+                            href="https://github.com/Viperisuseful/ViperCode/releases"
+                            target="_blank"
+                            rel="noreferrer"
+                            class="proj-lnk"
+                            >Releases ↗</a
+                        >
+                    </div>
+                </div>
+
+                <div class="proj rv">
+                    <div>
+                        <div class="proj-wm">02</div>
                         <h3 class="proj-name">Viperproxy</h3>
                         <p class="proj-desc">
                             A Fabric mod that routes your Minecraft multiplayer
@@ -1006,7 +1050,7 @@
 
                 <div class="proj rv">
                     <div>
-                        <div class="proj-wm">02</div>
+                        <div class="proj-wm">03</div>
                         <h3 class="proj-name">Turtle Cave</h3>
                         <p class="proj-desc">
                             A full-stack Discord community platform with a web
@@ -1030,7 +1074,7 @@
 
                 <div class="proj rv">
                     <div>
-                        <div class="proj-wm">03</div>
+                        <div class="proj-wm">04</div>
                         <h3 class="proj-name">QuickRunLab</h3>
                         <p class="proj-desc">
                             A cloud platform that runs C, Python, and R in a
@@ -1063,7 +1107,7 @@
 
                 <div class="proj rv">
                     <div>
-                        <div class="proj-wm">04</div>
+                        <div class="proj-wm">05</div>
                         <h3 class="proj-name">DulkirMod Port</h3>
                         <p class="proj-desc">
                             An independent port of DulkirMod-Fabric, a Hypixel
