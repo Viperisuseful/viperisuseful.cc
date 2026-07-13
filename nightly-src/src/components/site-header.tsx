@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sheet"
 
 const navLinks = [
-  { label: "Projects", href: "/#projects" },
+  { label: "Blog", href: "/blog/" },
   { label: "Systems", href: "/#systems" },
   { label: "About", href: "/#about" },
 ] as const
@@ -49,7 +49,7 @@ export function SiteHeader() {
             <SheetContent>
               <SheetHeader>
                 <SheetTitle>Navigate Viper</SheetTitle>
-                <SheetDescription>Projects, systems, and links.</SheetDescription>
+                <SheetDescription>Blog, systems, and links.</SheetDescription>
               </SheetHeader>
               <nav className="sheet-nav" aria-label="Mobile navigation">
                 {navLinks.map((link) => (

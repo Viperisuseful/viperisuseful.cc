@@ -61,9 +61,5 @@ test("keeps system theme and home recovery working", async ({ page }, testInfo) 
       name: "Everything Viper builds & runs in one place.",
     }),
   ).toBeVisible()
-  if ((page.viewportSize()?.width ?? 0) <= 820) {
-    await expect(page.getByTestId("hero-showcase")).toBeHidden()
-  } else {
-    await expect(page.getByTestId("hero-showcase")).toBeVisible()
-  }
+  await expect(page.getByTestId("hero-showcase")).toBeVisible()
 })

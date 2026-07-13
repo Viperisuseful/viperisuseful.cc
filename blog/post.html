@@ -1,63 +1,68 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Omnisend -->
-    <script type="text/javascript">
-        window.omnisend = window.omnisend || [];
-        omnisend.push(["brandID", "6a2591b056835e9f83f6b6a3"]);
-        omnisend.push(["track", "$pageViewed"]);
-        !function(){var e=document.createElement("script");
-        e.type="text/javascript",e.async=!0,
-        e.src="https://omnisnippet1.com/inshop/launcher-v2.js";
-        var t=document.getElementsByTagName("script")[0];
-        t.parentNode.insertBefore(e,t)}();
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
+    <meta name="description" content="A post from the Viper Journal." />
+    <link rel="icon" type="image/webp" href="/marks/viper.webp" />
+    <script>
+      const colorPreference = matchMedia("(prefers-color-scheme: dark)")
+      const syncTheme = () => {
+        const theme = colorPreference.matches ? "dark" : "light"
+        document.documentElement.dataset.theme = theme
+        document.documentElement.style.colorScheme = theme
+      }
+      syncTheme()
+      colorPreference.addEventListener?.("change", syncTheme)
     </script>
-    <script>try{var t=localStorage.getItem('theme')||(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-    <title>Journal · viperisuseful</title>
-    <meta name="description" content="A post from the viperisuseful journal.">
-    <link rel="icon" type="image/png" href="../resources/Viperisuseful-LOGO.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="blog.css">
-    <link rel="stylesheet" href="/theme.css">
-</head>
-<body>
-    <div id="xhair"></div>
-
-    <header>
-        <a href="/" class="hdr-logo">viperisuseful.cc</a>
-        <div class="hdr-right">
-            <a href="./" class="hdr-crumb"><span class="dot">&larr;</span> Journal</a>
-            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle theme">
-                <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-                <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.5 1.5M18.3 18.3l1.5 1.5M2.5 12h2M19.5 12h2M4.2 19.8l1.5-1.5M18.3 5.7l1.5-1.5"/></svg>
-            </button>
-        </div>
+    <title>Journal | Viper</title>
+    <link rel="stylesheet" href="blog.css" />
+  </head>
+  <body>
+    <header class="blog-header">
+      <div class="blog-header__inner">
+        <a class="blog-wordmark" href="/" aria-label="Viper home">Viper</a>
+        <nav class="blog-nav" aria-label="Primary navigation">
+          <a aria-current="page" href="/blog/">Blog</a>
+          <a href="/#systems">Systems</a>
+          <a href="/#about">About</a>
+          <a class="blog-github" href="https://github.com/Viperisuseful" rel="noreferrer" target="_blank">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
     </header>
 
-    <article class="article">
-        <a href="./" class="back-link"><span>&larr;</span> All entries</a>
+    <main class="article-shell">
+      <article class="article">
+        <a href="./" class="back-link"><span aria-hidden="true">←</span> All entries</a>
         <div class="art-meta" id="post-meta"></div>
         <h1 class="art-title" id="post-title">&nbsp;</h1>
         <div class="art-rule"></div>
         <div class="post-body" id="post-body"></div>
-
         <div class="art-foot">
-            <span class="sig">by Viper</span>
-            <a href="./" class="back-link" style="margin:0;">More entries <span>&rarr;</span></a>
+          <span class="sig">Written by Viper</span>
+          <a href="./" class="back-link back-link--foot">More entries <span aria-hidden="true">→</span></a>
         </div>
-    </article>
+      </article>
+    </main>
 
-    <footer>
-        <p>© 2025 Viperisuseful</p>
-        <p>viperisuseful.cc</p>
-        <p><a href="/privacy/">Privacy</a></p>
+    <footer class="blog-footer">
+      <div class="blog-footer__lead">
+        <strong>Viper</strong>
+        <span>Small things, useful things, and systems that run quietly in the background.</span>
+      </div>
+      <nav class="blog-footer__links" aria-label="Footer links">
+        <a href="https://github.com/Viperisuseful">GitHub</a>
+        <a href="/discord/">Discord</a>
+        <a href="/modrinth/">Modrinth</a>
+        <a href="mailto:viper@viperisuseful.cc">Email</a>
+        <a href="/privacy/">Privacy</a>
+      </nav>
+      <div class="blog-footer__meta"><span>© 2026 Viper</span><a href="#post-title">Back to top ↑</a></div>
     </footer>
 
     <script src="blog.js"></script>
-    <script src="/theme.js"></script>
-</body>
+  </body>
 </html>

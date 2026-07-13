@@ -138,7 +138,6 @@ export const socialLinks: readonly SocialLink[] = [
   { name: "GitHub", href: "https://github.com/Viperisuseful" },
   { name: "Discord", href: "/discord/" },
   { name: "Modrinth", href: "/modrinth/" },
-  { name: "Blog", href: "/blog/" },
   { name: "Email", href: "mailto:viper@viperisuseful.cc" },
   { name: "Privacy", href: "/privacy/" },
 ] as const
