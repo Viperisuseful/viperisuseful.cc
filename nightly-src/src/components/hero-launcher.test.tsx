@@ -16,4 +16,16 @@ describe("HeroLauncher", () => {
       "/nightly/marks/turtle-cave.png",
     )
   })
+
+  it.each(["monogram", "signal", "illustration"] as const)(
+    "renders the %s hero variant",
+    (variant) => {
+      render(<HeroLauncher variant={variant} />)
+      expect(screen.getByTestId(`hero-art-${variant}`)).toBeInTheDocument()
+      expect(screen.getByTestId("launcher-brand")).toHaveAttribute(
+        "data-hero-variant",
+        variant,
+      )
+    },
+  )
 })

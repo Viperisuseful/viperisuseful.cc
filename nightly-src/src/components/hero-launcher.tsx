@@ -3,7 +3,9 @@ import { GithubLogo } from "@phosphor-icons/react/GithubLogo"
 import { motion, useReducedMotion } from "motion/react"
 
 import { ExternalLink } from "@/components/external-link"
+import { HeroArt } from "@/components/hero-art"
 import { Button } from "@/components/ui/button"
+import type { HeroVariant } from "@/lib/hero-variant"
 
 const launcherItems = [
   {
@@ -24,7 +26,7 @@ const launcherItems = [
   },
 ] as const
 
-export function HeroLauncher() {
+export function HeroLauncher({ variant = "original" }: { variant?: HeroVariant }) {
   const reduceMotion = useReducedMotion()
 
   return (
@@ -54,17 +56,14 @@ export function HeroLauncher() {
 
       <div className="launcher" aria-label="Featured project launcher">
         <motion.div
-          className="launcher-brand"
+          className={`launcher-brand launcher-brand--${variant}`}
+          data-hero-variant={variant}
+          data-testid="launcher-brand"
           initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         >
-          <img
-            src="/nightly/marks/viper.webp"
-            alt="Viper is useful"
-            width="768"
-            height="768"
-          />
+          <HeroArt variant={variant} />
         </motion.div>
         {launcherItems.map((item, index) => (
           <motion.a

@@ -3,9 +3,12 @@ import { createRoot } from "react-dom/client"
 
 import App from "./App.tsx"
 import "./index.css"
+import { resolveHeroVariant } from "./lib/hero-variant.ts"
 
-createRoot(document.getElementById('root')!).render(
+const heroVariant = resolveHeroVariant(window.location.pathname)
+
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <App heroVariant={heroVariant} />
   </StrictMode>,
 )
