@@ -1,85 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Omnisend -->
-    <script type="text/javascript">
-        window.omnisend = window.omnisend || [];
-        omnisend.push(["brandID", "6a2591b056835e9f83f6b6a3"]);
-        omnisend.push(["track", "$pageViewed"]);
-        !function(){var e=document.createElement("script");
-        e.type="text/javascript",e.async=!0,
-        e.src="https://omnisnippet1.com/inshop/launcher-v2.js";
-        var t=document.getElementsByTagName("script")[0];
-        t.parentNode.insertBefore(e,t)}();
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#18251d" />
+    <meta
+      name="description"
+      content="Projects, tools, communities, and private systems built and hosted by Viper."
+    />
+    <meta property="og:title" content="Viper | Projects and systems" />
+    <meta
+      property="og:description"
+      content="Everything Viper runs, in one place."
+    />
+    <meta property="og:image" content="https://viperisuseful.cc/marks/viper.webp" />
+    <link rel="icon" type="image/webp" href="/marks/viper.webp" />
+    <script>
+      try {
+        const saved = localStorage.getItem("viper-theme")
+        const dark = saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches)
+        document.documentElement.classList.toggle("dark", dark)
+        document.documentElement.dataset.theme = dark ? "dark" : "light"
+      } catch {}
     </script>
-    <title>404 | Page Not Found</title>
-    <link rel="icon" type="image/png" href="resources/Viperisuseful-LOGO.png">
-    <link rel="stylesheet" href="style.css?v=1.2.7">
-</head>
-<body class="helium-theme" data-lanyard-id="990680811827261490">
-    <canvas id="starfield"></canvas>
-
-    <header class="site-header">
-        <div class="logo-area">
-            <div class="logo">
-                <a href="/" aria-label="Viperisuseful home">
-                    <img src="resources/Viperisuseful-LOGO.png" alt="Logo">
-                </a>
-                
-                <!-- Discord Profile Card Dropdown -->
-                <div class="status-dropdown">
-                    <div class="profile-banner" id="discord-banner" aria-hidden="true"></div>
-                    <div class="profile-header">
-                        <div class="avatar-container">
-                            <div class="avatar-wrapper">
-                                <img id="discord-avatar" src="resources/Viperisuseful-LOGO.png" alt="Avatar">
-                            </div>
-                            <img id="discord-decoration" class="avatar-decoration" src="" alt="" style="display:none;">
-                            <div id="avatar-status-dot" class="avatar-status-dot offline"></div>
-                        </div>
-
-                        <div class="profile-header-right">
-                            <div class="profile-title-row">
-                                <span class="profile-username">viperisuseful</span>
-                                <span id="discord-server-badge" class="server-badge" style="display:none;"></span>
-                                <span id="discord-server-badge-2" class="server-badge server-badge-icon" style="display:none;"></span>
-                                <span id="discord-primary-badge" class="profile-primary-badge" style="display:none;"></span>
-                                <div id="discord-clan-tag" class="clan-tag" style="display:none;"></div>
-                                <div id="discord-badges" class="profile-badges" aria-hidden="true"></div>
-                            </div>
-                            <div id="discord-custom-status" class="profile-custom-status" style="display:none;"></div>
-                        </div>
-                    </div>
-                    <div class="profile-body">
-                        <div class="profile-divider" aria-hidden="true"></div>
-                        <div id="discord-activity" class="profile-activity">
-                            <!-- Activity content injected via JS -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <nav class="nav-links">
-            <a href="/" class="nav-link">← Back to Home</a>
-        </nav>
-    </header>
-
-    <main class="redirect-container">
-        <div class="error-card glass reveal-on-scroll">
-            <h1 class="error-code">404</h1>
-            <h2 class="error-title">Page Not Found</h2>
-            <p class="error-message">Looks like this page swam away into the deep abyss!</p>
-            
-            <div class="error-actions">
-                <a href="/" class="btn btn-primary">Go Home</a>
-                <a href="/quickrunlab/" class="btn btn-ghost">QuickRun Lab</a>
-                <a href="/turtlecave/" class="btn btn-ghost">Turtle Cave</a>
-            </div>
-        </div>
-    </main>
-
-    <script src="script.js"></script>
-</body>
+    <script>
+      if (
+        location.hostname === "viperisuseful.cc" ||
+        location.hostname.endsWith(".viperisuseful.cc")
+      ) {
+        window.omnisend = window.omnisend || []
+        window.omnisend.push(["brandID", "6a2591b056835e9f83f6b6a3"])
+        window.omnisend.push(["track", "$pageViewed"])
+        ;(function () {
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.async = true
+          script.src = "https://omnisnippet1.com/inshop/launcher-v2.js"
+          const firstScript = document.getElementsByTagName("script")[0]
+          firstScript.parentNode.insertBefore(script, firstScript)
+        })()
+      }
+    </script>
+    <title>404 | Signal lost</title>
+    <script type="module" crossorigin src="/hub-assets/index-DscXLnFy.js"></script>
+    <link rel="stylesheet" crossorigin href="/hub-assets/index-BX2I7GMs.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
 </html>

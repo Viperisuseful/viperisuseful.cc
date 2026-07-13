@@ -5,9 +5,8 @@ import { ProjectField } from "@/components/project-field"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { SystemsRail } from "@/components/systems-rail"
-import type { HeroVariant } from "@/lib/hero-variant"
 
-function App({ heroVariant = "original" }: { heroVariant?: HeroVariant }) {
+function App() {
   return (
     <TooltipProvider>
       <a className="skip-link" href="#main-content">
@@ -15,7 +14,7 @@ function App({ heroVariant = "original" }: { heroVariant?: HeroVariant }) {
       </a>
       <SiteHeader />
       <main id="main-content">
-        <HeroLauncher variant={heroVariant} />
+        <HeroLauncher />
         <ProjectField />
         <SystemsRail />
         <Presence />

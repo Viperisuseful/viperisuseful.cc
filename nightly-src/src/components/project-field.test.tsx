@@ -17,9 +17,9 @@ describe("ProjectField", () => {
   it("renders the featured project logos without their old screenshots", () => {
     const { container } = render(<ProjectField />)
 
-    expect(container.querySelector('img[src="/nightly/marks/quickrunlab.png"]')).toBeInTheDocument()
-    expect(container.querySelector('img[src="/nightly/marks/turtle-cave.png"]')).toBeInTheDocument()
-    expect(container.querySelector('img[src="/nightly/media/quickrunlab.webp"]')).not.toBeInTheDocument()
-    expect(container.querySelector('img[src="/nightly/media/turtle-cave.webp"]')).not.toBeInTheDocument()
+    expect(container.querySelector('img[src="/marks/quickrunlab.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/marks/turtle-cave.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/media/quickrunlab.webp"]')).not.toBeInTheDocument()
+    expect(container.querySelector('img[src="/media/turtle-cave.webp"]')).not.toBeInTheDocument()
   })
 })

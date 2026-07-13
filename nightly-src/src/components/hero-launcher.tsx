@@ -5,13 +5,12 @@ import { motion, useReducedMotion } from "motion/react"
 import { ExternalLink } from "@/components/external-link"
 import { HeroArt } from "@/components/hero-art"
 import { Button } from "@/components/ui/button"
-import type { HeroVariant } from "@/lib/hero-variant"
 
 const launcherItems = [
   {
     className: "launcher-item launcher-item--quick",
     href: "https://quickrunlab.viperisuseful.cc",
-    mark: "/nightly/marks/quickrunlab.png",
+    mark: "/marks/quickrunlab.png",
     width: 1000,
     height: 1000,
     label: "QuickRunLab",
@@ -19,14 +18,14 @@ const launcherItems = [
   {
     className: "launcher-item launcher-item--turtle",
     href: "https://turtle.viperisuseful.cc",
-    mark: "/nightly/marks/turtle-cave.png",
+    mark: "/marks/turtle-cave.png",
     width: 128,
     height: 128,
     label: "Turtle Cave",
   },
 ] as const
 
-export function HeroLauncher({ variant = "original" }: { variant?: HeroVariant }) {
+export function HeroLauncher() {
   const reduceMotion = useReducedMotion()
 
   return (
@@ -56,14 +55,14 @@ export function HeroLauncher({ variant = "original" }: { variant?: HeroVariant }
 
       <div className="launcher" aria-label="Featured project launcher">
         <motion.div
-          className={`launcher-brand launcher-brand--${variant}`}
-          data-hero-variant={variant}
+          className="launcher-brand launcher-brand--signal"
+          data-hero-variant="signal"
           data-testid="launcher-brand"
           initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
         >
-          <HeroArt variant={variant} />
+          <HeroArt />
         </motion.div>
         {launcherItems.map((item, index) => (
           <motion.a

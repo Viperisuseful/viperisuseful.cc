@@ -9,23 +9,20 @@ describe("HeroLauncher", () => {
 
     expect(screen.getByRole("img", { name: "QuickRunLab logo" })).toHaveAttribute(
       "src",
-      "/nightly/marks/quickrunlab.png",
+      "/marks/quickrunlab.png",
     )
     expect(screen.getByRole("img", { name: "Turtle Cave logo" })).toHaveAttribute(
       "src",
-      "/nightly/marks/turtle-cave.png",
+      "/marks/turtle-cave.png",
     )
   })
 
-  it.each(["monogram", "signal", "illustration"] as const)(
-    "renders the %s hero variant",
-    (variant) => {
-      render(<HeroLauncher variant={variant} />)
-      expect(screen.getByTestId(`hero-art-${variant}`)).toBeInTheDocument()
-      expect(screen.getByTestId("launcher-brand")).toHaveAttribute(
-        "data-hero-variant",
-        variant,
-      )
-    },
-  )
+  it("renders the approved signal artwork", () => {
+    render(<HeroLauncher />)
+    expect(screen.getByTestId("hero-art-signal")).toBeInTheDocument()
+    expect(screen.getByTestId("launcher-brand")).toHaveAttribute(
+      "data-hero-variant",
+      "signal",
+    )
+  })
 })

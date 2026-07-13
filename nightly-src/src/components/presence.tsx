@@ -16,7 +16,7 @@ export function Presence() {
   const activity = presence?.activities.find((item) => item.type === 0 || item.type === 2)
   const avatar = presence?.discord_user.avatar
     ? `https://cdn.discordapp.com/avatars/${presence.discord_user.id}/${presence.discord_user.avatar}.webp?size=128`
-    : "/nightly/marks/viper.webp"
+    : "/marks/viper.webp"
 
   return (
     <section className="content-section about-section" id="about" aria-labelledby="about-title">

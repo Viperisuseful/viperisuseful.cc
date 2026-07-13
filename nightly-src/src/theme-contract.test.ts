@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest"
 
 import css from "./index.css?raw"
 
-describe("nightly palette", () => {
+describe("site palette", () => {
   it("uses the approved terracotta palette and removes lime UI tokens", () => {
     expect(css).toContain("--background: oklch(0.98 0.008 85)")
     expect(css).toContain("--primary: oklch(0.55 0.145 39)")

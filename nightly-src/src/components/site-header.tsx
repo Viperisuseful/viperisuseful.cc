@@ -15,16 +15,16 @@ import {
 } from "@/components/ui/sheet"
 
 const navLinks = [
-  { label: "Projects", href: "#projects" },
-  { label: "Systems", href: "#systems" },
-  { label: "About", href: "#about" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Systems", href: "/#systems" },
+  { label: "About", href: "/#about" },
 ] as const
 
 export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header__inner">
-        <a className="wordmark" href="/nightly/" aria-label="Viper home">
+        <a className="wordmark" href="/" aria-label="Viper home">
           <span className="wordmark__tile">V</span>
           <span>viperisuseful</span>
         </a>

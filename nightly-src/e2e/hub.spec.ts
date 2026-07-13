@@ -38,11 +38,11 @@ test("loads complete hub without runtime errors", async ({ page }, testInfo) => 
   })
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
   await page.screenshot({
-    path: `/tmp/viper-nightly-${testInfo.project.name}-viewport.png`,
+    path: `/tmp/viper-hub-${testInfo.project.name}-viewport.png`,
     fullPage: false,
   })
   await page.screenshot({
-    path: `/tmp/viper-nightly-${testInfo.project.name}.png`,
+    path: `/tmp/viper-hub-${testInfo.project.name}.png`,
     fullPage: true,
   })
 })
@@ -56,7 +56,7 @@ test("theme control changes the document theme", async ({ page }) => {
   await page.reload()
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark")
   await page.screenshot({
-    path: `/tmp/viper-nightly-dark-${page.viewportSize()?.width ?? "unknown"}.png`,
+    path: `/tmp/viper-hub-dark-${page.viewportSize()?.width ?? "unknown"}.png`,
     fullPage: false,
   })
 })

@@ -1,11 +1,11 @@
 {
-  "name": "nightly-src",
+  "name": "viper-hub",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/create-preview-routes.mjs",
+    "build": "tsc -b && vite build && node scripts/publish-site.mjs",
     "lint": "oxlint",
     "preview": "vite preview",
     "test": "vitest",

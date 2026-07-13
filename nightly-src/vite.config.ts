@@ -6,7 +6,7 @@ import { defineConfig } from "vite"
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/nightly/",
+  base: "/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -14,7 +14,8 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "../nightly",
+    outDir: "../site-dist",
+    assetsDir: "hub-assets",
     emptyOutDir: true,
   },
   test: {

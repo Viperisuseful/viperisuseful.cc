@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="noindex, nofollow" />
+    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#18251d" />
     <meta
       name="description"
@@ -14,9 +14,9 @@
       property="og:description"
       content="Everything Viper runs, in one place."
     />
-    <meta property="og:image" content="https://viperisuseful.cc/nightly/marks/viper.webp" />
-    <link rel="canonical" href="https://viperisuseful.cc/nightly/" />
-    <link rel="icon" type="image/webp" href="/nightly/marks/viper.webp" />
+    <meta property="og:image" content="https://viperisuseful.cc/marks/viper.webp" />
+    <link rel="canonical" href="https://viperisuseful.cc/" />
+    <link rel="icon" type="image/webp" href="/marks/viper.webp" />
     <script>
       try {
         const saved = localStorage.getItem("viper-theme")
@@ -24,6 +24,24 @@
         document.documentElement.classList.toggle("dark", dark)
         document.documentElement.dataset.theme = dark ? "dark" : "light"
       } catch {}
+    </script>
+    <script>
+      if (
+        location.hostname === "viperisuseful.cc" ||
+        location.hostname.endsWith(".viperisuseful.cc")
+      ) {
+        window.omnisend = window.omnisend || []
+        window.omnisend.push(["brandID", "6a2591b056835e9f83f6b6a3"])
+        window.omnisend.push(["track", "$pageViewed"])
+        ;(function () {
+          const script = document.createElement("script")
+          script.type = "text/javascript"
+          script.async = true
+          script.src = "https://omnisnippet1.com/inshop/launcher-v2.js"
+          const firstScript = document.getElementsByTagName("script")[0]
+          firstScript.parentNode.insertBefore(script, firstScript)
+        })()
+      }
     </script>
     <title>Viper | Projects and systems</title>
   </head>
