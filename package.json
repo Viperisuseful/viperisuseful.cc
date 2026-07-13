@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "Static portfolio hosted on Heroku",
   "scripts": {
-    "start": "npx serve . -l $PORT"
+    "start": "npx serve . -l $PORT",
+    "nightly:dev": "npm --prefix nightly-src run dev",
+    "nightly:test": "npm --prefix nightly-src run test -- --run",
+    "nightly:build": "npm --prefix nightly-src run build",
+    "nightly:e2e": "npm --prefix nightly-src run e2e"
   },
   "engines": {
     "node": "20.x"
