@@ -5,10 +5,9 @@ export type Destination = {
   name: string
   description: string
   href?: string
-  image?: string
   mark?: string
   access: DestinationAccess
-  action: "Open project" | "Sign in" | "View source" | "No public link"
+  action: string
   tags: readonly string[]
 }
 
@@ -17,47 +16,53 @@ export type SocialLink = {
   href: string
 }
 
-export const publicProjects: readonly Destination[] = [
+export const featuredProjects: readonly Destination[] = [
   {
     id: "quickrunlab",
     name: "QuickRunLab",
-    description: "Run C, Python, and R in a real interactive browser terminal.",
+    description: "Run code in the browser without handing it your machine.",
     href: "https://quickrunlab.viperisuseful.cc",
     mark: "/marks/quickrunlab.png",
     access: "public",
-    action: "Open project",
+    action: "Open QuickRunLab",
     tags: ["Python", "Docker", "WebSocket"],
   },
   {
     id: "turtle-cave",
     name: "Turtle Cave",
-    description: "Community tools, moderation, support, and a living corner of the web.",
+    description: "A community dashboard, Discord bot, and place to keep the shell organized.",
     href: "https://turtle.viperisuseful.cc",
     mark: "/marks/turtle-cave.png",
     access: "public",
-    action: "Open project",
+    action: "Visit Turtle Cave",
     tags: ["Node.js", "Discord", "MongoDB"],
+  },
+] as const
+
+export const publicSystems: readonly Destination[] = [
+  {
+    id: "scp",
+    name: "Screenshot API",
+    description: "Capture full-page websites at exact dimensions with a real browser.",
+    href: "https://scp.viperisuseful.cc",
+    mark: "/marks/viper.webp",
+    access: "public",
+    action: "Open service",
+    tags: ["FastAPI", "Playwright"],
   },
   {
     id: "vipersearch",
     name: "ViperSearch",
     description: "A private-minded metasearch engine hosted on Viper infrastructure.",
     href: "https://search.viperisuseful.cc",
-    image: "/media/vipersearch.webp",
+    mark: "/marks/viper.webp",
     access: "public",
-    action: "Open project",
+    action: "Search the web",
     tags: ["SearXNG", "Valkey"],
   },
-  {
-    id: "scp",
-    name: "Screenshot API",
-    description: "Capture full-page websites at exact dimensions with a real browser.",
-    href: "https://scp.viperisuseful.cc",
-    image: "/media/scp.webp",
-    access: "public",
-    action: "Open project",
-    tags: ["FastAPI", "Playwright"],
-  },
+] as const
+
+export const moreProjects: readonly Destination[] = [
   {
     id: "vipercode",
     name: "ViperCode",
@@ -90,6 +95,16 @@ export const publicProjects: readonly Destination[] = [
 
 export const privateSystems: readonly Destination[] = [
   {
+    id: "cdn",
+    name: "CDN",
+    description: "Authenticated file delivery and uploads.",
+    href: "https://cdn.viperisuseful.cc",
+    mark: "/marks/cloudflare.svg",
+    access: "login",
+    action: "Sign in",
+    tags: ["Private files"],
+  },
+  {
     id: "coolify",
     name: "Coolify",
     description: "Deploy and operate apps running on this VM.",
@@ -109,17 +124,15 @@ export const privateSystems: readonly Destination[] = [
     action: "Sign in",
     tags: ["Encrypted vault"],
   },
-  {
-    id: "cdn",
-    name: "CDN",
-    description: "Authenticated file delivery and uploads.",
-    href: "https://cdn.viperisuseful.cc",
-    mark: "/marks/cloudflare.svg",
-    access: "login",
-    action: "Sign in",
-    tags: ["Private files"],
-  },
 ] as const
+
+export const publicProjects: readonly Destination[] = [
+  ...featuredProjects,
+  ...publicSystems,
+  ...moreProjects,
+]
+
+export const systemDestinations: readonly Destination[] = [...publicSystems, ...privateSystems]
 
 export const socialLinks: readonly SocialLink[] = [
   { name: "GitHub", href: "https://github.com/Viperisuseful" },

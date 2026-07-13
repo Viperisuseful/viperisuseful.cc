@@ -1,5 +1,5 @@
-import { ArrowLeft } from "@phosphor-icons/react/ArrowLeft"
 import { ArrowDown } from "@phosphor-icons/react/ArrowDown"
+import { ArrowLeft } from "@phosphor-icons/react/ArrowLeft"
 
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
@@ -15,11 +15,9 @@ export function NotFound() {
       <SiteHeader />
       <main className="not-found-page" id="main-content">
         <section className="not-found" aria-labelledby="not-found-title">
-          <div className="not-found__signal" aria-hidden="true">
-            <div className="not-found__rings" />
-            <span>404</span>
+          <div className="not-found__code" aria-hidden="true">
+            404
           </div>
-
           <div className="not-found__copy">
             <h1 id="not-found-title">Signal lost.</h1>
             <p>This address does not connect to anything Viper runs.</p>

@@ -1,27 +1,32 @@
 import { ArrowDown } from "@phosphor-icons/react/ArrowDown"
+import { ArrowUpRight } from "@phosphor-icons/react/ArrowUpRight"
 import { GithubLogo } from "@phosphor-icons/react/GithubLogo"
 import { motion, useReducedMotion } from "motion/react"
 
 import { ExternalLink } from "@/components/external-link"
-import { HeroArt } from "@/components/hero-art"
 import { Button } from "@/components/ui/button"
+import { featuredProjects } from "@/data/destinations"
 
-const launcherItems = [
+const floatingMarks = [
   {
-    className: "launcher-item launcher-item--quick",
-    href: "https://quickrunlab.viperisuseful.cc",
-    mark: "/marks/quickrunlab.png",
-    width: 1000,
-    height: 1000,
+    className: "hero-float-mark--quickrunlab",
+    src: "/marks/quickrunlab.png",
     label: "QuickRunLab",
   },
   {
-    className: "launcher-item launcher-item--turtle",
-    href: "https://turtle.viperisuseful.cc",
-    mark: "/marks/turtle-cave.png",
-    width: 128,
-    height: 128,
+    className: "hero-float-mark--turtle",
+    src: "/marks/turtle-cave.png",
     label: "Turtle Cave",
+  },
+  {
+    className: "hero-float-mark--scp",
+    src: "/marks/viper.webp",
+    label: "Screenshot API",
+  },
+  {
+    className: "hero-float-mark--github",
+    src: "/marks/github.svg",
+    label: "GitHub",
   },
 ] as const
 
@@ -30,73 +35,86 @@ export function HeroLauncher() {
 
   return (
     <section className="hero-section" aria-labelledby="hero-title">
-      <div className="hero-copy">
-        <p className="hero-kicker">Viper's corner of the internet</p>
-        <h1 id="hero-title">Everything Viper runs, in one place.</h1>
+      <div className="hero-grid" aria-hidden="true" />
+
+      <div className="hero-float" aria-hidden="true">
+        {floatingMarks.map((mark, index) => (
+          <motion.span
+            className={`hero-float-mark ${mark.className}`}
+            key={mark.label}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.84 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.65,
+              delay: reduceMotion ? 0 : 0.08 + index * 0.08,
+              ease: [0.16, 1, 0.3, 1],
+            }}
+          >
+            <img src={mark.src} alt="" width="96" height="96" />
+          </motion.span>
+        ))}
+      </div>
+
+      <motion.div
+        className="hero-copy"
+        initial={reduceMotion ? false : { opacity: 0, y: 22 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <h1
+          aria-label="Everything Viper builds & runs in one place."
+          id="hero-title"
+        >
+          Everything Viper
+          <br />
+          builds &amp; runs
+          <br />
+          in one place.
+        </h1>
         <p className="hero-summary">
-          Projects, tools, communities, and private systems built and hosted by one very online
-          developer.
+          Projects, tools, communities, and private systems from one very online developer.
         </p>
         <div className="hero-actions">
           <Button asChild size="lg">
             <a href="#projects">
-              Explore work
+              Explore projects
               <ArrowDown aria-hidden="true" data-icon="inline-end" />
             </a>
           </Button>
-          <Button asChild size="lg" variant="outline">
-            <ExternalLink href="https://github.com/Viperisuseful">
-              <GithubLogo aria-hidden="true" data-icon="inline-start" />
-              GitHub
-            </ExternalLink>
-          </Button>
+          <ExternalLink className="hero-source-link" href="https://github.com/Viperisuseful">
+            <GithubLogo aria-hidden="true" />
+            Browse the code
+          </ExternalLink>
         </div>
-      </div>
+      </motion.div>
 
-      <div className="launcher" aria-label="Featured project launcher">
-        <motion.div
-          className="launcher-brand launcher-brand--signal"
-          data-hero-variant="signal"
-          data-testid="launcher-brand"
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <HeroArt />
-        </motion.div>
-        {launcherItems.map((item, index) => (
-          <motion.a
-            className={item.className}
-            href={item.href}
-            key={item.label}
-            rel="noreferrer"
-            target="_blank"
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.7,
-              delay: reduceMotion ? 0 : 0.12 + index * 0.09,
-              ease: [0.16, 1, 0.3, 1],
-            }}
-            whileHover={reduceMotion ? undefined : { y: -6 }}
-          >
-            <img
-              className="launcher-item__mark"
-              src={item.mark}
-              alt={`${item.label} logo`}
-              width={item.width}
-              height={item.height}
-            />
-            <span>{item.label}</span>
-          </motion.a>
-        ))}
-        <div className="launcher-orbit launcher-orbit--search" aria-hidden="true">
-          VS
+      <motion.div
+        className="hero-showcase"
+        data-testid="hero-showcase"
+        initial={reduceMotion ? false : { opacity: 0, y: 44, rotateX: 3 }}
+        animate={{ opacity: 1, y: 0, rotateX: 1.5 }}
+        transition={{ duration: 0.9, delay: reduceMotion ? 0 : 0.28, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <div className="showcase-toolbar">
+          <span className="showcase-brand">Viper Hub</span>
+          <span className="showcase-path">viperisuseful.cc</span>
+          <span className="showcase-label">Projects</span>
         </div>
-        <div className="launcher-orbit launcher-orbit--scp" aria-hidden="true">
-          SCP
+        <div className="showcase-projects">
+          {featuredProjects.map((project) => (
+            <a href={project.href} key={project.id} rel="noreferrer" target="_blank">
+              <span className={`showcase-project__mark showcase-project__mark--${project.id}`}>
+                <img src={project.mark} alt="" width="160" height="160" />
+              </span>
+              <span className="showcase-project__copy">
+                <strong>{project.name}</strong>
+                <span>{project.description}</span>
+              </span>
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+          ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }

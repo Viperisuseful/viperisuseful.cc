@@ -4,25 +4,21 @@ import { describe, expect, it } from "vitest"
 import { HeroLauncher } from "./hero-launcher"
 
 describe("HeroLauncher", () => {
-  it("uses project logos for QuickRunLab and Turtle Cave", () => {
-    render(<HeroLauncher />)
+  it("uses the existing project logos in the floating field and showcase", () => {
+    const { container } = render(<HeroLauncher />)
 
-    expect(screen.getByRole("img", { name: "QuickRunLab logo" })).toHaveAttribute(
-      "src",
-      "/marks/quickrunlab.png",
-    )
-    expect(screen.getByRole("img", { name: "Turtle Cave logo" })).toHaveAttribute(
-      "src",
-      "/marks/turtle-cave.png",
-    )
+    expect(container.querySelectorAll('img[src="/marks/quickrunlab.png"]')).toHaveLength(2)
+    expect(container.querySelectorAll('img[src="/marks/turtle-cave.png"]')).toHaveLength(2)
+    expect(container.querySelector('img[src="/marks/viper.webp"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/marks/github.svg"]')).toBeInTheDocument()
   })
 
-  it("renders the approved signal artwork", () => {
+  it("renders a real linked project stage beneath the hero", () => {
     render(<HeroLauncher />)
-    expect(screen.getByTestId("hero-art-signal")).toBeInTheDocument()
-    expect(screen.getByTestId("launcher-brand")).toHaveAttribute(
-      "data-hero-variant",
-      "signal",
+    expect(screen.getByTestId("hero-showcase")).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: /QuickRunLab/ })).toHaveAttribute(
+      "href",
+      "https://quickrunlab.viperisuseful.cc",
     )
   })
 })

@@ -13,11 +13,14 @@ test("loads complete hub without runtime errors", async ({ page }, testInfo) => 
 
   await expect(page).toHaveTitle("Viper | Projects and systems")
   await expect(
-    page.getByRole("heading", { level: 1, name: "Everything Viper runs, in one place." }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Everything Viper builds & runs in one place.",
+    }),
   ).toBeVisible()
   await expect(page.getByRole("heading", { name: "QuickRunLab" })).toBeVisible()
   await expect(page.getByRole("heading", { name: "Turtle Cave" })).toBeVisible()
-  await expect(page.getByRole("heading", { name: "Useful if you have the key." })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "Tools and systems" })).toBeVisible()
   await expect(page.getByText("Login required")).toHaveCount(3)
 
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)
@@ -47,18 +50,23 @@ test("loads complete hub without runtime errors", async ({ page }, testInfo) => 
   })
 })
 
-test("theme control changes the document theme", async ({ page }) => {
-  const toggle = page.getByRole("button", { name: /Use (light|dark) theme/ }).first()
-  const before = await page.locator("html").getAttribute("data-theme")
-  await toggle.click()
-  await expect(page.locator("html")).not.toHaveAttribute("data-theme", before ?? "")
-  await page.evaluate(() => window.localStorage.setItem("viper-theme", "dark"))
-  await page.reload()
+test("follows the browser theme without a manual theme control", async ({ page }) => {
+  await expect(page.getByRole("button", { name: /theme/i })).toHaveCount(0)
+
+  await page.emulateMedia({ colorScheme: "dark" })
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark")
-  await page.screenshot({
-    path: `/tmp/viper-hub-dark-${page.viewportSize()?.width ?? "unknown"}.png`,
-    fullPage: false,
-  })
+
+  await page.emulateMedia({ colorScheme: "light" })
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light")
+})
+
+test("large project stage adapts to the viewport", async ({ page }) => {
+  const showcase = page.getByTestId("hero-showcase")
+  if ((page.viewportSize()?.width ?? 0) <= 820) {
+    await expect(showcase).toBeHidden()
+  } else {
+    await expect(showcase).toBeVisible()
+  }
 })
 
 test("mobile navigation opens when compact", async ({ page }) => {

@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#18251d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#191918" />
     <meta
       name="description"
       content="Projects, tools, communities, and private systems built and hosted by Viper."
@@ -12,17 +13,20 @@
     <meta property="og:title" content="Viper | Projects and systems" />
     <meta
       property="og:description"
-      content="Everything Viper runs, in one place."
+      content="Everything Viper builds, in one place."
     />
     <meta property="og:image" content="https://viperisuseful.cc/marks/viper.webp" />
     <link rel="icon" type="image/webp" href="/marks/viper.webp" />
     <script>
-      try {
-        const saved = localStorage.getItem("viper-theme")
-        const dark = saved === "dark" || (!saved && matchMedia("(prefers-color-scheme: dark)").matches)
-        document.documentElement.classList.toggle("dark", dark)
-        document.documentElement.dataset.theme = dark ? "dark" : "light"
-      } catch {}
+      const colorPreference = matchMedia("(prefers-color-scheme: dark)")
+      const syncTheme = () => {
+        const theme = colorPreference.matches ? "dark" : "light"
+        document.documentElement.classList.toggle("dark", colorPreference.matches)
+        document.documentElement.dataset.theme = theme
+        document.documentElement.style.colorScheme = theme
+      }
+      syncTheme()
+      colorPreference.addEventListener?.("change", syncTheme)
     </script>
     <script>
       if (
@@ -43,8 +47,8 @@
       }
     </script>
     <title>404 | Signal lost</title>
-    <script type="module" crossorigin src="/hub-assets/index-DscXLnFy.js"></script>
-    <link rel="stylesheet" crossorigin href="/hub-assets/index-BX2I7GMs.css">
+    <script type="module" crossorigin src="/hub-assets/index-Cn9BBFmP.js"></script>
+    <link rel="stylesheet" crossorigin href="/hub-assets/index-CCQ5_llv.css">
   </head>
   <body>
     <div id="root"></div>

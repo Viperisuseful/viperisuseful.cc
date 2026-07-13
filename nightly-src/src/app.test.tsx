@@ -9,7 +9,7 @@ describe("Viper hub", () => {
     expect(
       screen.getByRole("heading", {
         level: 1,
-        name: /everything viper runs, in one place/i,
+        name: /everything viper builds & runs in one place/i,
       }),
     ).toBeInTheDocument()
   })

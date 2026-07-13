@@ -5,6 +5,10 @@ import { socialLinks } from "@/data/destinations"
 export function SiteFooter() {
   return (
     <footer className="site-footer">
+      <div className="site-footer__lead">
+        <strong>Viper</strong>
+        <span>Small things, useful things, and systems that run quietly in the background.</span>
+      </div>
       <div className="footer-links" aria-label="Footer links">
         {socialLinks.map((link) => (
           <a href={link.href} key={link.name}>

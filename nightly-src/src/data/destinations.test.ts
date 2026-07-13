@@ -20,8 +20,8 @@ describe("destination registry", () => {
     const turtle = publicProjects.find((item) => item.id === "turtle-cave")
 
     expect(quickrunlab?.mark).toBe("/marks/quickrunlab.png")
-    expect(quickrunlab?.image).toBeUndefined()
+    expect(quickrunlab).not.toHaveProperty("image")
     expect(turtle?.mark).toBe("/marks/turtle-cave.png")
-    expect(turtle?.image).toBeUndefined()
+    expect(turtle).not.toHaveProperty("image")
   })
 })

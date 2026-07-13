@@ -44,13 +44,10 @@ test("renders the lost-signal recovery page", async ({ page }, testInfo) => {
   })
 })
 
-test("keeps theme controls and home recovery working", async ({ page }, testInfo) => {
-  const toggle = page.getByRole("button", { name: /Use (light|dark) theme/ }).first()
-  await toggle.click()
-  const selectedTheme = await page.locator("html").getAttribute("data-theme")
-
-  await page.reload()
-  await expect(page.locator("html")).toHaveAttribute("data-theme", selectedTheme ?? "")
+test("keeps system theme and home recovery working", async ({ page }, testInfo) => {
+  await expect(page.getByRole("button", { name: /theme/i })).toHaveCount(0)
+  await page.emulateMedia({ colorScheme: "dark" })
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark")
   await page.screenshot({
     path: `/tmp/viper-404-dark-${testInfo.project.name}.png`,
     fullPage: false,
@@ -59,10 +56,14 @@ test("keeps theme controls and home recovery working", async ({ page }, testInfo
   await page.getByRole("link", { name: "Go home" }).click()
   await expect(page).toHaveURL("http://127.0.0.1:5173/")
   await expect(
-    page.getByRole("heading", { level: 1, name: "Everything Viper runs, in one place." }),
+    page.getByRole("heading", {
+      level: 1,
+      name: "Everything Viper builds & runs in one place.",
+    }),
   ).toBeVisible()
-  await expect(page.getByTestId("launcher-brand")).toHaveAttribute(
-    "data-hero-variant",
-    "signal",
-  )
+  if ((page.viewportSize()?.width ?? 0) <= 820) {
+    await expect(page.getByTestId("hero-showcase")).toBeHidden()
+  } else {
+    await expect(page.getByTestId("hero-showcase")).toBeVisible()
+  }
 })

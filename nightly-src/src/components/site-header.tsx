@@ -2,7 +2,6 @@ import { GithubLogo } from "@phosphor-icons/react/GithubLogo"
 import { List } from "@phosphor-icons/react/List"
 
 import { ExternalLink } from "@/components/external-link"
-import { ThemeToggle } from "@/components/theme-toggle"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,
@@ -25,8 +24,7 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="site-header__inner">
         <a className="wordmark" href="/" aria-label="Viper home">
-          <span className="wordmark__tile">V</span>
-          <span>viperisuseful</span>
+          Viper
         </a>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -39,11 +37,9 @@ export function SiteHeader() {
             <GithubLogo aria-hidden="true" data-icon="inline-start" />
             GitHub
           </ExternalLink>
-          <ThemeToggle />
         </nav>
 
         <div className="mobile-nav">
-          <ThemeToggle />
           <Sheet>
             <SheetTrigger asChild>
               <Button aria-label="Open navigation" size="icon-lg" variant="ghost">
