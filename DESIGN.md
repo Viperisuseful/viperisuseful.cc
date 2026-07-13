@@ -9,25 +9,26 @@ primary choices.
 
 ## Theme
 
-System-aware light and dark themes using semantic OKLCH tokens. Dark mode feels
-like a dim developer workspace. Light mode feels like a clean hardware manual,
-not cream paper. Theme is set once at the application root.
+System-aware light and dark themes using semantic OKLCH tokens. OpenCode's
+crisp rule structure supplies the restraint; Claude's warm canvas and
+terracotta supply the human tone. Dark mode uses espresso-charcoal rather than
+green-black. Theme is set once at the application root.
 
 ### Color
 
 | Token | Light | Dark | Role |
 | --- | --- | --- | --- |
-| `--background` | `oklch(0.975 0.006 150)` | `oklch(0.145 0.018 155)` | Page canvas |
-| `--foreground` | `oklch(0.19 0.018 155)` | `oklch(0.94 0.008 150)` | Primary text |
-| `--surface` | `oklch(0.945 0.012 150)` | `oklch(0.205 0.022 155)` | Raised content |
-| `--surface-strong` | `oklch(0.90 0.02 145)` | `oklch(0.27 0.028 155)` | Interactive surface |
-| `--muted` | `oklch(0.47 0.025 155)` | `oklch(0.71 0.024 150)` | Secondary text |
-| `--border` | `oklch(0.82 0.02 150)` | `oklch(0.32 0.026 155)` | Dividers and focus structure |
-| `--primary` | `oklch(0.79 0.19 128)` | `oklch(0.84 0.20 128)` | Single lime accent |
-| `--primary-foreground` | `oklch(0.16 0.035 145)` | `oklch(0.16 0.035 145)` | Text on accent |
+| `--background` | `oklch(0.98 0.008 85)` | `oklch(0.14 0.009 55)` | Page canvas |
+| `--foreground` | `oklch(0.18 0.007 60)` | `oklch(0.93 0.008 82)` | Primary text |
+| `--surface` | `oklch(0.955 0.010 82)` | `oklch(0.19 0.010 55)` | Raised content |
+| `--surface-strong` | `oklch(0.90 0.014 80)` | `oklch(0.25 0.013 55)` | Interactive surface |
+| `--muted` | `oklch(0.42 0.014 70)` | `oklch(0.72 0.012 78)` | Secondary text |
+| `--border` | `oklch(0.84 0.012 80)` | `oklch(0.31 0.013 58)` | Dividers and focus structure |
+| `--primary` | `oklch(0.55 0.145 39)` | `oklch(0.72 0.125 39)` | Terracotta accent |
+| `--primary-foreground` | `oklch(0.98 0.008 85)` | `oklch(0.15 0.010 55)` | Text on accent |
 
 Project artwork may retain its own colors inside screenshots and logos. UI
-chrome uses only the semantic palette above.
+chrome uses only warm ink, terracotta, and the semantic neutrals above.
 
 ## Typography
 
@@ -92,4 +93,3 @@ is complete. Private systems use official product marks, not fake dashboards.
 Voice is direct, first-person, and specific. Avoid startup claims, fake metrics,
 section numbering, decorative status language, and em dashes. Button labels use
 one consistent intent: `Open project`, `Sign in`, or `View source`.
-

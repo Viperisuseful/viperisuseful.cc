@@ -13,4 +13,13 @@ describe("ProjectField", () => {
     expect(screen.getByText("No public link")).toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /dulkirmod/i })).not.toBeInTheDocument()
   })
+
+  it("renders the featured project logos without their old screenshots", () => {
+    const { container } = render(<ProjectField />)
+
+    expect(container.querySelector('img[src="/nightly/marks/quickrunlab.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/nightly/marks/turtle-cave.png"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/nightly/media/quickrunlab.webp"]')).not.toBeInTheDocument()
+    expect(container.querySelector('img[src="/nightly/media/turtle-cave.webp"]')).not.toBeInTheDocument()
+  })
 })

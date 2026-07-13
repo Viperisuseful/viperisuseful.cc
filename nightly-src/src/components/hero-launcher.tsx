@@ -9,17 +9,17 @@ const launcherItems = [
   {
     className: "launcher-item launcher-item--quick",
     href: "https://quickrunlab.viperisuseful.cc",
-    image: "/nightly/media/quickrunlab.webp",
-    width: 1200,
-    height: 750,
+    mark: "/nightly/marks/quickrunlab.png",
+    width: 1000,
+    height: 1000,
     label: "QuickRunLab",
   },
   {
     className: "launcher-item launcher-item--turtle",
     href: "https://turtle.viperisuseful.cc",
-    image: "/nightly/media/turtle-cave.webp",
-    width: 1200,
-    height: 1491,
+    mark: "/nightly/marks/turtle-cave.png",
+    width: 128,
+    height: 128,
     label: "Turtle Cave",
   },
 ] as const
@@ -83,8 +83,9 @@ export function HeroLauncher() {
             whileHover={reduceMotion ? undefined : { y: -6 }}
           >
             <img
-              src={item.image}
-              alt={`${item.label} interface`}
+              className="launcher-item__mark"
+              src={item.mark}
+              alt={`${item.label} logo`}
               width={item.width}
               height={item.height}
             />
