@@ -1,5 +1,12 @@
 [
   {
+    "slug": "viperproxy-mixin-patches",
+    "title": "Sorry about the Viper Proxy Mixin crash",
+    "date": "2026-07-13",
+    "tags": ["Viper Proxy", "Minecraft", "Patch"],
+    "excerpt": "I shipped a few Viper Proxy builds with a bad Mixin target. The fixed releases are up, and I added checks to stop the same mistake happening again."
+  },
+  {
     "slug": "quickrunlab-is-back",
     "title": "QuickRunLab is back, with more room to run",
     "date": "2026-05-29",
