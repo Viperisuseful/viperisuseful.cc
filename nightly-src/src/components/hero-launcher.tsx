@@ -19,9 +19,9 @@ const floatingMarks = [
     label: "Turtle Cave",
   },
   {
-    className: "hero-float-mark--scp",
-    src: "/marks/viper.webp",
-    label: "Screenshot API",
+    className: "hero-float-mark--vipercapture",
+    src: "/marks/vipercapture.svg",
+    label: "ViperCapture",
   },
   {
     className: "hero-float-mark--github",

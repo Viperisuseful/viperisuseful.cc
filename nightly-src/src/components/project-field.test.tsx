@@ -21,4 +21,18 @@ describe("ProjectField", () => {
     expect(screen.queryByText("Turtle Cave")).not.toBeInTheDocument()
     expect(container.querySelector(".project-story")).not.toBeInTheDocument()
   })
+
+  it("leads More works with the canonical ViperCapture destination", () => {
+    const { container } = render(<ProjectField />)
+
+    expect(screen.getByRole("heading", { name: "More works" })).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: /ViperCapture/ })).toHaveAttribute(
+      "href",
+      "https://capture.viperisuseful.cc",
+    )
+    expect(container.querySelector(".project-directory__item img")).toHaveAttribute(
+      "src",
+      "/marks/vipercapture.svg",
+    )
+  })
 })

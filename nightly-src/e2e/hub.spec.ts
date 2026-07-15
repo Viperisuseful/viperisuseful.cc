@@ -20,6 +20,11 @@ test("loads complete hub without runtime errors", async ({ page }, testInfo) => 
   ).toBeVisible()
   await expect(page.getByRole("link", { name: /QuickRunLab/ })).toBeVisible()
   await expect(page.getByRole("link", { name: /Turtle Cave/ })).toBeVisible()
+  await expect(page.getByRole("heading", { name: "More works" })).toBeVisible()
+  await expect(page.getByRole("link", { name: /ViperCapture/ })).toHaveAttribute(
+    "href",
+    "https://capture.viperisuseful.cc",
+  )
   await expect(page.locator(".project-story")).toHaveCount(0)
   await expect(page.getByRole("heading", { name: "Tools and systems" })).toBeVisible()
   await expect(page.getByText("Login required")).toHaveCount(3)

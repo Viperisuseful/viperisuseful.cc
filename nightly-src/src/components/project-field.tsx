@@ -34,7 +34,7 @@ export function ProjectField() {
       aria-labelledby="more-projects-title"
     >
       <div className="section-heading">
-        <h2 id="more-projects-title">More from Viper</h2>
+        <h2 id="more-projects-title">More works</h2>
         <p>Smaller tools, open-source work, and projects that keep moving.</p>
       </div>
       <div className="project-directory">

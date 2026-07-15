@@ -9,7 +9,7 @@ describe("HeroLauncher", () => {
 
     expect(container.querySelectorAll('img[src="/marks/quickrunlab.png"]')).toHaveLength(2)
     expect(container.querySelectorAll('img[src="/marks/turtle-cave.png"]')).toHaveLength(2)
-    expect(container.querySelector('img[src="/marks/viper.webp"]')).toBeInTheDocument()
+    expect(container.querySelector('img[src="/marks/vipercapture.svg"]')).toBeInTheDocument()
     expect(container.querySelector('img[src="/marks/github.svg"]')).toBeInTheDocument()
   })
 

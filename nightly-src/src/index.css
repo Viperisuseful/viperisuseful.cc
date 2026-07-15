@@ -435,7 +435,7 @@
   animation-delay: -2s;
 }
 
-.hero-float-mark--scp {
+.hero-float-mark--vipercapture {
   top: 42%;
   left: 4%;
   transform: rotate(5deg);
@@ -713,10 +713,6 @@ a.project-directory__item:hover {
   object-fit: contain;
 }
 
-.system-item--scp .system-item__mark {
-  background: #202022;
-}
-
 .system-item__copy {
   min-width: 0;
   display: flex;
@@ -939,7 +935,7 @@ a.project-directory__item:hover {
   }
 
   .hero-float-mark--quickrunlab,
-  .hero-float-mark--scp {
+  .hero-float-mark--vipercapture {
     left: 2%;
   }
 
@@ -1021,7 +1017,7 @@ a.project-directory__item:hover {
     right: 0.75rem;
   }
 
-  .hero-float-mark--scp {
+  .hero-float-mark--vipercapture {
     display: none;
   }
 

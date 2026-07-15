@@ -41,16 +41,6 @@ export const featuredProjects: readonly Destination[] = [
 
 export const publicSystems: readonly Destination[] = [
   {
-    id: "scp",
-    name: "Screenshot API",
-    description: "Capture full-page websites at exact dimensions with a real browser.",
-    href: "https://scp.viperisuseful.cc",
-    mark: "/marks/viper.webp",
-    access: "public",
-    action: "Open service",
-    tags: ["FastAPI", "Playwright"],
-  },
-  {
     id: "vipersearch",
     name: "ViperSearch",
     description: "A private-minded metasearch engine hosted on Viper infrastructure.",
@@ -63,6 +53,16 @@ export const publicSystems: readonly Destination[] = [
 ] as const
 
 export const moreProjects: readonly Destination[] = [
+  {
+    id: "vipercapture",
+    name: "ViperCapture",
+    description: "Capture full-page websites at exact dimensions with a real browser.",
+    href: "https://capture.viperisuseful.cc",
+    mark: "/marks/vipercapture.svg",
+    access: "public",
+    action: "Open ViperCapture",
+    tags: ["FastAPI", "Playwright"],
+  },
   {
     id: "vipercode",
     name: "ViperCode",
