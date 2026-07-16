@@ -23,6 +23,22 @@ test("loads complete hub without runtime errors", async ({ page }, testInfo) => 
     "href",
     "https://capture.viperisuseful.cc",
   )
+  const viperCaptureMark = page.locator(".showcase-project__mark--vipercapture")
+  const viperCaptureImage = viperCaptureMark.locator("img")
+  const markDimensions = await viperCaptureMark.evaluate((element) => ({
+    width: element.clientWidth,
+    height: element.clientHeight,
+  }))
+  const imageDimensions = await viperCaptureImage.evaluate((element) => ({
+    width: element.clientWidth,
+    height: element.clientHeight,
+  }))
+  expect(imageDimensions).toEqual(markDimensions)
+
+  const markSource = await page.evaluate(async () =>
+    fetch("/marks/vipercapture.svg").then((response) => response.text()),
+  )
+  expect(markSource).not.toContain("M38 64H64V38C57 48 48 57 38 64Z")
   await expect(page.getByRole("heading", { name: "More works" })).toBeVisible()
   await expect(page.getByRole("link", { name: /Turtle Cave/ })).toHaveAttribute(
     "href",
