@@ -8,8 +8,8 @@ describe("HeroLauncher", () => {
     const { container } = render(<HeroLauncher />)
 
     expect(container.querySelectorAll('img[src="/marks/quickrunlab.png"]')).toHaveLength(2)
-    expect(container.querySelectorAll('img[src="/marks/turtle-cave.png"]')).toHaveLength(2)
-    expect(container.querySelector('img[src="/marks/vipercapture.svg"]')).toBeInTheDocument()
+    expect(container.querySelectorAll('img[src="/marks/vipercapture.svg"]')).toHaveLength(2)
+    expect(container.querySelectorAll('img[src="/marks/turtle-cave.png"]')).toHaveLength(1)
     expect(container.querySelector('img[src="/marks/github.svg"]')).toBeInTheDocument()
   })
 

@@ -19,11 +19,14 @@ test("loads complete hub without runtime errors", async ({ page }, testInfo) => 
     }),
   ).toBeVisible()
   await expect(page.getByRole("link", { name: /QuickRunLab/ })).toBeVisible()
-  await expect(page.getByRole("link", { name: /Turtle Cave/ })).toBeVisible()
-  await expect(page.getByRole("heading", { name: "More works" })).toBeVisible()
   await expect(page.getByRole("link", { name: /ViperCapture/ })).toHaveAttribute(
     "href",
     "https://capture.viperisuseful.cc",
+  )
+  await expect(page.getByRole("heading", { name: "More works" })).toBeVisible()
+  await expect(page.getByRole("link", { name: /Turtle Cave/ })).toHaveAttribute(
+    "href",
+    "https://turtle.viperisuseful.cc",
   )
   await expect(page.locator(".project-story")).toHaveCount(0)
   await expect(page.getByRole("heading", { name: "Tools and systems" })).toBeVisible()
@@ -81,9 +84,19 @@ test("mobile navigation opens when compact", async ({ page }) => {
 })
 
 test("links and accessibility contract are intact", async ({ page }) => {
-  await expect(
-    page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Blog" }),
-  ).toHaveAttribute("href", "/blog/")
+  const mobileNavTrigger = page.getByRole("button", { name: "Open navigation" })
+  if (await mobileNavTrigger.isVisible()) {
+    await mobileNavTrigger.click()
+    await expect(
+      page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Blog" }),
+    ).toHaveAttribute("href", "/blog/")
+    await page.keyboard.press("Escape")
+    await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeHidden()
+  } else {
+    await expect(
+      page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Blog" }),
+    ).toHaveAttribute("href", "/blog/")
+  }
   await expect(
     page.getByRole("contentinfo").getByRole("link", { name: "Blog" }),
   ).toHaveCount(0)

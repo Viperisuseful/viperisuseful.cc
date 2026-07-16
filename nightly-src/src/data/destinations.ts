@@ -28,14 +28,14 @@ export const featuredProjects: readonly Destination[] = [
     tags: ["Python", "Docker", "WebSocket"],
   },
   {
-    id: "turtle-cave",
-    name: "Turtle Cave",
-    description: "A community dashboard, Discord bot, and place to keep the shell organized.",
-    href: "https://turtle.viperisuseful.cc",
-    mark: "/marks/turtle-cave.png",
+    id: "vipercapture",
+    name: "ViperCapture",
+    description: "Capture full-page websites at exact dimensions with a real browser.",
+    href: "https://capture.viperisuseful.cc",
+    mark: "/marks/vipercapture.svg",
     access: "public",
-    action: "Visit Turtle Cave",
-    tags: ["Node.js", "Discord", "MongoDB"],
+    action: "Open ViperCapture",
+    tags: ["FastAPI", "Playwright"],
   },
 ] as const
 
@@ -54,14 +54,14 @@ export const publicSystems: readonly Destination[] = [
 
 export const moreProjects: readonly Destination[] = [
   {
-    id: "vipercapture",
-    name: "ViperCapture",
-    description: "Capture full-page websites at exact dimensions with a real browser.",
-    href: "https://capture.viperisuseful.cc",
-    mark: "/marks/vipercapture.svg",
+    id: "turtle-cave",
+    name: "Turtle Cave",
+    description: "A community dashboard, Discord bot, and place to keep the shell organized.",
+    href: "https://turtle.viperisuseful.cc",
+    mark: "/marks/turtle-cave.png",
     access: "public",
-    action: "Open ViperCapture",
-    tags: ["FastAPI", "Playwright"],
+    action: "Visit Turtle Cave",
+    tags: ["Node.js", "Discord", "MongoDB"],
   },
   {
     id: "vipercode",

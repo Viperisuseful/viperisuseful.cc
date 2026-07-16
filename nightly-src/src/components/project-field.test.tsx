@@ -14,25 +14,25 @@ describe("ProjectField", () => {
     expect(screen.queryByRole("link", { name: /dulkirmod/i })).not.toBeInTheDocument()
   })
 
-  it("does not repeat the featured QuickRunLab and Turtle Cave cards", () => {
+  it("does not repeat the featured QuickRunLab and ViperCapture cards", () => {
     const { container } = render(<ProjectField />)
 
     expect(screen.queryByText("QuickRunLab")).not.toBeInTheDocument()
-    expect(screen.queryByText("Turtle Cave")).not.toBeInTheDocument()
+    expect(screen.queryByText("ViperCapture")).not.toBeInTheDocument()
     expect(container.querySelector(".project-story")).not.toBeInTheDocument()
   })
 
-  it("leads More works with the canonical ViperCapture destination", () => {
+  it("leads More works with the Turtle Cave destination", () => {
     const { container } = render(<ProjectField />)
 
     expect(screen.getByRole("heading", { name: "More works" })).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: /ViperCapture/ })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /Turtle Cave/ })).toHaveAttribute(
       "href",
-      "https://capture.viperisuseful.cc",
+      "https://turtle.viperisuseful.cc",
     )
     expect(container.querySelector(".project-directory__item img")).toHaveAttribute(
       "src",
-      "/marks/vipercapture.svg",
+      "/marks/turtle-cave.png",
     )
   })
 })

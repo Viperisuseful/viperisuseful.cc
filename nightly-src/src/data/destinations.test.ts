@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest"
 
-import { moreProjects, privateSystems, publicProjects, systemDestinations } from "./destinations"
+import {
+  featuredProjects,
+  moreProjects,
+  privateSystems,
+  publicProjects,
+  systemDestinations,
+} from "./destinations"
 
 describe("destination registry", () => {
   it("uses unique ids and HTTPS links", () => {
@@ -25,12 +31,13 @@ describe("destination registry", () => {
     expect(turtle).not.toHaveProperty("image")
   })
 
-  it("features canonical ViperCapture branding in More works instead of systems", () => {
+  it("features ViperCapture and leads More works with Turtle Cave", () => {
+    expect(featuredProjects.map((item) => item.id)).toEqual(["quickrunlab", "vipercapture"])
     expect(moreProjects[0]).toMatchObject({
-      id: "vipercapture",
-      name: "ViperCapture",
-      href: "https://capture.viperisuseful.cc",
-      mark: "/marks/vipercapture.svg",
+      id: "turtle-cave",
+      name: "Turtle Cave",
+      href: "https://turtle.viperisuseful.cc",
+      mark: "/marks/turtle-cave.png",
     })
     expect(systemDestinations.some((item) => item.id === "vipercapture" || item.id === "scp")).toBe(
       false,
