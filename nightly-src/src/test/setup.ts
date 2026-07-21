@@ -1,8 +1,30 @@
 import "@testing-library/jest-dom/vitest"
 import { cleanup } from "@testing-library/react"
-import { afterEach } from "vitest"
+import { afterEach, vi } from "vitest"
 
-afterEach(cleanup)
+const fetchMock = vi.fn((input: RequestInfo | URL) => {
+  if (String(input).startsWith("https://github-contributions-api.jogruber.de/")) {
+    return Promise.resolve(
+      new Response(JSON.stringify({ contributions: [], total: { lastYear: 0 } }), {
+        headers: { "Content-Type": "application/json" },
+        status: 200,
+      }),
+    )
+  }
+
+  return Promise.reject(new Error(`Unexpected fetch in test: ${String(input)}`))
+})
+
+Object.defineProperty(globalThis, "fetch", {
+  configurable: true,
+  value: fetchMock,
+  writable: true,
+})
+
+afterEach(() => {
+  cleanup()
+  fetchMock.mockClear()
+})
 
 Object.defineProperty(window, "matchMedia", {
   configurable: true,
@@ -17,10 +39,6 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: () => false,
   }),
 })
-
-if (!globalThis.fetch) {
-  globalThis.fetch = (() => Promise.reject(new Error("fetch unavailable in test"))) as typeof fetch
-}
 
 class ResizeObserverMock {
   observe() {}

@@ -1,5 +1,6 @@
 import { ArrowUp } from "@phosphor-icons/react/ArrowUp"
 
+import { GithubCalendar } from "@/components/ui/github-calendar"
 import { socialLinks } from "@/data/destinations"
 
 export function SiteFooter() {
@@ -9,6 +10,7 @@ export function SiteFooter() {
         <strong>Viper</strong>
         <span>Small things, useful things, and systems that run quietly in the background.</span>
       </div>
+      <GithubCalendar className="footer-calendar" username="Viperisuseful" />
       <div className="footer-links" aria-label="Footer links">
         {socialLinks.map((link) => (
           <a href={link.href} key={link.name}>

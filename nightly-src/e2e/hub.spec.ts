@@ -2,7 +2,59 @@ import axeCore from "axe-core"
 import { expect, test } from "@playwright/test"
 
 test.beforeEach(async ({ page }) => {
+  const today = new Date()
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1)
+  const toDate = (date: Date) => date.toISOString().slice(0, 10)
+
+  await page.route("https://github-contributions-api.jogruber.de/**", async (route) => {
+    await route.fulfill({
+      body: JSON.stringify({
+        contributions: [
+          { count: 1, date: toDate(yesterday), level: 1 },
+          { count: 2, date: toDate(today), level: 2 },
+        ],
+        total: { lastYear: 3 },
+      }),
+      contentType: "application/json",
+      status: 200,
+    })
+  })
   await page.goto("./")
+})
+
+test("shows the GitHub calendar between the footer lead and links", async ({ page }) => {
+  const calendar = page.getByRole("region", { name: "Viperisuseful's GitHub contributions" })
+  await expect(calendar).toBeVisible()
+  await expect(calendar.getByRole("link", { name: "@Viperisuseful" })).toHaveAttribute(
+    "href",
+    "https://github.com/Viperisuseful",
+  )
+  await expect(calendar.getByText("3", { exact: true })).toBeVisible()
+
+  expect(
+    await calendar.evaluate((element) => ({
+      next: element.nextElementSibling?.className,
+      previous: element.previousElementSibling?.className,
+    })),
+  ).toEqual({ next: "footer-links", previous: "site-footer__lead" })
+
+  const previousCell = calendar.getByRole("gridcell", { name: /^1 contribution on/ })
+  const latestCell = calendar.getByRole("gridcell", { name: /^2 contributions on/ })
+  await latestCell.hover()
+  await expect(page.getByRole("tooltip")).toContainText("2 contributions")
+
+  await latestCell.focus()
+  await page.keyboard.press("ArrowUp")
+  await expect(previousCell).toBeFocused()
+  await expect(page.getByRole("tooltip")).toContainText("1 contribution")
+
+  await latestCell.dispatchEvent("pointerdown", { pointerType: "touch" })
+  await expect(latestCell).toBeFocused()
+  await expect(page.getByRole("tooltip")).toContainText("2 contributions")
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
+  ).toBe(false)
 })
 
 test("loads complete hub without runtime errors", async ({ page }, testInfo) => {
@@ -77,12 +129,17 @@ test("loads complete hub without runtime errors", async ({ page }, testInfo) => 
 
 test("follows the browser theme without a manual theme control", async ({ page }) => {
   await expect(page.getByRole("button", { name: /theme/i })).toHaveCount(0)
+  const latestContribution = page
+    .getByRole("region", { name: "Viperisuseful's GitHub contributions" })
+    .getByRole("gridcell", { name: /^2 contributions on/ })
 
   await page.emulateMedia({ colorScheme: "dark" })
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark")
+  await expect(latestContribution).toHaveAttribute("fill", "#006d32")
 
   await page.emulateMedia({ colorScheme: "light" })
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light")
+  await expect(latestContribution).toHaveAttribute("fill", "#40c463")
 })
 
 test("large project stage adapts to the viewport", async ({ page }) => {

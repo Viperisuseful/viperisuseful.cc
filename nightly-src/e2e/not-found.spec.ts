@@ -2,6 +2,24 @@ import axeCore from "axe-core"
 import { expect, test } from "@playwright/test"
 
 test.beforeEach(async ({ page }) => {
+  const today = new Date()
+  const yesterday = new Date(today)
+  yesterday.setDate(yesterday.getDate() - 1)
+  const toDate = (date: Date) => date.toISOString().slice(0, 10)
+
+  await page.route("https://github-contributions-api.jogruber.de/**", async (route) => {
+    await route.fulfill({
+      body: JSON.stringify({
+        contributions: [
+          { count: 1, date: toDate(yesterday), level: 1 },
+          { count: 2, date: toDate(today), level: 2 },
+        ],
+        total: { lastYear: 3 },
+      }),
+      contentType: "application/json",
+      status: 200,
+    })
+  })
   await page.goto("/nightly/")
 })
 
@@ -20,6 +38,15 @@ test("renders the lost-signal recovery page", async ({ page }, testInfo) => {
     "href",
     "/#projects",
   )
+  const calendar = page.getByRole("region", { name: "Viperisuseful's GitHub contributions" })
+  await expect(calendar).toBeVisible()
+  await expect(calendar.getByText("3", { exact: true })).toBeVisible()
+  expect(
+    await calendar.evaluate((element) => ({
+      next: element.nextElementSibling?.className,
+      previous: element.previousElementSibling?.className,
+    })),
+  ).toEqual({ next: "footer-links", previous: "site-footer__lead" })
 
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
@@ -48,6 +75,11 @@ test("keeps system theme and home recovery working", async ({ page }, testInfo) 
   await expect(page.getByRole("button", { name: /theme/i })).toHaveCount(0)
   await page.emulateMedia({ colorScheme: "dark" })
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark")
+  await expect(
+    page
+      .getByRole("region", { name: "Viperisuseful's GitHub contributions" })
+      .getByRole("gridcell", { name: /^2 contributions on/ }),
+  ).toHaveAttribute("fill", "#006d32")
   await page.screenshot({
     path: `/tmp/viper-404-dark-${testInfo.project.name}.png`,
     fullPage: false,

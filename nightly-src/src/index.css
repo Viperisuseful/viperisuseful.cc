@@ -832,6 +832,10 @@ a.project-directory__item:hover {
   font-size: 1.05rem;
 }
 
+.footer-calendar {
+  margin-top: 2.5rem;
+}
+
 .footer-links {
   display: flex;
   flex-wrap: wrap;
