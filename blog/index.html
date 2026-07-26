@@ -4,90 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#09090b" />
-    <meta name="description" content="Release notes, dev logs, and project updates from Viper." />
-    <meta property="og:title" content="Viper Journal" />
-    <meta property="og:description" content="Notes from the things Viper builds and runs." />
-    <meta property="og:url" content="https://viperisuseful.cc/blog/" />
+    <meta name="theme-color" content="#101011" />
+    <meta
+      name="description"
+      content="ViperCode CLI: an interactive command-line portfolio for Viper's projects, systems, and build notes."
+    />
+    <meta property="og:title" content="ViperCode CLI | Interactive portfolio" />
+    <meta
+      property="og:description"
+      content="Explore Viper's projects and systems through an interactive coding-agent interface."
+    />
     <meta property="og:image" content="https://viperisuseful.cc/marks/viper.webp" />
-    <link rel="canonical" href="https://viperisuseful.cc/blog/" />
+    <link rel="canonical" href="https://viperisuseful.cc/" />
     <link rel="icon" type="image/webp" href="/marks/viper.webp" />
     <script>
-      const colorPreference = matchMedia("(prefers-color-scheme: dark)")
-      const syncTheme = () => {
-        const theme = colorPreference.matches ? "dark" : "light"
-        document.documentElement.dataset.theme = theme
-        document.documentElement.style.colorScheme = theme
-      }
-      syncTheme()
-      colorPreference.addEventListener?.("change", syncTheme)
+      document.documentElement.classList.add("dark")
+      document.documentElement.dataset.theme = "dark"
+      document.documentElement.style.colorScheme = "dark"
     </script>
     <script>
-      if (location.hostname === "viperisuseful.cc" || location.hostname.endsWith(".viperisuseful.cc")) {
+      if (
+        location.hostname === "viperisuseful.cc" ||
+        location.hostname.endsWith(".viperisuseful.cc")
+      ) {
         window.omnisend = window.omnisend || []
         window.omnisend.push(["brandID", "6a2591b056835e9f83f6b6a3"])
         window.omnisend.push(["track", "$pageViewed"])
         ;(function () {
           const script = document.createElement("script")
+          script.type = "text/javascript"
           script.async = true
           script.src = "https://omnisnippet1.com/inshop/launcher-v2.js"
-          document.head.appendChild(script)
+          const firstScript = document.getElementsByTagName("script")[0]
+          firstScript.parentNode.insertBefore(script, firstScript)
         })()
       }
     </script>
-    <title>Journal | Viper</title>
-    <link rel="stylesheet" href="blog.css" />
+    <title>ViperCode CLI | Interactive portfolio</title>
+    <script type="module" crossorigin src="/hub-assets/index-BY2Zfi88.js"></script>
+    <link rel="stylesheet" crossorigin href="/hub-assets/index-CPrfRmEa.css">
   </head>
   <body>
-    <header class="blog-header">
-      <div class="blog-header__inner">
-        <a class="blog-wordmark" href="/" aria-label="Viper home">Viper</a>
-        <nav class="blog-nav" aria-label="Primary navigation">
-          <a aria-current="page" href="/blog/">Blog</a>
-          <a href="/#systems">Systems</a>
-          <a href="/#about">About</a>
-          <a class="blog-github" href="https://github.com/Viperisuseful" rel="noreferrer" target="_blank">GitHub <span aria-hidden="true">↗</span></a>
-        </nav>
-      </div>
-    </header>
-
-    <main>
-      <section class="blog-hero" aria-labelledby="journal-title">
-        <div class="blog-grid" aria-hidden="true"></div>
-        <div class="blog-hero__copy">
-          <p class="eyebrow">Viper Journal</p>
-          <h1 id="journal-title">Notes from what<br />I build &amp; run.</h1>
-          <p class="blog-intro">Release notes, dev logs, and the occasional rabbit hole from projects that keep changing.</p>
-        </div>
-      </section>
-
-      <section class="entries-shell" aria-labelledby="entries-title">
-        <div class="entries-heading">
-          <h2 id="entries-title">Latest entries</h2>
-          <p>Progress, problems, and what shipped.</p>
-        </div>
-        <div class="entries" id="entry-list" aria-live="polite">
-          <p class="bl-state">Loading entries...</p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="blog-footer">
-      <div class="blog-footer__lead">
-        <strong>Viper</strong>
-        <span>Small things, useful things, and systems that run quietly in the background.</span>
-      </div>
-      <nav class="blog-footer__links" aria-label="Footer links">
-        <a href="https://github.com/Viperisuseful">GitHub</a>
-        <a href="/discord/">Discord</a>
-        <a href="/modrinth/">Modrinth</a>
-        <a href="mailto:viper@viperisuseful.cc">Email</a>
-        <a href="/privacy/">Privacy</a>
-      </nav>
-      <div class="blog-footer__meta"><span>© 2026 Viper</span><a href="#journal-title">Back to top ↑</a></div>
-    </footer>
-
-    <script src="blog.js"></script>
+    <div id="root"></div>
   </body>
 </html>

@@ -11,13 +11,15 @@ for (const directory of ["hub-assets", "marks", "media"]) {
   })
 }
 
-const homeHtml = await readFile(resolve(buildRoot, "index.html"), "utf8")
+const homeHtml = (await readFile(resolve(buildRoot, "index.html"), "utf8")).replace(/\r/g, "")
 const notFoundHtml = homeHtml
   .replace('content="index, follow"', 'content="noindex, nofollow"')
-  .replace('<title>Viper | Projects and systems</title>', '<title>404 | Signal lost</title>')
+  .replace('<title>ViperCode CLI | Interactive portfolio</title>', '<title>404 | Signal lost</title>')
   .replace(/\s*<link rel="canonical"[^>]+>/, "")
 
 await writeFile(resolve(repositoryRoot, "index.html"), homeHtml)
 await writeFile(resolve(repositoryRoot, "404.html"), notFoundHtml)
+await writeFile(resolve(repositoryRoot, "blog/index.html"), homeHtml)
+await writeFile(resolve(repositoryRoot, "blog/post.html"), homeHtml)
 await rm(resolve(repositoryRoot, "nightly"), { force: true, recursive: true })
 await rm(buildRoot, { force: true, recursive: true })

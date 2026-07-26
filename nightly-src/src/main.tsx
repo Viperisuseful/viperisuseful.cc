@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client"
 import App from "./App.tsx"
 import "./index.css"
 import { NotFound } from "./components/not-found.tsx"
+import { ViperBlogIndex, ViperBlogPost } from "./components/viperblog-cli.tsx"
 import { resolveSiteSurface } from "./lib/site-surface.ts"
 
 const surface = resolveSiteSurface(window.location.pathname)
@@ -16,8 +17,18 @@ if (surface === "not-found") {
   canonical?.remove()
 }
 
+if (surface === "blog") document.title = "ViperBlog CLI | Field notes"
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {surface === "home" ? <App /> : <NotFound />}
+    {surface === "home" ? (
+      <App />
+    ) : surface === "blog" ? (
+      <ViperBlogIndex />
+    ) : surface === "blog-post" ? (
+      <ViperBlogPost />
+    ) : (
+      <NotFound />
+    )}
   </StrictMode>,
 )

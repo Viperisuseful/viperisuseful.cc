@@ -4,30 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#191918" />
+    <meta name="theme-color" content="#101011" />
     <meta
       name="description"
-      content="Projects, tools, communities, and private systems built and hosted by Viper."
+      content="ViperCode CLI: an interactive command-line portfolio for Viper's projects, systems, and build notes."
     />
-    <meta property="og:title" content="Viper | Projects and systems" />
+    <meta property="og:title" content="ViperCode CLI | Interactive portfolio" />
     <meta
       property="og:description"
-      content="Everything Viper builds, in one place."
+      content="Explore Viper's projects and systems through an interactive coding-agent interface."
     />
     <meta property="og:image" content="https://viperisuseful.cc/marks/viper.webp" />
     <link rel="canonical" href="https://viperisuseful.cc/" />
     <link rel="icon" type="image/webp" href="/marks/viper.webp" />
     <script>
-      const colorPreference = matchMedia("(prefers-color-scheme: dark)")
-      const syncTheme = () => {
-        const theme = colorPreference.matches ? "dark" : "light"
-        document.documentElement.classList.toggle("dark", colorPreference.matches)
-        document.documentElement.dataset.theme = theme
-        document.documentElement.style.colorScheme = theme
-      }
-      syncTheme()
-      colorPreference.addEventListener?.("change", syncTheme)
+      document.documentElement.classList.add("dark")
+      document.documentElement.dataset.theme = "dark"
+      document.documentElement.style.colorScheme = "dark"
     </script>
     <script>
       if (
@@ -47,7 +40,7 @@
         })()
       }
     </script>
-    <title>Viper | Projects and systems</title>
+    <title>ViperCode CLI | Interactive portfolio</title>
   </head>
   <body>
     <div id="root"></div>

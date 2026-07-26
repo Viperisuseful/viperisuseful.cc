@@ -87,11 +87,6 @@ test("keeps system theme and home recovery working", async ({ page }, testInfo) 
 
   await page.getByRole("link", { name: "Go home" }).click()
   await expect(page).toHaveURL("http://127.0.0.1:5173/")
-  await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: "Everything Viper builds & runs in one place.",
-    }),
-  ).toBeVisible()
-  await expect(page.getByTestId("hero-showcase")).toBeVisible()
+  await expect(page.getByRole("region", { name: "ViperCode CLI portfolio" })).toBeVisible()
+  await expect(page.getByRole("group", { name: "ViperCode CLI v1.0.0" })).toBeVisible()
 })

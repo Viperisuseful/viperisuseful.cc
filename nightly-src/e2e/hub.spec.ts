@@ -20,167 +20,51 @@ test.beforeEach(async ({ page }) => {
       status: 200,
     })
   })
+
+  await page.route("https://api.lanyard.rest/v1/users/**", async (route) => {
+    await route.fulfill({
+      body: JSON.stringify({
+        success: true,
+        data: {
+          discord_status: "online",
+          discord_user: {
+            avatar: null,
+            global_name: "Viper",
+            id: "990680811827261490",
+            username: "Viperisuseful",
+          },
+          activities: [{ name: "Building ViperCode", type: 0 }],
+        },
+      }),
+      contentType: "application/json",
+      status: 200,
+    })
+  })
+
   await page.goto("./")
 })
 
-test("shows the GitHub calendar between the footer lead and links", async ({ page }) => {
-  const calendar = page.getByRole("region", { name: "Viperisuseful's GitHub contributions" })
-  await expect(calendar).toBeVisible()
-  await expect(calendar.getByRole("link", { name: "@Viperisuseful" })).toHaveAttribute(
-    "href",
-    "https://github.com/Viperisuseful",
-  )
-  await expect(calendar.getByText("3", { exact: true })).toBeVisible()
-
-  expect(
-    await calendar.evaluate((element) => ({
-      next: element.nextElementSibling?.className,
-      previous: element.previousElementSibling?.className,
-    })),
-  ).toEqual({ next: "footer-links", previous: "site-footer__lead" })
-
-  const previousCell = calendar.getByRole("gridcell", { name: /^1 contribution on/ })
-  const latestCell = calendar.getByRole("gridcell", { name: /^2 contributions on/ })
-  await latestCell.hover()
-  await expect(page.getByRole("tooltip")).toContainText("2 contributions")
-
-  await latestCell.focus()
-  await page.keyboard.press("ArrowUp")
-  await expect(previousCell).toBeFocused()
-  await expect(page.getByRole("tooltip")).toContainText("1 contribution")
-
-  await latestCell.dispatchEvent("pointerdown", { pointerType: "touch" })
-  await expect(latestCell).toBeFocused()
-  await expect(page.getByRole("tooltip")).toContainText("2 contributions")
-  expect(
-    await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth),
-  ).toBe(false)
-})
-
-test("loads complete hub without runtime errors", async ({ page }, testInfo) => {
+test("loads the ViperCode CLI without runtime or accessibility errors", async ({ page }) => {
   const errors: string[] = []
   page.on("console", (message) => {
     if (message.type() === "error") errors.push(message.text())
   })
 
-  await expect(page).toHaveTitle("Viper | Projects and systems")
-  await expect(
-    page.getByRole("heading", {
-      level: 1,
-      name: "Everything Viper builds & runs in one place.",
-    }),
-  ).toBeVisible()
-  await expect(page.getByRole("link", { name: /QuickRunLab/ })).toBeVisible()
-  await expect(page.getByRole("link", { name: /ViperCapture/ })).toHaveAttribute(
-    "href",
-    "https://capture.viperisuseful.cc",
-  )
-  const viperCaptureMark = page.locator(".showcase-project__mark--vipercapture")
-  const viperCaptureImage = viperCaptureMark.locator("img")
-  const markDimensions = await viperCaptureMark.evaluate((element) => ({
-    width: element.clientWidth,
-    height: element.clientHeight,
-  }))
-  const imageDimensions = await viperCaptureImage.evaluate((element) => ({
-    width: element.clientWidth,
-    height: element.clientHeight,
-  }))
-  expect(imageDimensions).toEqual(markDimensions)
+  await expect(page).toHaveTitle("ViperCode CLI | Interactive portfolio")
+  await expect(page.getByRole("region", { name: "ViperCode CLI portfolio" })).toBeVisible()
+  await expect(page.getByRole("group", { name: "ViperCode CLI v1.0.0" })).toBeVisible()
+  await expect(page.getByRole("textbox", { name: "Prompt" })).toBeVisible()
+  await expect(page.getByText("Portfolio mounted as an interactive session. Type /help to start.")).toBeVisible()
+  await expect(page.locator(".command-grid")).toHaveCount(0)
 
-  const markSource = await page.evaluate(async () =>
-    fetch("/marks/vipercapture.svg").then((response) => response.text()),
-  )
-  expect(markSource).not.toContain("M38 64H64V38C57 48 48 57 38 64Z")
-  await expect(page.getByRole("heading", { name: "More works" })).toBeVisible()
-  await expect(page.getByRole("link", { name: /Turtle Cave/ })).toHaveAttribute(
-    "href",
-    "https://turtle.viperisuseful.cc",
-  )
-  await expect(page.locator(".project-story")).toHaveCount(0)
-  await expect(page.getByRole("heading", { name: "Tools and systems" })).toBeVisible()
-  await expect(page.getByText("Login required")).toHaveCount(3)
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false)
+  await expect.poll(() =>
+    page.locator("img").evaluateAll((images) =>
+      images.filter((image) => !(image as HTMLImageElement).complete || (image as HTMLImageElement).naturalWidth === 0)
+        .length,
+    ),
+  ).toBe(0)
 
-  const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)
-  expect(overflow).toBe(false)
-
-  await page.locator("#systems").scrollIntoViewIfNeeded()
-  await page.waitForTimeout(250)
-  const imageFailures = await page.locator("img").evaluateAll((images) =>
-    images.filter((image) => !(image as HTMLImageElement).complete || (image as HTMLImageElement).naturalWidth === 0)
-      .length,
-  )
-  expect(imageFailures).toBe(0)
-  expect(errors).toEqual([])
-
-  await page.evaluate(() => {
-    document.documentElement.style.scrollBehavior = "auto"
-    window.scrollTo(0, 0)
-  })
-  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0)
-  await page.screenshot({
-    path: `/tmp/viper-hub-${testInfo.project.name}-viewport.png`,
-    fullPage: false,
-  })
-  await page.screenshot({
-    path: `/tmp/viper-hub-${testInfo.project.name}.png`,
-    fullPage: true,
-  })
-})
-
-test("follows the browser theme without a manual theme control", async ({ page }) => {
-  await expect(page.getByRole("button", { name: /theme/i })).toHaveCount(0)
-  const latestContribution = page
-    .getByRole("region", { name: "Viperisuseful's GitHub contributions" })
-    .getByRole("gridcell", { name: /^2 contributions on/ })
-
-  await page.emulateMedia({ colorScheme: "dark" })
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "dark")
-  await expect(latestContribution).toHaveAttribute("fill", "#006d32")
-
-  await page.emulateMedia({ colorScheme: "light" })
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "light")
-  await expect(latestContribution).toHaveAttribute("fill", "#40c463")
-})
-
-test("large project stage adapts to the viewport", async ({ page }) => {
-  const showcase = page.getByTestId("hero-showcase")
-  await expect(showcase).toBeVisible()
-})
-
-test("mobile navigation opens when compact", async ({ page }) => {
-  const trigger = page.getByRole("button", { name: "Open navigation" })
-  if (await trigger.isVisible()) {
-    await trigger.click()
-    await expect(page.getByRole("heading", { name: "Navigate Viper" })).toBeVisible()
-    await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeVisible()
-  }
-})
-
-test("links and accessibility contract are intact", async ({ page }) => {
-  const mobileNavTrigger = page.getByRole("button", { name: "Open navigation" })
-  if (await mobileNavTrigger.isVisible()) {
-    await mobileNavTrigger.click()
-    await expect(
-      page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Blog" }),
-    ).toHaveAttribute("href", "/blog/")
-    await page.keyboard.press("Escape")
-    await expect(page.getByRole("navigation", { name: "Mobile navigation" })).toBeHidden()
-  } else {
-    await expect(
-      page.getByRole("navigation", { name: "Primary navigation" }).getByRole("link", { name: "Blog" }),
-    ).toHaveAttribute("href", "/blog/")
-  }
-  await expect(
-    page.getByRole("contentinfo").getByRole("link", { name: "Blog" }),
-  ).toHaveCount(0)
-  await expect(page.getByRole("link", { name: /QuickRunLab/ }).last()).toHaveAttribute(
-    "href",
-    "https://quickrunlab.viperisuseful.cc",
-  )
-  await expect(page.getByRole("link", { name: /Turtle Cave/ }).last()).toHaveAttribute(
-    "href",
-    "https://turtle.viperisuseful.cc",
-  )
   await page.addScriptTag({ content: axeCore.source })
   const violations = await page.evaluate(async () => {
     const axe = (window as typeof window & {
@@ -192,4 +76,114 @@ test("links and accessibility contract are intact", async ({ page }) => {
     )
   })
   expect(violations).toEqual([])
+  expect(errors).toEqual([])
+})
+
+test("runs /whoami from the semantic slash menu", async ({ page }) => {
+  const prompt = page.getByRole("textbox", { name: "Prompt" })
+  await prompt.fill("/who")
+  const menu = page.getByRole("listbox", { name: "Slash commands" })
+  await expect(menu).toBeVisible()
+  await expect(menu.getByRole("option", { name: /\/whoami/i })).toHaveAttribute("aria-selected", "true")
+  await prompt.press("Enter")
+
+  await expect(page.getByRole("heading", { name: "Viper", exact: true })).toBeVisible()
+  const calendar = page.getByRole("region", { name: "Viperisuseful's GitHub contributions" })
+  await expect(calendar).toBeVisible()
+  await expect(calendar.getByText("3", { exact: true })).toBeVisible()
+})
+
+test("lists projects and systems as numbered destinations", async ({ page }) => {
+  const prompt = page.getByRole("textbox", { name: "Prompt" })
+  await prompt.fill("/projects")
+  await prompt.press("Enter")
+  const projects = page.getByRole("list", { name: "project destinations" })
+  await expect(projects.getByText("QuickRunLab", { exact: true })).toBeVisible()
+  await expect(projects.getByText("ViperCapture", { exact: true })).toBeVisible()
+  await expect(projects.getByRole("link")).toHaveCount(0)
+
+  await prompt.fill("/systems")
+  await prompt.press("Enter")
+  const systems = page.getByRole("list", { name: "system destinations" })
+  await expect(systems.getByText("ViperSearch", { exact: true })).toBeVisible()
+  await expect(systems.getByText("auth", { exact: true })).toHaveCount(3)
+})
+
+test("asks permission before every redirect", async ({ page }) => {
+  await expect(page.getByRole("link", { name: /status\.viperisuseful\.cc/i })).toHaveCount(0)
+  const prompt = page.getByRole("textbox", { name: "Prompt" })
+  await prompt.fill("/status")
+  await prompt.press("Enter")
+
+  const permission = page.getByRole("group", { name: "External navigation" })
+  await expect(permission).toContainText("open https://status.viperisuseful.cc/")
+  await expect(permission.getByRole("radiogroup", { name: "Open Viper status page?" })).toBeVisible()
+  await expect(prompt).toBeDisabled()
+  await permission.getByRole("radio", { name: /No, stay here/ }).click()
+  await expect(permission).toBeHidden()
+  await expect(prompt).toBeEnabled()
+
+  await prompt.fill("/github")
+  await prompt.press("Enter")
+  await expect(page.getByRole("group", { name: "External navigation" })).toContainText(
+    "github.com/Viperisuseful",
+  )
+})
+
+test("completes slash commands with Tab", async ({ page }) => {
+  const prompt = page.getByRole("textbox", { name: "Prompt" })
+  await prompt.fill("/sou")
+  await expect(page.getByRole("option", { name: /\/source/i })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  )
+  await prompt.press("Tab")
+  await expect(prompt).toHaveValue("/source")
+  await expect(prompt).toBeFocused()
+})
+
+test("does not expose the removed history command", async ({ page }) => {
+  const prompt = page.getByRole("textbox", { name: "Prompt" })
+  await prompt.fill("/")
+  await expect(page.getByRole("option", { name: /\/history/i })).toHaveCount(0)
+})
+
+test("moves permission selection with arrows and executes with Enter", async ({ page }) => {
+  await page.evaluate(() => {
+    const state = window as typeof window & { openedDestination?: string }
+    window.open = ((url?: string | URL) => {
+      state.openedDestination = String(url)
+      return null
+    }) as typeof window.open
+  })
+
+  const prompt = page.getByRole("textbox", { name: "Prompt" })
+  await prompt.fill("/status")
+  await prompt.press("Enter")
+
+  const permission = page.getByRole("group", { name: "External navigation" })
+  const first = permission.getByRole("radio", { name: /Yes, open link/ })
+  const second = permission.getByRole("radio", { name: /Open in a new tab/ })
+  await expect(first).toBeFocused()
+  await expect(first).toHaveAttribute("aria-checked", "true")
+
+  await page.keyboard.press("ArrowDown")
+  await expect(second).toBeFocused()
+  await expect(second).toHaveAttribute("aria-checked", "true")
+  await page.keyboard.press("Enter")
+
+  await expect
+    .poll(() => page.evaluate(() => (
+      window as typeof window & { openedDestination?: string }
+    ).openedDestination))
+    .toBe("https://status.viperisuseful.cc/")
+  await expect(permission).toBeHidden()
+})
+
+test("stays usable at mobile width", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 760 })
+  await page.reload()
+  await expect(page.getByRole("textbox", { name: "Prompt" })).toBeVisible()
+  await expect(page.getByText("Type /help to list every command")).toBeVisible()
+  expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth)).toBe(false)
 })
