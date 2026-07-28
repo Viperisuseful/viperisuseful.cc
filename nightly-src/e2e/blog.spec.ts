@@ -4,6 +4,11 @@ import { expect, test } from "@playwright/test"
 test("runs the ViperBlog Codex CLI and opens numbered posts through approval", async ({ page }) => {
   await page.goto("./blog/")
   await expect(page).toHaveTitle("ViperBlog CLI | Field notes")
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow")
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://viperisuseful.cc/blog/",
+  )
   await expect(page.getByRole("main", { name: "ViperBlog CLI" })).toBeVisible()
 
   const prompt = page.getByRole("textbox", { name: "Prompt" })
@@ -28,6 +33,11 @@ test("runs the ViperBlog Codex CLI and opens numbered posts through approval", a
 test("renders a Grok-style article reader and gates article links", async ({ page }) => {
   await page.goto("./blog/post.html?slug=viperproxy-26x")
   await expect(page).toHaveTitle(/Porting Viperproxy to 26\.x.*ViperBlog CLI/)
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "index, follow")
+  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+    "href",
+    "https://viperisuseful.cc/blog/post.html?slug=viperproxy-26x",
+  )
   await expect(page.getByText("ViperBlog CLI reader-1.0")).toBeVisible()
   await expect(page.getByRole("heading", { name: "What broke: networking" })).toBeVisible()
   await expect(page.getByText("Parsed Markdown and resolved journal metadata.")).toBeVisible()
@@ -50,4 +60,12 @@ test("renders a Grok-style article reader and gates article links", async ({ pag
     )
   })
   expect(violations).toEqual([])
+})
+
+test("keeps an unknown article out of the index", async ({ page }) => {
+  await page.goto("./blog/post.html?slug=missing")
+
+  await expect(page.getByRole("main")).toContainText("Post not found")
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "noindex, nofollow")
+  await expect(page.locator('link[rel="canonical"]')).toHaveCount(0)
 })

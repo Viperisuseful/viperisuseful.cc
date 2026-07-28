@@ -16,10 +16,22 @@ const notFoundHtml = homeHtml
   .replace('content="index, follow"', 'content="noindex, nofollow"')
   .replace('<title>ViperCode CLI | Interactive portfolio</title>', '<title>404 | Signal lost</title>')
   .replace(/\s*<link rel="canonical"[^>]+>/, "")
+const blogIndexHtml = homeHtml
+  .replace(
+    '<title>ViperCode CLI | Interactive portfolio</title>',
+    '<title>ViperBlog CLI | Field notes</title>',
+  )
+  .replace('href="https://viperisuseful.cc/"', 'href="https://viperisuseful.cc/blog/"')
+const blogPostHtml = homeHtml
+  .replace(
+    '<title>ViperCode CLI | Interactive portfolio</title>',
+    '<title>ViperBlog CLI | Article</title>',
+  )
+  .replace(/\s*<link rel="canonical"[^>]+>/, "")
 
 await writeFile(resolve(repositoryRoot, "index.html"), homeHtml)
 await writeFile(resolve(repositoryRoot, "404.html"), notFoundHtml)
-await writeFile(resolve(repositoryRoot, "blog/index.html"), homeHtml)
-await writeFile(resolve(repositoryRoot, "blog/post.html"), homeHtml)
+await writeFile(resolve(repositoryRoot, "blog/index.html"), blogIndexHtml)
+await writeFile(resolve(repositoryRoot, "blog/post.html"), blogPostHtml)
 await rm(resolve(repositoryRoot, "nightly"), { force: true, recursive: true })
 await rm(buildRoot, { force: true, recursive: true })
